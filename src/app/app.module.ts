@@ -9,6 +9,8 @@ import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import {routes} from "./app.routing";
+import { AddeventComponent } from './events/addevent/addevent.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -18,11 +20,13 @@ import {routes} from "./app.routing";
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    AddeventComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(routes),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
