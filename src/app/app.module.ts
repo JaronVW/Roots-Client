@@ -9,6 +9,10 @@ import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import {routes} from "./app.routing";
+import { SearchComponent } from './search/search.component';
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {SearchService} from "./search/search.service";
 
 
 @NgModule({
@@ -18,13 +22,18 @@ import {routes} from "./app.routing";
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(routes),
+    FormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    SearchService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
