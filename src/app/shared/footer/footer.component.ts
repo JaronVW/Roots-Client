@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+  template: `
+    <footer class="border-top footer">
+      <div class="container">&copy; 2022 - Roots</div>
+    </footer>
+  `,
+  styles: [
+    'footer { background-color: #007469 !important; color: white; line-height: 60px; bottom: 0; width: 100%; }',
+  ],
 })
 export class FooterComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

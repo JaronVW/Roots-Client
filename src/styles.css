@@ -3,4 +3,18 @@ body{
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: #DAE0E6;
+}
+
+button {
+  background-color: #007469 !important;
+  outline: black !important;
+}
+
+button:hover {
+  background-color: #0d8478 !important;
+}
+
+.btn {
+  border-color: #007469;
 }
