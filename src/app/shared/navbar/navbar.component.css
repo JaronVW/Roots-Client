@@ -1,0 +1,32 @@
+.navbar{
+  display: flex;
+  background-color: #FFDEAD;
+  max-height: 70px;
+  min-height: 70px;
+}
+
+.site-menu{
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+
+}
+
+a{
+  text-decoration: none;
+  color: #000;
+  margin: 0px 10px;
+  font-size: 16px;
+}
+
+.logo{
+  margin: 5px 5px 5px 5px;
+  background-color: red;
+  width: 120px;
+}
+
+.logo-image{
+  display: block;
+  height: 100%;
+}
+
