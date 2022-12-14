@@ -11,6 +11,10 @@ import { RegisterComponent } from './authentication/register/register.component'
 import {routes} from "./app.routing";
 import { AddeventComponent } from './events/addevent/addevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SearchComponent } from './search/search.component';
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {SearchService} from "./search/search.service";
 
 
 @NgModule({
@@ -20,6 +24,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    SearchComponent,
     AddeventComponent,
   ],
   imports: [
@@ -27,8 +32,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     RouterModule.forRoot(routes),
     NgbModule,
+    FormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    SearchService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
