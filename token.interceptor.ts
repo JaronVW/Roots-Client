@@ -40,7 +40,7 @@ export class TokenInterceptor implements HttpInterceptor {
         'Content-Type': 'application/json',
         // 'Authorization': `${this.currentUser$.value?.token}`,
       }),
-      url: `http://localhost:3333/${request.url}`
+      url: `http://localhost:3000/${request.url}`
     });
     console.log('newRequest',newRequest);
     return next.handle(newRequest);
