@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {AddeventServiceService} from "./addevent-service.service";
+import {Event} from "./event.interface";
 
 @Component({
   selector: 'app-addevent',
@@ -15,12 +17,25 @@ import { Router } from '@angular/router';
   ],
 })
 export class AddeventComponent implements OnInit {
-  constructor(private router: Router) {}
+  event: Event = {
+    title: '',
+    description: '',
+  }
+
+
+  constructor(
+    private router: Router,
+    private addeventService: AddeventServiceService
+    ) {}
 
   ngOnInit(): void {}
 
   createEvent() {
     // add logic for creating an event here...
-    this.router.navigate(['/']);
+    this.addeventService.addEvent(this.event).subscribe(
+      (response : Event) => {
+        this.router.navigate(['/events']);
+        console.log(response, 'response joepiee');
+      });
   }
 }
