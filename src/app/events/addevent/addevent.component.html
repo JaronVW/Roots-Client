@@ -1,24 +1,24 @@
 <div class="container">
   <div class="text-center">
-    <h1>Evenement toevoegen</h1>
+    <h1>Add event</h1>
   </div>
   <form>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="title">Titel</label>
+          <label for="title">Title:</label>
           <input
             type="text"
             class="form-control"
             id="title"
             aria-describedby="titleHelp"
-            placeholder="Voer titel in..."
+            placeholder="Enter title..."
           />
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="date">Datum:</label>
+          <label for="date">Date:</label>
           <input
             type="date"
             class="form-control"
@@ -29,7 +29,7 @@
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="date">Beschrijving:</label>
+          <label for="date">Description:</label>
           <textarea
             type="description"
             class="form-control"
@@ -40,39 +40,78 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="tags">Tag toevoegen:</label>
+          <label for="tags">Add tag:</label>
           <select class="form-select" aria-label="select-picker">
-            <option selected>Kies tag...</option>
-            <option value="1">Administratie</option>
-            <option value="2">Financiën</option>
-            <option value="3">Werkcultuur</option>
+            <option selected>Choose a tag...</option>
+            <option value="1">Administration</option>
+            <option value="2">Finances</option>
+            <option value="3">Work culture</option>
           </select>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="date">Bestand toevoegen:</label>
+          <label for="file">Add file:</label>
           <input
-            type="date"
+            type="file"
             class="form-control"
-            id="date"
-            aria-describedby="dateHelp"
+            id="file"
+            aria-describedby="fileHelp"
           />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="terms" />
           <label class="form-check-label" for="terms"
-            >Ik ga akkoord met de algemene voorwaarden.</label
+            >I agree with the <a href="">terms and conditions</a>.</label
           >
         </div>
       </div>
-      <div class="col-md-2">
-        <button type="submit" class="btn btn-primary" routerLink="/" routerLinkActive="active">Annuleren</button>
-      </div>
-      <div class="col-md-2">
-        <button type="submit" class="btn btn-primary" (click)="createEvent()">Aanmaken</button>
+      <div class="col-md-6">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          routerLink="/"
+          routerLinkActive="active"
+        >
+          Back
+        </button>
+        <button type="submit" class="btn btn-primary" (click)="createEvent()">
+          Create
+        </button>
       </div>
     </div>
   </form>

@@ -5,14 +5,15 @@ import { Router } from '@angular/router';
   selector: 'app-addevent',
   templateUrl: './addevent.component.html',
   styles: [
-    'button { width: 100%; margin-top: 10px; }',
+    'button { margin-top: 10px; margin-right: 10px; margin-bottom: 10px; width: 45%; }',
     '.form-check, .form-group { padding-top: 10px; }',
     'h1 { padding-top: 10px; }',
-    'textarea { height: 150px; }',
-    'select { width: 100%; }'
+    'textarea { height: 111px; }',
+    '.list-group-flush { border-top-left-radius: 5px; border-bottom-left-radius: 5px; height: 160px; overflow:hidden; overflow-y:scroll; }',
+    'a { text-decoration: none; }',
+    'a:hover { text-decoration: underline; }',
   ],
 })
-
 export class AddeventComponent implements OnInit {
   constructor(private router: Router) {}
 
