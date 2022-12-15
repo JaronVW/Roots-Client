@@ -18,7 +18,6 @@ import { Location } from '@angular/common';
   ],
 })
 export class AddeventComponent implements OnInit {
-  constructor(private router: Router, private _location: Location,) {}
   event: Event = {
     title: '',
     description: '',
@@ -27,7 +26,8 @@ export class AddeventComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private addeventService: AddeventServiceService
+    private addeventService: AddeventServiceService,
+    private _location: Location,
     ) {}
 
   ngOnInit(): void {}
