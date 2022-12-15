@@ -13,10 +13,10 @@ import { AddeventComponent } from './events/addevent/addevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
 import {SearchService} from "./search/search.service";
 import { ListeventsComponent } from './events/listevents/listevents.component';
-
+import {TokenInterceptor} from "../../token.interceptor";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -36,9 +36,11 @@ import { ListeventsComponent } from './events/listevents/listevents.component';
     NgbModule,
     FormsModule,
     HttpClientModule,
+
   ],
   providers: [
     SearchService,
+    {provide: HTTP_INTERCEPTORS , useClass: TokenInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })
