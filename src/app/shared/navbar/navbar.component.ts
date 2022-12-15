@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
             <li class="nav-item">
               <a
                 class="nav-link"
-                routerLink="/"
+                routerLink="/home"
                 routerLinkActive="active"
                 ariaCurrentWhenActive="page"
                 >Home</a
@@ -43,37 +43,33 @@ import { Router } from '@angular/router';
               >
             </li>
           </ul>
-            <ul class="navbar-nav flex-grow-2">
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  routerLink="/login"
-                  routerLinkActive="active"
-                  ariaCurrentWhenActive="page"
-                  >Login</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  routerLink="/register"
-                  routerLinkActive="active"
-                  ariaCurrentWhenActive="page"
-                  >Register</a
-                >
-              </li>
-            </ul>
+          <ul class="navbar-nav flex-grow-2">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/login"
+                routerLinkActive="active"
+                ariaCurrentWhenActive="page"
+                >Login</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/register"
+                routerLinkActive="active"
+                ariaCurrentWhenActive="page"
+                >Register</a
+              >
+            </li>
+          </ul>
         </div>
       </div>
     </nav>`,
-  styles: [
-    'nav { background-color: #007469 !important; color: white; }',
-  ],
+  styles: ['nav { background-color: #007469 !important; color: white; }'],
 })
 export class NavbarComponent implements OnInit {
   constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

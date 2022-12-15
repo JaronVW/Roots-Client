@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
   selector: 'app-addevent',
   templateUrl: './addevent.component.html',
   styles: [
-    'button { margin-top: 10px; margin-right: 10px; margin-bottom: 10px; width: 45%; }',
+    'button { margin-top: 10px; margin-right: 10px; width: 45%; }',
     '.form-check, .form-group { padding-top: 10px; }',
     'h1 { padding-top: 10px; }',
     'textarea { height: 111px; }',
