@@ -14,10 +14,10 @@ export class SearchService {
 
   search(searchValue: string):Observable<Array<Event>> | null {
     console.log('reached service',searchValue);
-    // return this.http.get<EventResponse>(`/search/${searchValue}`).pipe(
-    //   map((response: EventResponse) => response.results)
-    // )
-    return null;
+    return this.http.get<EventResponse>(`/search/${searchValue}`).pipe(
+      map((response: EventResponse) => response.results)
+    );
+    // return null;
   }
 }
 
