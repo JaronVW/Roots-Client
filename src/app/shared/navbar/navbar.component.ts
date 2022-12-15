@@ -44,7 +44,8 @@ import { Router } from '@angular/router';
             </li>
           </ul>
           <ul class="navbar-nav flex-grow-2">
-            <li class="nav-item">
+            <!-- Links to have on the right side of the navbar. -->
+            <!-- <li class="nav-item">
               <a
                 class="nav-link"
                 routerLink="/login"
@@ -61,7 +62,7 @@ import { Router } from '@angular/router';
                 ariaCurrentWhenActive="page"
                 >Register</a
               >
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
