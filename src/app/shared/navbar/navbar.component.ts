@@ -36,10 +36,10 @@ import { Router } from '@angular/router';
             <li class="nav-item">
               <a
                 class="nav-link"
-                routerLink="/events/create"
+                routerLink="/events"
                 routerLinkActive="active"
                 ariaCurrentWhenActive="page"
-                >Event Aanmaken</a
+                >Events</a
               >
             </li>
           </ul>
