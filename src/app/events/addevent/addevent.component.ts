@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-addevent',
@@ -15,12 +16,16 @@ import { Router } from '@angular/router';
   ],
 })
 export class AddeventComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private _location: Location,) {}
 
   ngOnInit(): void {}
 
   createEvent() {
     // add logic for creating an event here...
     this.router.navigate(['/']);
+  }
+
+  backClicked() {
+    this._location.back();
   }
 }
