@@ -8,5 +8,7 @@ export interface Event{
   files?: string[];
   userId?: string;
 
+  multiMedia?: string[];
+
 //   Nog te doen: Tags, files, userId referencen naar andere interfaces
 }
