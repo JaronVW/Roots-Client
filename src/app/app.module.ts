@@ -10,11 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { routes } from './app.routing';
-<<<<<<< HEAD
-import { AddeventComponent } from './events/addevent/addevent.component';
-=======
 import { AddediteventComponent } from './events/addeditevent/addeditevent.component';
->>>>>>> ca9be74b22090b84879b3d247d0e6b0b289d1720
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import { FormsModule } from '@angular/forms';
