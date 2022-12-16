@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventService } from '../event.service';
+import { Event } from '../event.interface';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-addevent',
@@ -15,12 +18,37 @@ import { Router } from '@angular/router';
   ],
 })
 export class AddediteventComponent implements OnInit {
-  constructor(private router: Router) {}
+  title: string = '';
+  description: string = '';
+  date: Date = new Date();
+
+  event: Event = {
+    title: '',
+    description: '',
+    // date: new Date(),
+    // tags: ['test', 'test2'],
+    // files: ['test', 'test2'],
+    // userId: 'test',
+    // multiMedia: ['test', 'test2'],
+  };
+
+  constructor(private router: Router, private EventService: EventService, private _location: Location) {}
 
   ngOnInit(): void {}
 
   createEvent() {
     // add logic for creating an event here...
-    this.router.navigate(['/']);
+    this.event.title = this.title;
+    this.event.description = this.description;
+    // this.event.date = new Date();
+    console.log(this.event);
+    this.EventService.addEvent(this.event).subscribe((response: Event) => {
+      this.router.navigate(['/events']);
+      console.log(response, 'response joepiee');
+    });
+  }
+
+  backClicked() {
+    this._location.back();
   }
 }

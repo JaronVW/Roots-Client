@@ -13,8 +13,10 @@ import { AddediteventComponent } from './events/addeditevent/addeditevent.compon
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { SearchService } from './search/search.service';
+import { ListeventsComponent } from './events/listevents/listevents.component';
+import {TokenInterceptor} from "../../token.interceptor";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { SearchService } from './search/search.service';
     RegisterComponent,
     SearchComponent,
     AddediteventComponent,
+    ListeventsComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +36,12 @@ import { SearchService } from './search/search.service';
     NgbModule,
     FormsModule,
     HttpClientModule,
+
   ],
-  providers: [SearchService],
-  bootstrap: [AppComponent],
+  providers: [
+    SearchService,
+    {provide: HTTP_INTERCEPTORS , useClass: TokenInterceptor, multi: true},
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
