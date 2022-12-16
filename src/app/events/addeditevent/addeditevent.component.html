@@ -8,7 +8,7 @@
         <div class="form-group">
           <label for="title">Title:</label>
           <input
-            [(ngModel)]="title"
+            [(ngModel)]="event.title"
             name="title"
             type="text"
             class="form-control"
@@ -22,7 +22,7 @@
         <div class="form-group">
           <label for="date">Date:</label>
           <input
-            [(ngModel)]="date"
+            [(ngModel)]="event.date"
             name="date"
             type="date"
             class="form-control"
@@ -35,7 +35,7 @@
         <div class="form-group">
           <label for="date">Description:</label>
           <textarea
-            [(ngModel)]="description"
+            [(ngModel)]="event.description"
             name="description"
             type="description"
             class="form-control"

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Location } from '@angular/common';
@@ -18,33 +18,40 @@ import { Location } from '@angular/common';
   ],
 })
 export class AddediteventComponent implements OnInit {
-  title: string = '';
-  description: string = '';
-  date: Date = new Date();
-
   event: Event = {
     title: '',
     description: '',
-    // date: new Date(),
-    // tags: ['test', 'test2'],
-    // files: ['test', 'test2'],
+    date: new Date(),
     // userId: 'test',
+    // tags: ['test', 'test2'],
+    // customtags ['test', 'test2'],
     // multiMedia: ['test', 'test2'],
   };
 
-  constructor(private router: Router, private EventService: EventService, private _location: Location) {}
+  constructor(
+    private router: Router,
+    private EventService: EventService,
+    private _location: Location,
+    private route: ActivatedRoute,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    var id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.EventService.getEvent(id).subscribe((response: Event) => {
+        this.event = response;
+      });
+    }
+  }
 
   createEvent() {
-    // add logic for creating an event here...
-    this.event.title = this.title;
-    this.event.description = this.description;
-    // this.event.date = new Date();
-    console.log(this.event);
-    this.EventService.addEvent(this.event).subscribe((response: Event) => {
+    const data = {
+      title: this.event.title,
+      description: this.event.description,
+    };
+    this.EventService.addEvent(data).subscribe((response: Event) => {
       this.router.navigate(['/events']);
-      console.log(response, 'response joepiee');
+      console.log(response);
     });
   }
 

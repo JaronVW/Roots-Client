@@ -22,8 +22,8 @@ export class EventService {
     return this.http.get<EventResponse>('events').pipe(map((body: EventResponse) => body.results));
   }
 
-  getEvent(id: string): Observable<Event> {
-    return this.http.get<EventResponse>(`events/${id}`).pipe(map((body: EventResponse) => body.results[0]));
+  getEvent(id: string): Observable<any> {
+    return this.http.get<Event>(`events/${id}`).pipe(map((body: Event) => body));
   }
 
   updateEvent(id: string, event: Event): Observable<Event> {
