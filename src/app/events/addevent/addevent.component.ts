@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {AddeventServiceService} from "./addevent-service.service";
-import {Event} from "./event.interface";
+import { EventService } from '../event.service';
+import { Event } from '../event.interface';
 import { Location } from '@angular/common';
 
 @Component({
@@ -22,7 +22,6 @@ export class AddeventComponent implements OnInit {
   description: string = '';
   date: Date = new Date();
 
-
   event: Event = {
     title: '',
     description: '',
@@ -31,14 +30,9 @@ export class AddeventComponent implements OnInit {
     // files: ['test', 'test2'],
     // userId: 'test',
     // multiMedia: ['test', 'test2'],
-  }
+  };
 
-
-  constructor(
-    private router: Router,
-    private addeventService: AddeventServiceService,
-    private _location: Location,
-    ) {}
+  constructor(private router: Router, private EventService: EventService, private _location: Location) {}
 
   ngOnInit(): void {}
 
@@ -48,11 +42,10 @@ export class AddeventComponent implements OnInit {
     this.event.description = this.description;
     // this.event.date = new Date();
     console.log(this.event);
-    this.addeventService.addEvent(this.event).subscribe(
-      (response : Event) => {
-        this.router.navigate(['/events']);
-        console.log(response, 'response joepiee');
-      });
+    this.EventService.addEvent(this.event).subscribe((response: Event) => {
+      this.router.navigate(['/events']);
+      console.log(response, 'response joepiee');
+    });
   }
 
   backClicked() {

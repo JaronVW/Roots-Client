@@ -9,7 +9,8 @@ import { SearchService } from '../../search/search.service';
 export class ListeventsComponent implements OnInit {
   searchValue: string = '';
 
-  constructor(private SearchService: SearchService) {}
+  constructor(private SearchService: SearchService, 
+    ) {}
 
   ngOnInit(): void {}
 

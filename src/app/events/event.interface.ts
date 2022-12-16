@@ -1,6 +1,4 @@
-
-
-export interface Event{
+export interface Event {
   title: string;
   description: string;
   date?: Date;
@@ -10,5 +8,5 @@ export interface Event{
 
   multiMedia?: string[];
 
-//   Nog te doen: Tags, files, userId referencen naar andere interfaces
+  //   Nog te doen: Tags, files, userId referencen naar andere interfaces
 }
