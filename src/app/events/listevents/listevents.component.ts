@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../../search/search.service';
+import { EventService } from '../event.service';
+import { Event } from '../event.interface';
 
 @Component({
   selector: 'app-listevents',
   templateUrl: './listevents.component.html',
-  styles: [
-    '.input { width: 60%; height: 40px; padding-left: 2.5rem; border: 2px solid transparent; border-radius: 8px; background-color: #f3f3f4; transition: .3s ease; }',
-    '.input::placeholder { color: #9e9ea7; }',
-    '.input:focus, input:hover { outline: none; border-color: rgb(234 76 137 / 10%); background-color: #fff; box-shadow: 0 0 0 4px rgb(234 76 137 / 10%); }',
-    '.icon { fill: #9e9ea7; margin: 11px 0px 0px 15px; width: 1rem; height: 1rem; position: absolute; }',
-    'button { float: right; }',
-    '.card { margin-top: 10px; }',
-  ],
+  styleUrls: ['./listevents.component.css'],
 })
 export class ListeventsComponent implements OnInit {
   searchValue: string = '';
+  events: Array<Event> = new Array<Event>;
 
-  constructor(private SearchService: SearchService) {}
+  constructor(private SearchService: SearchService, private EventService: EventService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.EventService.getEvents().subscribe((response) => {
+      this.events = response;
+    });
+    console.log(this.events);
+  }
 
   search(value: any) {
     console.log('reached component', value);
