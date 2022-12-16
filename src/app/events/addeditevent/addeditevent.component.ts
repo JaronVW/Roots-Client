@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addevent',
-  templateUrl: './addevent.component.html',
+  templateUrl: './addeditevent.component.html',
   styles: [
     'button { margin-top: 10px; margin-right: 10px; width: 45%; }',
     '.form-check, .form-group { padding-top: 10px; }',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
     'a:hover { text-decoration: underline; }',
   ],
 })
-export class AddeventComponent implements OnInit {
+export class AddediteventComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
