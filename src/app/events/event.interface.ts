@@ -1,7 +1,7 @@
 export interface Event {
   title: string;
   description: string;
-  dateOfEvent?: Date;
+  dateOfEvent?: string;
   tags?: Tag[];
   files?: string[];
   userId?: string;

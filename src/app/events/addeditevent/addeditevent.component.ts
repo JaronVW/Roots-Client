@@ -7,20 +7,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-addevent',
   templateUrl: './addeditevent.component.html',
-  styles: [
-    'button { margin-top: 10px; margin-right: 10px; width: 45%; }',
-    '.form-check, .form-group { padding-top: 10px; }',
-    'h1 { padding-top: 10px; }',
-    'textarea { height: 111px; }',
-    '.list-group-flush { border-top-left-radius: 5px; border-bottom-left-radius: 5px; height: 160px; overflow:hidden; overflow-y:scroll; background-color: white; }',
-    'a { text-decoration: none; }',
-    'a:hover { text-decoration: underline; }',
-    '.validField {  border:2px solid green; display: block;  }',
-    '.invalidField {  border:2px solid red; display: block;  }',
-    '::ng-deep .multiselect-dropdown .dropdown-btn {width: -webkit-fill-available !important; }',
-    '::ng-deep .multiselect-dropdown .dropdown-btn:focus {outline: none !important}',
-    '.form-tags { background-color: white; border-radius: 5px; }',
-  ],
+  styleUrls: ['./addeditevent.component.css'],
 })
 export class AddediteventComponent implements OnInit {
   dropdownList: any = [];
@@ -29,14 +16,16 @@ export class AddediteventComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = '';
   isFirstVisit: boolean = true;
+  buttonText: string = 'Create';
+  eventid: string | null = '';
   isEditing: boolean = false;
 
   event: Event = {
     title: '',
     description: '',
-    dateOfEvent: new Date(),
+    dateOfEvent: new Date().toISOString(),
     // userId: 'test',
-    tags: [{subject: ''}],
+    tags: [{ subject: '' }],
     // customtags ['test', 'test2'],
     // multiMedia: ['test', 'test2'],
   };
@@ -49,15 +38,17 @@ export class AddediteventComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    var id = this.route.snapshot.paramMap.get('id');
-    if (id) {
+    this.eventid = this.route.snapshot.paramMap.get('id');
+    if (this.eventid) {
       this.isEditing = true;
-      this.EventService.getEvent(id).subscribe((response: Event) => {
+      this.EventService.getEvent(this.eventid).subscribe((response: Event) => {
         this.event = response;
-        console.log(this.event)
-        if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent);
+        console.log(this.event);
+        if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent).toISOString();
       });
     }
+
+    if (this.isEditing) this.buttonText = 'Update';
 
     this.dropdownList = [
       { item_id: 1, item_text: 'Finances' },
@@ -77,6 +68,20 @@ export class AddediteventComponent implements OnInit {
     };
   }
 
+  validate() {
+    if (this.selectedItems.length <= 0) this.setError(true, 'You must select at least 1 tag.');
+    if (this.event.description == '') this.setError(true, 'Description can not be empty.');
+    if (this.event.title == '') this.setError(true, 'Title can not be empty.');
+    if (this.event.title != '' && this.event.description != '' && this.selectedItems.length > 0) {
+      this.setError(false, '');
+      if (this.isEditing) {
+        this.updateEvent();
+      } else {
+        this.createEvent();
+      }
+    }
+  }
+
   createEvent() {
     const data = {
       title: this.event.title,
@@ -88,18 +93,12 @@ export class AddediteventComponent implements OnInit {
     });
   }
 
-  validate() {
-    if (this.selectedItems.length <= 0) this.setError(true, 'You must select at least 1 tag.');
-    if (this.event.description == '') this.setError(true, 'Description can not be empty.');
-    if (this.event.title == '') this.setError(true, 'Title can not be empty.');
-    if (this.event.title != '' && this.event.description != '' && this.selectedItems.length > 0) {
-      this.setError(false, '');
-      if (this.isEditing) {
-        console.log("Editing man")
-      } else {
-        this.createEvent();
-      }
-    } 
+  updateEvent() {
+    if (this.eventid != null)
+      this.EventService.updateEvent(this.eventid, this.event).subscribe((response: Event) => {
+        this.router.navigate(['/events']);
+        console.log(response);
+      });
   }
 
   setError(error: boolean, errorMessage: string) {
