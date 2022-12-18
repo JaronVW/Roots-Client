@@ -24,8 +24,11 @@
               <div class="card-body">
                 <h5 class="card-title">{{ item.title }}</h5>
                 <p class="card-text">{{ item.description }}</p>
+                <button type="button" class="btn btn-danger eventDeleteButton " (click)="delete(item.id!)">Delete</button>
+
                 <button type="button" class="btn btn-danger eventDeleteButton "
-                  (click)="delete(item.id!)">Delete</button>
+                  [routerLink]="[ '/', 'events','edit', item.id! ]">Update</button>
+                  
               </div>
             </li>
           </ul>
