@@ -13,14 +13,11 @@ export class EventService {
   constructor(private http: HttpClient) {}
 
   addEvent(event: Event): Observable<Event> {
-    console.log('addEvent() in event.service.ts');
     console.log('event: ', event);
     return this.http.post<Event>('events', event);
   }
 
   getEvents(): Observable<Array<Event>> {
-    console.log('getEvents() in event.service.ts');
-    console.log('this.http.get<Array<Event>>: ', this.http.get<Array<Event>>('events'));
     return this.http.get<Array<Event>>('events');
   }
 

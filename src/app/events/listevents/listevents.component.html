@@ -16,26 +16,29 @@
 
     <!--    <div class="col-lg-4 col-md-6" *ngFor="let item of followInterestProducts">-->
 
-
-    <div class="col-md-12" *ngFor="let item of events" style="display: block">
-      <div class=" rounded card">
-        <ul class="list-group">
-          <li class="">
-            <div class="card-body">
-              <h5 class="card-title">{{ item.title }}</h5>
-              <p class="card-text">{{ item.description }}</p>
-              <button type="button" class="btn btn-danger eventDeleteButton " (click)="delete(item.id!)">Verwijderen</button>
-            </div>
-          </li>
-        </ul>
-        <div class="expand-item" onclick="location.href='';" style="cursor: pointer;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-            class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-              d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z" />
-          </svg>
+    <ng-container *ngIf="events">
+      <div class="col-md-12" *ngFor="let item of events" style="display: block">
+        <div class=" rounded card">
+          <ul class="list-group">
+            <li class="">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.description }}</p>
+                <button type="button" class="btn btn-danger eventDeleteButton "
+                  (click)="delete(item.id!)">Delete</button>
+              </div>
+            </li>
+          </ul>
+          <div class="expand-item" onclick="location.href='';" style="cursor: pointer;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+              class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z" />
+            </svg>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+
   </div>
 </div>
