@@ -10,11 +10,20 @@ import { Event } from '../event.interface';
 })
 export class ListeventsComponent implements OnInit {
   searchValue: string = '';
-  events: Event[] = [];
+  events: Event[] | null = [];
 
   constructor(private SearchService: SearchService, private EventService: EventService) {}
 
   ngOnInit(): void {
+    this.getEvents();
+  }
+
+  search(value: any) {
+    this.SearchService.search(this.searchValue);
+  }
+
+  getEvents() {
+    this.events = null;
     this.EventService.getEvents().subscribe((response: any[]) => {
       this.events = response;
       for (let i = 0; i < this.events.length; i++) {
@@ -25,8 +34,8 @@ export class ListeventsComponent implements OnInit {
     });
   }
 
-  search(value: any) {
-    console.log('reached component', value);
-    this.SearchService.search(this.searchValue);
+  delete(id: number) {
+    this.EventService.deleteEvent(id);
+    this.getEvents();
   }
 }
