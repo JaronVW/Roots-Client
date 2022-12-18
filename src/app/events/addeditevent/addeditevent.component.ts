@@ -91,11 +91,13 @@ export class AddediteventComponent implements OnInit {
   }
 
   updateEvent() {
-    if (this.eventid != null)
+    if (this.eventid != null) {
+      if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
       this.EventService.updateEvent(this.eventid, this.event).subscribe((response: Event) => {
         this.router.navigate(['/events']);
         console.log(response);
       });
+    }
   }
 
   setError(error: boolean, errorMessage: string) {
