@@ -4,11 +4,16 @@
   </div>
   <form>
     <div class="row">
+      <div class="col-md-12">
+        <div *ngIf="error" class="alert alert-danger" role="alert">
+          {{ errorMessage }}
+        </div>
+      </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="title">Title:</label>
           <input
-            [(ngModel)]="title"
+            [(ngModel)]="event.title"
             name="title"
             type="text"
             class="form-control"
@@ -20,22 +25,24 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="date">Date:</label>
+          <label for="dateOfEvent">Date:</label>
           <input
-            [(ngModel)]="date"
-            name="date"
+            [ngModel]="event.dateOfEvent | date : 'yyyy-MM-dd'"
+            (ngModelChange)="event.dateOfEvent = $event"
+            name="dateOfEvent"
             type="date"
             class="form-control"
-            id="date"
+            id="dateOfEvent"
+            [value]="event.dateOfEvent | date : 'yyyy-MM-dd'"
             aria-describedby="dateHelp"
           />
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="date">Description:</label>
+          <label for="description">Description:</label>
           <textarea
-            [(ngModel)]="description"
+            [(ngModel)]="event.description"
             name="description"
             type="description"
             class="form-control"
@@ -46,50 +53,36 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="tags">Add tag:</label>
-          <select class="form-select" aria-label="select-picker">
-            <option selected>Choose a tag...</option>
-            <option value="1">Administration</option>
-            <option value="2">Finances</option>
-            <option value="3">Work culture</option>
-          </select>
+          <label for="tags">Add tags:</label>
+          <div class="form-tags">
+            <ng-multiselect-dropdown
+              [settings]="dropdownSettings"
+              [data]="dropdownList"
+              [(ngModel)]="event.tags"
+              [required]="error"
+              name="tags"
+              id="tags"
+            >
+            </ng-multiselect-dropdown>
+          </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 mb-3">
         <div class="form-group">
           <label for="file">Add file:</label>
-          <input
-            type="file"
-            class="form-control"
-            id="file"
-            aria-describedby="fileHelp"
-          />
+          <input type="file" class="form-control" id="file" multiple aria-describedby="fileHelp" />
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
+            <li class="list-group-item" *ngFor="let tag of event.tags">{{ tag.subject }}</li>
           </ul>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
             <li class="list-group-item">Cras justo odio</li>
             <li class="list-group-item">Dapibus ac facilisis in</li>
             <li class="list-group-item">Morbi leo risus</li>
@@ -102,22 +95,24 @@
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="terms" />
           <label class="form-check-label" for="terms"
-            >I agree with the <a href="">terms and conditions</a>.</label
+            >I understand this new event <span class="text-danger">can only be deleted by admins</span>.</label
           >
         </div>
       </div>
       <div class="col-md-6">
-        <button
-          type="submit"
-          class="btn btn-primary"
-          (click)="backClicked()"
-        >
-          Back
-        </button>
-        <button type="submit" class="btn btn-primary" (click)="createEvent()">
-          Create
-        </button>
+        <button type="submit" class="btn btn-primary" (click)="backClicked()">Back</button>
+        <button type="submit" class="btn btn-primary" (click)="validate()">{{ buttonText }}</button>
       </div>
     </div>
   </form>
 </div>
+<script>
+  $(document).ready(function () {
+    $('#tags').multiselect({
+      nonSelectedText: 'Select Framework',
+      enableFiltering: true,
+      enableCaseInsensitiveFiltering: true,
+      buttonWidth: '400px',
+    });
+  });
+</script>
