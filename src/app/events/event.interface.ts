@@ -2,7 +2,7 @@ export interface Event {
   title: string;
   description: string;
   dateOfEvent?: string;
-  tags?: Tag[];
+  tags: Tag[];
   files?: string[];
   userId?: string;
 
@@ -12,5 +12,6 @@ export interface Event {
 }
 
 export interface Tag {
+  id?: number;
   subject: string;
 }

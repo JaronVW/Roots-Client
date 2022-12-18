@@ -11,7 +11,6 @@ import { Location } from '@angular/common';
 })
 export class AddediteventComponent implements OnInit {
   dropdownList: any = [];
-  selectedItems: any = [];
   dropdownSettings = {};
   error: boolean = false;
   errorMessage: string = '';
@@ -50,17 +49,14 @@ export class AddediteventComponent implements OnInit {
 
     if (this.isEditing) this.buttonText = 'Update';
 
-    this.dropdownList = [
-      { item_id: 1, item_text: 'Finances' },
-      { item_id: 2, item_text: 'Relocation' },
-      { item_id: 3, item_text: 'Work culture' },
-    ];
-    this.selectedItems = [];
+    this.EventService.getTags().subscribe((response: any[]) => {
+      this.dropdownList = response.map((tag: Tag) => ({ ...tag }));
+    });
 
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: 'id',
+      textField: 'subject',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 5,
@@ -69,10 +65,10 @@ export class AddediteventComponent implements OnInit {
   }
 
   validate() {
-    if (this.selectedItems.length <= 0) this.setError(true, 'You must select at least 1 tag.');
+    if (this.event.tags && this.event.tags?.length <= 0) this.setError(true, 'You must select at least 1 tag.');
     if (this.event.description == '') this.setError(true, 'Description can not be empty.');
     if (this.event.title == '') this.setError(true, 'Title can not be empty.');
-    if (this.event.title != '' && this.event.description != '' && this.selectedItems.length > 0) {
+    if (this.event.title != '' && this.event.description != '' && this.event.tags.length > 0) {
       this.setError(false, '');
       if (this.isEditing) {
         this.updateEvent();
@@ -87,9 +83,6 @@ export class AddediteventComponent implements OnInit {
     if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
     const data = {
       ...this.event,
-      tags: this.selectedItems.map((item: any) => {
-        return { subject: item.item_text };
-      }),
     };
     this.EventService.addEvent(data).subscribe((response: Event) => {
       this.router.navigate(['/events']);
@@ -108,42 +101,6 @@ export class AddediteventComponent implements OnInit {
   setError(error: boolean, errorMessage: string) {
     this.error = error;
     this.errorMessage = errorMessage;
-  }
-
-  onItemSelect(item: any) {
-    //Do something if required
-    console.log(item);
-    this.addToSelectedItems(item);
-    console.log(this.selectedItems);
-  }
-  onSelectAll(items: any) {
-    //Do something if required
-    console.log(items);
-    this.addToSelectedItems(items);
-    console.log(this.selectedItems);
-  }
-
-  addToSelectedItems(items: any) {
-    if (Array.isArray(items)) {
-      for (let i = 0; i < items.length; i++) {
-        this.selectedItems.push(items[i]);
-      }
-    } else {
-      this.selectedItems.push(items);
-    }
-  }
-
-  onDeSelect(items: any) {
-    if (Array.isArray(items)) {
-      this.selectedItems.splice(0);
-    } else {
-      for (let i = 0; i < this.selectedItems.length; i++) {
-        if (this.selectedItems[i].item_text == items.item_text) {
-          this.selectedItems.splice(i, 1);
-          break;
-        }
-      }
-    }
   }
 
   backClicked() {

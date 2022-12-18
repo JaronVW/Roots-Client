@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
-import { Event } from './event.interface';
+import { Event, Tag } from './event.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,10 @@ export class EventService {
 
   getEvent(id: string): Observable<any> {
     return this.http.get<Event>(`events/${id}`).pipe(map((body: Event) => body));
+  }
+
+  getTags(): Observable<Tag[]> {
+    return this.http.get<Tag[]>('tags');
   }
 
   updateEvent(id: string, event: Event): Observable<Event> {
