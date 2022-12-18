@@ -24,7 +24,7 @@ export class AddediteventComponent implements OnInit {
     description: '',
     dateOfEvent: new Date().toISOString(),
     // userId: 'test',
-    tags: [{ subject: '' }],
+    tags: [],
     // customtags ['test', 'test2'],
     // multiMedia: ['test', 'test2'],
   };
@@ -57,15 +57,15 @@ export class AddediteventComponent implements OnInit {
       singleSelection: false,
       idField: 'id',
       textField: 'subject',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      selectAllText: 'select all',
+      unSelectAllText: 'deselect all',
       itemsShowLimit: 5,
       allowSearchFilter: true,
     };
   }
 
   validate() {
-    if (this.event.tags && this.event.tags?.length <= 0) this.setError(true, 'You must select at least 1 tag.');
+    if (this.event.tags.length <= 0) this.setError(true, 'You must select at least 1 tag.');
     if (this.event.description == '') this.setError(true, 'Description can not be empty.');
     if (this.event.title == '') this.setError(true, 'Title can not be empty.');
     if (this.event.title != '' && this.event.description != '' && this.event.tags.length > 0) {
@@ -91,11 +91,13 @@ export class AddediteventComponent implements OnInit {
   }
 
   updateEvent() {
-    if (this.eventid != null)
+    if (this.eventid != null) {
+      if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
       this.EventService.updateEvent(this.eventid, this.event).subscribe((response: Event) => {
         this.router.navigate(['/events']);
         console.log(response);
       });
+    }
   }
 
   setError(error: boolean, errorMessage: string) {
