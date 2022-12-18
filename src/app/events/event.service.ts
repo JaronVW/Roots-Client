@@ -19,7 +19,9 @@ export class EventService {
   }
 
   getEvents(): Observable<Array<Event>> {
-    return this.http.get<EventResponse>('events').pipe(map((body: EventResponse) => body.results));
+    console.log('getEvents() in event.service.ts');
+    console.log('this.http.get<Array<Event>>: ', this.http.get<Array<Event>>('events'));
+    return this.http.get<Array<Event>>('events');
   }
 
   getEvent(id: string): Observable<any> {

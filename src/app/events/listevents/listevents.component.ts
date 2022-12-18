@@ -10,15 +10,15 @@ import { Event } from '../event.interface';
 })
 export class ListeventsComponent implements OnInit {
   searchValue: string = '';
-  events: Array<Event> = new Array<Event>;
+  events: Event[] = [];
 
   constructor(private SearchService: SearchService, private EventService: EventService) {}
 
   ngOnInit(): void {
-    this.EventService.getEvents().subscribe((response) => {
+    this.EventService.getEvents().subscribe((response: any[]) => {
       this.events = response;
+      console.log(this.events);
     });
-    console.log(this.events);
   }
 
   search(value: any) {
