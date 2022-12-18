@@ -57,15 +57,15 @@ export class AddediteventComponent implements OnInit {
       singleSelection: false,
       idField: 'id',
       textField: 'subject',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      selectAllText: 'select all',
+      unSelectAllText: 'deselect all',
       itemsShowLimit: 5,
       allowSearchFilter: true,
     };
   }
 
   validate() {
-    if (this.event.tags && this.event.tags?.length <= 0) this.setError(true, 'You must select at least 1 tag.');
+    if (this.event.tags.length <= 0) this.setError(true, 'You must select at least 1 tag.');
     if (this.event.description == '') this.setError(true, 'Description can not be empty.');
     if (this.event.title == '') this.setError(true, 'Title can not be empty.');
     if (this.event.title != '' && this.event.description != '' && this.event.tags.length > 0) {

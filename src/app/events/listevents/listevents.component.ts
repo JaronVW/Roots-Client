@@ -26,7 +26,11 @@ export class ListeventsComponent implements OnInit {
     this.events = null;
     this.EventService.getEvents().subscribe((response: any[]) => {
       this.events = response;
-      console.log(response);
+      for (let i = 0; i < this.events.length; i++) {
+        if (this.events[i].dateOfEvent)
+          this.events[i].dateOfEvent = new Date(this.events[i].dateOfEvent!).toDateString();
+      }
+      console.log(this.events);
     });
   }
 
