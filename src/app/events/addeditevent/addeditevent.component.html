@@ -25,22 +25,22 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="date">Date:</label>
+          <label for="dateOfEvent">Date:</label>
           <input
-            [ngModel]="event.dateOfEvent | date:'yyyy-MM-dd'"
+            [ngModel]="event.dateOfEvent | date : 'yyyy-MM-dd'"
             (ngModelChange)="event.dateOfEvent = $event"
-            name="date"
+            name="dateOfEvent"
             type="date"
             class="form-control"
-            id="date"
-            [value]="event.dateOfEvent | date:'yyyy-MM-dd'"
+            id="dateOfEvent"
+            [value]="event.dateOfEvent | date : 'yyyy-MM-dd'"
             aria-describedby="dateHelp"
           />
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="date">Description:</label>
+          <label for="description">Description:</label>
           <textarea
             [(ngModel)]="event.description"
             name="description"
@@ -97,7 +97,9 @@
       <div class="col-md-12">
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="terms" />
-          <label class="form-check-label" for="terms">I understand this new event <span class="text-danger">can only be deleted by admins</span>.</label>
+          <label class="form-check-label" for="terms"
+            >I understand this new event <span class="text-danger">can only be deleted by admins</span>.</label
+          >
         </div>
       </div>
       <div class="col-md-6">

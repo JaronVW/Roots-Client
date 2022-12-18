@@ -83,9 +83,13 @@ export class AddediteventComponent implements OnInit {
   }
 
   createEvent() {
+    console.log(this.event);
+    if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
     const data = {
-      title: this.event.title,
-      description: this.event.description,
+      ...this.event,
+      tags: this.selectedItems.map((item: any) => {
+        return { subject: item.item_text };
+      }),
     };
     this.EventService.addEvent(data).subscribe((response: Event) => {
       this.router.navigate(['/events']);
