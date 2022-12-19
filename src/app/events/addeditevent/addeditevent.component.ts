@@ -57,8 +57,6 @@ export class AddediteventComponent implements OnInit {
       singleSelection: false,
       idField: 'id',
       textField: 'subject',
-      selectAllText: 'select all',
-      unSelectAllText: 'deselect all',
       itemsShowLimit: 5,
       allowSearchFilter: true,
     };
