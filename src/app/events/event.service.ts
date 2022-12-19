@@ -38,7 +38,7 @@ export class EventService {
   }
 
   deleteEvent(id: number) {
-    return this.http.delete(`events/${id}`).subscribe();
+    return this.http.delete(`events/${id}`);
   }
 }
 

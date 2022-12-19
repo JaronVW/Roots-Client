@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../../search/search.service';
 import { EventService } from '../event.service';
 import { Event } from '../event.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listevents',
@@ -12,7 +13,7 @@ export class ListeventsComponent implements OnInit {
   searchValue: string = '';
   events: Event[] | null = [];
 
-  constructor(private SearchService: SearchService, private EventService: EventService) {}
+  constructor(private router: Router, private SearchService: SearchService, private EventService: EventService) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -35,7 +36,7 @@ export class ListeventsComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.EventService.deleteEvent(id);
+    this.EventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
     this.getEvents();
   }
 }
