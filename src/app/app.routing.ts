@@ -3,6 +3,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 import { AddediteventComponent } from './events/addeditevent/addeditevent.component';
+import { ArchiveComponent } from './events/archive/archive.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'events', pathMatch: 'full' },
@@ -11,4 +12,5 @@ export const routes: Routes = [
   { path: 'events', component: ListeventsComponent },
   { path: 'events/create', component: AddediteventComponent },
   { path: 'events/edit/:id', component: AddediteventComponent },
+  { path: 'events/archive', component: ArchiveComponent },
 ];

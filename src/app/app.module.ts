@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 import { TokenInterceptor } from '../../token.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ArchiveComponent } from './events/archive/archive.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     AddediteventComponent,
     ListeventsComponent,
+    ArchiveComponent,
   ],
   imports: [
     BrowserModule,
