@@ -11,7 +11,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="title">Title:</label>
+          <label for="title">Titel:</label>
           <input
             [(ngModel)]="event.title"
             name="title"
@@ -19,13 +19,13 @@
             class="form-control"
             id="title"
             aria-describedby="titleHelp"
-            placeholder="Enter title..."
+            placeholder="Titel typen..."
           />
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="dateOfEvent">Date:</label>
+          <label for="dateOfEvent">Datum:</label>
           <input
             [ngModel]="event.dateOfEvent | date : 'yyyy-MM-dd'"
             (ngModelChange)="event.dateOfEvent = $event"
@@ -35,12 +35,13 @@
             id="dateOfEvent"
             [value]="event.dateOfEvent | date : 'yyyy-MM-dd'"
             aria-describedby="dateHelp"
+            lang="fr-CA"
           />
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="description">Description:</label>
+          <label for="description">Beschrijving:</label>
           <textarea
             [(ngModel)]="event.description"
             name="description"
@@ -48,12 +49,13 @@
             class="form-control"
             id="description"
             aria-describedby="descriptionHelp"
+            placeholder="Beschrijving typen..."
           ></textarea>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="tags">Add tags:</label>
+          <label for="tags">Tags toevoegen:</label>
           <div class="form-tags">
             <ng-multiselect-dropdown
               [settings]="dropdownSettings"
@@ -62,6 +64,7 @@
               [required]="error"
               name="tags"
               id="tags"
+              placeholder="Selecteren"
             >
             </ng-multiselect-dropdown>
           </div>
@@ -69,8 +72,9 @@
       </div>
       <div class="col-md-6 mb-3">
         <div class="form-group">
-          <label for="file">Add file:</label>
-          <input type="file" class="form-control" id="file" multiple aria-describedby="fileHelp" />
+          <label for="file"></label>
+          Bestand toevoegen:
+          <input type="file" class="form-control" id="file" multiple aria-describedby="fileHelp" name="Image" />
         </div>
       </div>
       <div class="col-md-6">
@@ -91,16 +95,8 @@
           </ul>
         </div>
       </div>
-      <div class="col-md-12">
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="terms" />
-          <label class="form-check-label" for="terms"
-            >I understand this new event <span class="text-danger">can only be deleted by admins</span>.</label
-          >
-        </div>
-      </div>
       <div class="col-md-6">
-        <button type="submit" class="btn btn-primary" (click)="backClicked()">Back</button>
+        <button type="submit" class="btn btn-primary" (click)="backClicked()">Terug</button>
         <button type="submit" class="btn btn-primary" (click)="validate()">{{ buttonText }}</button>
       </div>
     </div>
