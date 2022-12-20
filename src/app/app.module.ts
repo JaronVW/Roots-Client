@@ -11,9 +11,7 @@ import { RegisterComponent } from './authentication/register/register.component'
 import { routes } from './app.routing';
 import { AddediteventComponent } from './events/addeditevent/addeditevent.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SearchComponent } from './search/search.component';
 import { FormsModule } from '@angular/forms';
-import { SearchService } from './search/search.service';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 import { TokenInterceptor } from '../../token.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -25,7 +23,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     FooterComponent,
     LoginComponent,
     RegisterComponent,
-    SearchComponent,
     AddediteventComponent,
     ListeventsComponent,
   ],
@@ -37,10 +34,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
-  ],
-  providers: [
-    SearchService,
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

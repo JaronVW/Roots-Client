@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchService } from '../../search/search.service';
 import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
@@ -13,15 +12,13 @@ export class ListeventsComponent implements OnInit {
   searchValue: string = '';
   events: Event[] | null = [];
 
-  constructor(private router: Router, private SearchService: SearchService, private EventService: EventService) {}
+  constructor(private router: Router, private EventService: EventService) {}
 
   ngOnInit(): void {
     this.getEvents();
   }
 
-  search(value: any) {
-    this.SearchService.search(this.searchValue);
-  }
+  search(value: any) {}
 
   getEvents() {
     this.events = null;
