@@ -5,12 +5,8 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
@@ -26,10 +22,18 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Roots-Client');
   });
 
-  it('should render title', () => {
+  // it('should render title', () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   fixture.detectChanges();
+  //   const compiled = fixture.nativeElement as HTMLElement;
+  //   console.log(compiled.querySelector('.content span')?.textContent);
+  //   expect(compiled.querySelector('.content span')?.textContent).toContain('Roots-Client app is running!');
+  // });
+
+  it('should display navbar', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('Roots-Client app is running!');
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('app-navbar')).toBeTruthy();
   });
 });
