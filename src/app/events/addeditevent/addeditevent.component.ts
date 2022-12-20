@@ -15,7 +15,7 @@ export class AddediteventComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = '';
   isFirstVisit: boolean = true;
-  buttonText: string = 'Create';
+  buttonText: string = 'Aanmaken';
   eventid: string | null = '';
   isEditing: boolean = false;
 
