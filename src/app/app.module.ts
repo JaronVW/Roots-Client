@@ -17,6 +17,10 @@ import { SearchService } from './search/search.service';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 import { TokenInterceptor } from '../../token.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddtagDialogComponent } from './events/addeditevent/addtag-dialog/addtag-dialog.component';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +32,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     SearchComponent,
     AddediteventComponent,
     ListeventsComponent,
+    AddtagDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -37,10 +43,13 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [
     SearchService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    {provide: MatDialogRef, useValue: {}},
   ],
   bootstrap: [AppComponent],
 })
