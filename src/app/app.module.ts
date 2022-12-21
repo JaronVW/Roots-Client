@@ -15,7 +15,11 @@ import { FormsModule } from '@angular/forms';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 import { TokenInterceptor } from '../../token.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddtagDialogComponent } from './events/addeditevent/addtag-dialog/addtag-dialog.component';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { ArchiveComponent } from './events/archive/archive.component';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +30,8 @@ import { ArchiveComponent } from './events/archive/archive.component';
     RegisterComponent,
     AddediteventComponent,
     ListeventsComponent,
+    AddtagDialogComponent,
+
     ArchiveComponent,
   ],
   imports: [
@@ -36,8 +42,13 @@ import { ArchiveComponent } from './events/archive/archive.component';
     FormsModule,
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    {provide: MatDialogRef, useValue: {}},
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

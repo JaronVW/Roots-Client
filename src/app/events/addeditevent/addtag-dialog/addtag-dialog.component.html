@@ -1,0 +1,29 @@
+<div class="form-group">
+  <h3>Een tag zelf toevoegen?</h3>
+
+  <div class="col-md-12">
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <label for="title" style="padding-bottom: 3px">Tag:</label>
+  <input
+    [(ngModel)]="newTag!.subject"
+    name="Tag"
+    type="text"
+    class="form-control"
+    id="title"
+    aria-describedby="titleHelp"
+    placeholder="Enter Tag..."
+    required
+    [minlength]="3"
+  />
+</div>
+
+
+
+<div style="padding-top: 8px">
+  <button type="submit" class="btn btn-primary" (click)="closeDialog()">Terug</button>
+  <button type="submit" class="btn btn-primary" style="margin-left: 8px" (click)="validate()">Aanmaken</button>
+</div>

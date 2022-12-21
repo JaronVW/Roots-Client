@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event, Tag } from '../event.interface';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import {AddtagDialogComponent} from "./addtag-dialog/addtag-dialog.component";
 
 @Component({
   selector: 'app-addevent',
@@ -34,6 +36,7 @@ export class AddediteventComponent implements OnInit {
     private EventService: EventService,
     private _location: Location,
     private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -59,6 +62,7 @@ export class AddediteventComponent implements OnInit {
       textField: 'subject',
       itemsShowLimit: 5,
       allowSearchFilter: true,
+      enableCheckAll: false,
     };
   }
 
@@ -105,5 +109,22 @@ export class AddediteventComponent implements OnInit {
 
   backClicked() {
     this._location.back();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(AddtagDialogComponent, {
+      width: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result != undefined) {
+        this.dropdownList.push({id: this.dropdownList.length + 1, subject: result});
+        this.event.tags = [...this.event.tags, result];
+
+
+        console.log('event tags:', this.event.tags);
+      }
+    });
   }
 }
