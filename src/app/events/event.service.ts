@@ -18,7 +18,6 @@ export class EventService {
   }
 
   getEvents(): Observable<Array<Event>> {
-    console.log(this.http.get<Array<Event>>('events'));
     return this.http.get<Array<Event>>('events');
   }
 

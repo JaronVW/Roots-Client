@@ -15,7 +15,6 @@ describe('ListeventsComponent', () => {
       imports: [HttpClientModule],
     }).compileComponents();
 
-    console.log('component');
     fixture = TestBed.createComponent(ListeventsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -37,6 +37,7 @@ import { ArchiveComponent } from './events/archive/archive.component';
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
