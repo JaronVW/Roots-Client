@@ -71,3 +71,65 @@ button {
   background-color: #fff;
   transition: 0.6s ease;
 }
+
+.small-expand-item {
+  border: 2px solid transparent;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+  background-color: #f3f3f4;
+  text-align: left;
+  position: absolute;
+  margin-left: -58px;;
+  top: 0;
+}
+
+.disable-rounded-top-left {
+  border-top-left-radius: 0!important;
+}
+
+
+
+.small-expand-item:hover {
+  background-color: #fff;
+  transition: 0.6s ease;
+}
+
+.example-accordion-item-body{
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+}
+
+.more-options{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
+}
+
+.tags{
+  float: left;
+}
+
+.info{
+  float: right;
+}
+.badge{
+  margin: 0.2rem 0;
+  border-radius: 0.2rem;
+  background-color: #202049;
+  float: left;
+  margin-left: 10px;
+}
+
+.dateOfEvent{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0.5rem;
+  text-align: end;
+
+  font-style: oblique;
+  font-weight: lighter;
+}
+
+
+
