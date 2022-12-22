@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event, Tag } from '../event.interface';
@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./addeditevent.component.css'],
 })
 export class AddediteventComponent implements OnInit {
-  dropdownList: any = [];
+  tagsList: any = [];
   dropdownSettings = {};
   error: boolean = false;
   errorMessage: string = '';
@@ -50,7 +50,7 @@ export class AddediteventComponent implements OnInit {
     if (this.isEditing) this.buttonText = 'Update';
 
     this.EventService.getTags().subscribe((response: any[]) => {
-      this.dropdownList = response.map((tag: Tag) => ({ ...tag }));
+      this.tagsList = response.map((tag: Tag) => ({ ...tag }));
     });
 
     this.dropdownSettings = {
@@ -105,5 +105,28 @@ export class AddediteventComponent implements OnInit {
 
   backClicked() {
     this._location.back();
+  }
+
+  tags = ['hallo', 'doei', 'good', 'bye'];
+
+  title = '';
+
+  onTitleChanged() {
+    const wordsInTitle = this.title
+      .replace(/[^a-z ]/gi, '')
+      .toLowerCase()
+      .split(' ');
+    this.compareTitleAndTags(wordsInTitle, this.tags);
+  }
+
+  compareTitleAndTags(wordsInTitle: String[], tags: String[]) {
+    for (var i = 0; i < wordsInTitle.length; i++) {
+      for (var j = 0; j < tags.length; i++) {
+        // if (this.tags[i] == wordsInTitle[j]) {
+        //   tagsInTitle.push(this.tags[i]);
+        // }
+        console.log(wordsInTitle[i]);
+      }
+    }
   }
 }
