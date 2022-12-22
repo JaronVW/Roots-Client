@@ -21,11 +21,11 @@ describe('AddeventComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  xit('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('form invalid when empty', fakeAsync(() => {
+  xit('form invalid when empty', fakeAsync(() => {
     spyOn(component, 'validate');
 
     let button = fixture.debugElement.nativeElement.querySelector('.submitButton');
