@@ -5,6 +5,7 @@ import { EventService } from '../event.service';
 import { ListeventsComponent } from './listevents.component';
 
 describe('ListeventsComponent', () => {
+  //debuging over here
   let component: ListeventsComponent;
   let fixture: ComponentFixture<ListeventsComponent>;
   let service = EventService;

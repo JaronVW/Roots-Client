@@ -28,13 +28,9 @@ describe('AddeventComponent', () => {
   it('form invalid when empty', fakeAsync(() => {
     spyOn(component, 'validate');
 
-    let button = fixture.debugElement.query(By.css('.submitButton'));
-    console.log(button);
-    button.triggerEventHandler('click', null);
-
+    let button = fixture.debugElement.nativeElement.querySelector('.submitButton');
+    button.click();
     tick();
-    fixture.whenStable().then(() => {
-      expect(component.validate).toHaveBeenCalled();
-    });
+    expect(component.validate).toHaveBeenCalled();
   }));
 });
