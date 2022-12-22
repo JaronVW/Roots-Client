@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 describe('Router: App', () => {
   let location: Location;
   let router: Router;
-  let fixture;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,10 +17,9 @@ describe('Router: App', () => {
       declarations: [ListeventsComponent],
     });
 
-    router = TestBed.get(Router);
-    location = TestBed.get(Location);
+    router = TestBed.inject(Router);
+    location = TestBed.inject(Location);
 
-    fixture = TestBed.createComponent(AppComponent);
     router.initialNavigation();
   });
 
