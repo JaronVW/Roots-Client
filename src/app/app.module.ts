@@ -19,6 +19,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddtagDialogComponent } from './events/addeditevent/addtag-dialog/addtag-dialog.component';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { ArchiveComponent } from './events/archive/archive.component';
+import {CdkAccordionModule} from "@angular/cdk/accordion";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -43,7 +46,10 @@ import { ArchiveComponent } from './events/archive/archive.component';
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    CdkAccordionModule,
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
