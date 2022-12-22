@@ -57,7 +57,7 @@
       </div>
       <div class="col-md-5">
         <div class="form-group">
-          <label for="tags">Tags toevoegen:</label>
+          <!-- <label for="tags">Tags toevoegen:</label>
           <div class="form-tags">
             <ng-multiselect-dropdown
               [settings]="dropdownSettings"
@@ -66,10 +66,10 @@
               [required]="error"
               name="tags"
               id="tags"
-              placeholder="Selecteren"
+              placeholder="Selecteren"x
             >
             </ng-multiselect-dropdown>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-md-1">
@@ -102,7 +102,7 @@
       </div>
       <div class="col-md-6">
         <button type="submit" class="btn btn-primary" (click)="backClicked()">Terug</button>
-        <button type="submit" class="btn btn-primary" (click)="validate()">{{ buttonText }}</button>
+        <button type="submit" class="btn btn-primary submitButton" (click)="validate()">{{ buttonText }}</button>
       </div>
     </div>
   </form>

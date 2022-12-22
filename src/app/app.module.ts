@@ -55,6 +55,7 @@ import {MatButtonModule} from "@angular/material/button";
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {provide: MatDialogRef, useValue: {}},
   ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

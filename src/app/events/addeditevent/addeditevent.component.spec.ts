@@ -1,4 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AddediteventComponent } from './addeditevent.component';
 
@@ -9,6 +13,7 @@ describe('AddeventComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AddediteventComponent],
+      imports: [HttpClientModule, RouterTestingModule, ReactiveFormsModule, FormsModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AddediteventComponent);
@@ -19,4 +24,13 @@ describe('AddeventComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('form invalid when empty', fakeAsync(() => {
+    spyOn(component, 'validate');
+
+    let button = fixture.debugElement.nativeElement.querySelector('.submitButton');
+    button.click();
+    tick();
+    expect(component.validate).toHaveBeenCalled();
+  }));
 });
