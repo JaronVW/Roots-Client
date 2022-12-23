@@ -107,7 +107,7 @@ export class AddediteventComponent implements OnInit {
     this._location.back();
   }
 
-  tags = ['hallo', 'doei', 'good', 'bye'];
+  tags = ['hallo', 'doei', 'good', 'bye', 'hoi', 'hier'];
 
   title = '';
 
@@ -116,17 +116,19 @@ export class AddediteventComponent implements OnInit {
       .replace(/[^a-z ]/gi, '')
       .toLowerCase()
       .split(' ');
-    this.compareTitleAndTags(wordsInTitle, this.tags);
+    console.log(wordsInTitle);
+    const tags = this.compareTitleAndTags(wordsInTitle, this.tags);
   }
 
   compareTitleAndTags(wordsInTitle: String[], tags: String[]) {
+    const tagsInTitle = [];
     for (var i = 0; i < wordsInTitle.length; i++) {
-      for (var j = 0; j < tags.length; i++) {
-        // if (this.tags[i] == wordsInTitle[j]) {
-        //   tagsInTitle.push(this.tags[i]);
-        // }
-        console.log(wordsInTitle[i]);
+      for (var j = 0; j < tags.length; j++) {
+        if (this.tags[i] == wordsInTitle[j]) {
+          tagsInTitle.push(this.tags[i]);
+        }
       }
     }
+    return tagsInTitle;
   }
 }
