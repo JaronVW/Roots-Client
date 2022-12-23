@@ -31,7 +31,7 @@
                             [attr.aria-controls]="'accordion-body-' + index">
           <div class="rounded card" [ngClass]="{'disable-rounded-top-left': accordionItem.expanded}">
 
-            <ul class="list-group">
+            <ul class="list-group" style="cursor: default;">
               <li class="">
                 <div class="card-body" *ngIf="!accordionItem.expanded">
                   <!--                  Card field content-->
