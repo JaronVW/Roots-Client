@@ -1,57 +1,62 @@
 button {
-    margin-top: 10px;
-    margin-right: 10px;
-    width: 45%;
+  margin-top: 10px;
+  margin-right: 10px;
+  width: 45%;
 }
 
-.form-check, .form-group {
-    padding-top: 10px;
+.form-check,
+.form-group {
+  padding-top: 10px;
 }
 
 h1 {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 textarea {
-    height: 111px;
+  height: 111px;
 }
 
 .list-group-flush {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    height: 160px;
-    overflow: hidden;
-    overflow-y: scroll;
-    background-color: white;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  height: 160px;
+  overflow: hidden;
+  overflow-y: scroll;
+  background-color: white;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .validField {
-    border: 2px solid green;
-    display: block;
+  border: 2px solid green;
+  display: block;
 }
 
 .invalidField {
-    border: 2px solid red;
-    display: block;
+  border: 2px solid red;
+  display: block;
 }
 
 ::ng-deep .multiselect-dropdown .dropdown-btn {
-    width: -webkit-fill-available !important;
+  width: -webkit-fill-available !important;
 }
 
 ::ng-deep .multiselect-dropdown .dropdown-btn:focus {
-    outline: none !important
+  outline: none !important;
 }
 
 .form-tags {
-    background-color: white;
-    border-radius: 5px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.material-icons:hover {
+  cursor: pointer;
 }
