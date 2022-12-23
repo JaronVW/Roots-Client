@@ -13,7 +13,7 @@ export class ListeventsComponent implements OnInit {
   events: Event[] | null = [];
   hasSearched: boolean = false;
 
-  constructor(private router: Router, private EventService: EventService) {}
+  constructor(private router: Router, private eventService: EventService) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -30,9 +30,14 @@ export class ListeventsComponent implements OnInit {
     this.hasSearched = false;
   }
 
+  archive(id: number) {
+    this.eventService.archive(id).subscribe(() => {});
+    this.getEvents();
+  }
+
   getEvents(searchQuery?: string) {
     this.events = null;
-    this.EventService.getEvents(undefined, undefined, undefined, searchQuery).subscribe((response: any[]) => {
+    this.eventService.getEvents(undefined, undefined, undefined, searchQuery).subscribe((response: any[]) => {
       this.events = response;
       for (const element of this.events) {
         if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
@@ -42,7 +47,7 @@ export class ListeventsComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.EventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
+    this.eventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
     this.getEvents();
   }
 }

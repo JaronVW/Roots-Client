@@ -133,7 +133,7 @@
                 <i class="material-icons" [matMenuTriggerFor]="menu">&#xe5d4;</i>
                 <mat-menu #menu="matMenu">
                   <button mat-menu-item [routerLink]="['edit', item.id]">Wijzigen</button>
-                  <button mat-menu-item (click)="delete(item.id!)">Archiveren</button>
+                  <button mat-menu-item (click)="archive(item.id!)">Archiveren</button>
                 </mat-menu>
               </div>
               <div class="dateOfEvent">
