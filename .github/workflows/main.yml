@@ -1,0 +1,27 @@
+name: Roots API CI
+
+on:
+  push:
+    branches: ['main', 'development', 'feature-workflow']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+      - name: install npm dependencies
+        run: |
+          npm ci
+      - name: run tests
+        run: |
+          npm run test
