@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
