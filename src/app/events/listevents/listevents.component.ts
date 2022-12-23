@@ -50,7 +50,7 @@ export class ListeventsComponent implements OnInit {
 
   archive(id: number) {
     this.eventService.archive(id).subscribe(() => {});
-    this.getEvents();
+    this.router.navigate(['/events/archive']);
   }
 
   getEvents(searchQuery?: string) {
