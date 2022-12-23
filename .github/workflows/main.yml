@@ -1,4 +1,4 @@
-name: Roots API CI
+name: Roots Client CI
 
 on:
   push:
