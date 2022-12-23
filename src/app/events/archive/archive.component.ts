@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from '../event.service';
+import { Event } from '../event.interface';
+
 
 @Component({
   selector: 'app-archive',
@@ -6,11 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./archive.component.css'],
 })
 export class ArchiveComponent implements OnInit {
-  constructor() {
-    /* TODO document why this constructor is empty */
-  }
+  events: Event[] = [];
+  constructor(private readonly eventService: EventService) {}
 
   ngOnInit(): void {
-    /* TODO document why this method 'ngOnInit' is empty */
+    this.getEvents();
+  }
+
+  getEvents() {
+    this.eventService.getEvents().subscribe((response: any[]) => {
+      this.events = response;
+      for (const element of this.events) {
+        if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
+      }
+      console.log(this.events);
+    });
   }
 }
