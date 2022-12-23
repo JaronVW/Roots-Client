@@ -33,7 +33,7 @@ export class EventService {
     return this.http.get<Array<Event>>('events' + queryparams);
   }
 
-  getEvent(id: string): Observable<any> {
+  getEvent(id: number): Observable<any> {
     return this.http.get<Event>(`events/${id}`).pipe(map((body: Event) => body));
   }
 
@@ -41,7 +41,7 @@ export class EventService {
     return this.http.get<Tag[]>('tags');
   }
 
-  updateEvent(id: string, event: Event): Observable<Event> {
+  updateEvent(id: number, event: Event): Observable<Event> {
     return this.http
       .put<Event>(`events/${id}`, event)
       .pipe

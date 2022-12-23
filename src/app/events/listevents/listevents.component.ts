@@ -12,7 +12,12 @@ export class ListeventsComponent implements OnInit {
   _searchValue: string = '';
   events: Event[] | null = [];
   hasSearched: boolean = false;
-  data: any;
+  eventDetailsObject: Event = {
+    title: '',
+    description: '',
+    tags: []
+  };
+  loading: boolean = false;
 
   constructor(private router: Router, private eventService: EventService) {}
 
@@ -61,6 +66,23 @@ export class ListeventsComponent implements OnInit {
         if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
       }
       console.log(this.events);
+    });
+  }
+
+  clearDetails(){
+    this.eventDetailsObject = {
+      title: '',
+      description: '',
+      tags: []
+    };
+  }
+
+  getEventDetails(id: number) {
+    this.loading = true;
+    this.eventService.getEvent(id).subscribe((response: any) => {
+      this.eventDetailsObject = response;
+      console.log(this.eventDetailsObject);
+      this.loading = false;
     });
   }
 

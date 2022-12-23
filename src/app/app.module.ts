@@ -22,6 +22,7 @@ import { ArchiveComponent } from './events/archive/archive.component';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MatButtonModule } from '@angular/material/button';
     AddtagDialogComponent,
 
     ArchiveComponent,
+      LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@ export class AddediteventComponent implements OnInit {
   errorMessage: string = '';
   isFirstVisit: boolean = true;
   buttonText: string = 'Aanmaken';
-  eventid: string | null = '';
+  eventid: number | null =null;
   isEditing: boolean = false;
 
   event: Event = {
@@ -40,7 +40,7 @@ export class AddediteventComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.eventid = this.route.snapshot.paramMap.get('id');
+    this.eventid = Number(this.route.snapshot.paramMap.get('id'));
     if (this.eventid) {
       this.isEditing = true;
       this.EventService.getEvent(this.eventid).subscribe((response: Event) => {
