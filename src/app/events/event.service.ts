@@ -17,8 +17,13 @@ export class EventService {
     return this.http.post<Event>('events', event);
   }
 
-  getEvents(): Observable<Array<Event>> {
-    return this.http.get<Array<Event>>('events');
+  getEvents(min?: number, max?: number, order?: string, searchQuery?: string): Observable<Array<Event>> {
+    let queryparams = '?';
+    if (min) queryparams += `min=${min}&`;
+    if (max) queryparams += `max=${max}&`;
+    if (order) queryparams += `order=${order}&`;
+    if (searchQuery) queryparams += `searchQuery=${searchQuery}`;
+    return this.http.get<Array<Event>>('events' + queryparams);
   }
 
   getEvent(id: string): Observable<any> {
