@@ -21,7 +21,7 @@
     <ng-container *ngIf="events">
       <cdk-accordion class="example-accordion">
         <cdk-accordion-item class="example-accordion col-md-12" *ngFor="let item of events; let index = index;"
-                            style="display: block"
+                            style="display: block; cursor: default"
                             #accordionItem="cdkAccordionItem"
                             class="example-accordion-item"
                             role="button"
