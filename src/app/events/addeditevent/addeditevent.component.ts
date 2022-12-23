@@ -1,8 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event, Tag } from '../event.interface';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
 
 @Component({
   selector: 'app-addevent',
@@ -10,7 +12,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./addeditevent.component.css'],
 })
 export class AddediteventComponent implements OnInit {
-  tagsList: any = [];
+  dropdownList: any = [];
   dropdownSettings = {};
   error: boolean = false;
   errorMessage: string = '';
@@ -34,6 +36,7 @@ export class AddediteventComponent implements OnInit {
     private EventService: EventService,
     private _location: Location,
     private route: ActivatedRoute,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -50,7 +53,7 @@ export class AddediteventComponent implements OnInit {
     if (this.isEditing) this.buttonText = 'Update';
 
     this.EventService.getTags().subscribe((response: any[]) => {
-      this.tagsList = response.map((tag: Tag) => ({ ...tag }));
+      this.dropdownList = response.map((tag: Tag) => ({ ...tag }));
     });
 
     this.dropdownSettings = {
@@ -59,13 +62,23 @@ export class AddediteventComponent implements OnInit {
       textField: 'subject',
       itemsShowLimit: 5,
       allowSearchFilter: true,
+      enableCheckAll: false,
     };
   }
 
   validate() {
-    if (this.event.tags.length <= 0) this.setError(true, 'You must select at least 1 tag.');
-    if (this.event.description == '') this.setError(true, 'Description can not be empty.');
-    if (this.event.title == '') this.setError(true, 'Title can not be empty.');
+    if (this.event.tags.length <= 0) {
+      this.setError(true, 'You must select at least 1 tag.');
+      throw new Error('You must select at least 1 tag.');
+    }
+    if (this.event.description == '') {
+      this.setError(true, 'Description can not be empty.');
+      throw new Error('Description can not be empty.');
+    }
+    if (this.event.title == '') {
+      this.setError(true, 'Title can not be empty.');
+      throw new Error('Title can not be empty.');
+    }
     if (this.event.title != '' && this.event.description != '' && this.event.tags.length > 0) {
       this.setError(false, '');
       if (this.isEditing) {
@@ -109,10 +122,8 @@ export class AddediteventComponent implements OnInit {
 
   tags = ['hallo', 'doei', 'good', 'bye', 'hoi', 'hier'];
 
-  title = '';
-
   onTitleChanged() {
-    const wordsInTitle = this.title
+    const wordsInTitle = this.event.title
       .replace(/[^a-z ]/gi, '')
       .toLowerCase()
       .split(' ');
@@ -130,5 +141,21 @@ export class AddediteventComponent implements OnInit {
       }
     }
     return tagsInTitle;
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(AddtagDialogComponent, {
+      width: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      if (result != undefined) {
+        this.dropdownList.push({ id: this.dropdownList.length + 1, subject: result });
+        this.event.tags = [...this.event.tags, result];
+
+        console.log('event tags:', this.event.tags);
+      }
+    });
   }
 }

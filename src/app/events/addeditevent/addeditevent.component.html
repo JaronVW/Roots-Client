@@ -20,7 +20,6 @@
             id="title"
             aria-describedby="titleHelp"
             placeholder="Titel typen..."
-            [(ngModel)]="title"
             (input)="onTitleChanged()"
           />
         </div>
@@ -55,13 +54,13 @@
           ></textarea>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="form-group">
           <label for="tags">Tags toevoegen:</label>
           <div class="form-tags">
             <ng-multiselect-dropdown
               [settings]="dropdownSettings"
-              [data]="tagsList"
+              [data]="dropdownList"
               [(ngModel)]="event.tags"
               [required]="error"
               name="tags"
@@ -71,6 +70,9 @@
             </ng-multiselect-dropdown>
           </div>
         </div>
+      </div>
+      <div class="col-md-1">
+        <i class="material-icons" (click)="openDialog()" style="padding-top: 35px">&#xe148;</i>
       </div>
       <div class="col-md-6 mb-3">
         <div class="form-group">
@@ -99,7 +101,7 @@
       </div>
       <div class="col-md-6">
         <button type="submit" class="btn btn-primary" (click)="backClicked()">Terug</button>
-        <button type="submit" class="btn btn-primary" (click)="validate()">{{ buttonText }}</button>
+        <button type="submit" class="btn btn-primary submitButton" (click)="validate()">{{ buttonText }}</button>
       </div>
     </div>
   </form>
