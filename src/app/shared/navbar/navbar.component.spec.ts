@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Location, CommonModule } from '@angular/common';
@@ -40,7 +39,6 @@ describe('NavbarComponent', function () {
 
   it('should be 2 items in navbar', () => {
     const elem = fixture.debugElement.queryAll(By.css('.navbar-nav')).length;
-    console.log(elem);
     expect(elem).toBe(2);
     console.log();
   });

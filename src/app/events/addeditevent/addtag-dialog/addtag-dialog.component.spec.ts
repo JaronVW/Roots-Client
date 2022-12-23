@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { AddtagDialogComponent } from './addtag-dialog.component';
 
@@ -9,6 +10,13 @@ describe('AddtagDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AddtagDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {},
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AddtagDialogComponent);
@@ -16,7 +24,7 @@ describe('AddtagDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
