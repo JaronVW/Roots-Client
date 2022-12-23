@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class ListeventsComponent implements OnInit {
   searchValue: string = '';
   events: Event[] | null = [];
+  hasSearched: boolean = false;
 
   constructor(private router: Router, private EventService: EventService) {}
 
@@ -18,13 +19,20 @@ export class ListeventsComponent implements OnInit {
     this.getEvents();
   }
 
-  search(value: any) {
-    /* TODO document why this method 'search' is empty */
+  search(query: string) {
+    this.getEvents(query);
+    this.hasSearched = true;
   }
 
-  getEvents() {
+  clearSearch() {
+    this.searchValue = '';
+    this.getEvents();
+    this.hasSearched = false;
+  }
+
+  getEvents(searchQuery?: string) {
     this.events = null;
-    this.EventService.getEvents().subscribe((response: any[]) => {
+    this.EventService.getEvents(undefined, undefined, undefined, searchQuery).subscribe((response: any[]) => {
       this.events = response;
       for (const element of this.events) {
         if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
