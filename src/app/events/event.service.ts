@@ -17,8 +17,20 @@ export class EventService {
     return this.http.post<Event>('events', event);
   }
 
-  getEvents(): Observable<Array<Event>> {
-    return this.http.get<Array<Event>>('events');
+  getEvents(
+    min?: number,
+    max?: number,
+    order?: string,
+    searchQuery?: string,
+    getArchivedItems?: boolean,
+  ): Observable<Array<Event>> {
+    let queryparams = '?';
+    if (min) queryparams += `min=${min}&`;
+    if (max) queryparams += `max=${max}&`;
+    if (order) queryparams += `order=${order}&`;
+    if (searchQuery) queryparams += `searchQuery=${searchQuery}&`;
+    if (getArchivedItems) queryparams += `getArchivedItems=${getArchivedItems}`;
+    return this.http.get<Array<Event>>('events' + queryparams);
   }
 
   getEvent(id: string): Observable<any> {
@@ -40,8 +52,13 @@ export class EventService {
   deleteEvent(id: number) {
     return this.http.delete(`events/${id}`);
   }
-}
 
-export interface EventResponse {
-  results: Event[];
+  unarchive(id: number) {
+    return this.http.patch(`events/${id}/unarchive`, null);
+  }
+
+  
+  archive(id: number) {
+    return this.http.patch(`events/${id}/archive`, null);
+  }
 }
