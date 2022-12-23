@@ -18,15 +18,16 @@ export class ListeventsComponent implements OnInit {
     this.getEvents();
   }
 
-  search(value: any) {}
+  search(value: any) {
+    /* TODO document why this method 'search' is empty */
+  }
 
   getEvents() {
     this.events = null;
     this.EventService.getEvents().subscribe((response: any[]) => {
       this.events = response;
-      for (let i = 0; i < this.events.length; i++) {
-        if (this.events[i].dateOfEvent)
-          this.events[i].dateOfEvent = new Date(this.events[i].dateOfEvent!).toDateString();
+      for (const element of this.events) {
+        if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
       }
       console.log(this.events);
     });

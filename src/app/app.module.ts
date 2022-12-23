@@ -17,12 +17,11 @@ import { TokenInterceptor } from '../../token.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddtagDialogComponent } from './events/addeditevent/addtag-dialog/addtag-dialog.component';
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ArchiveComponent } from './events/archive/archive.component';
-import {CdkAccordionModule} from "@angular/cdk/accordion";
-import {MatMenuModule} from "@angular/material/menu";
-import {MatButtonModule} from "@angular/material/button";
-
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -49,11 +48,11 @@ import {MatButtonModule} from "@angular/material/button";
     MatDialogModule,
     CdkAccordionModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    {provide: MatDialogRef, useValue: {}},
+    { provide: MatDialogRef, useValue: {} },
   ],
   bootstrap: [AppComponent],
 })

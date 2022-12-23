@@ -6,7 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./archive.component.css'],
 })
 export class ArchiveComponent implements OnInit {
-  constructor() {}
+  constructor() {
+    /* TODO document why this constructor is empty */
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    /* TODO document why this method 'ngOnInit' is empty */
+  }
 }
