@@ -3,7 +3,7 @@ describe('Testing the event cards.', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: 'http://localhost:3000/events',
+        url: 'http://localhost:3000/events?',
       },
       [
         {
@@ -89,9 +89,9 @@ describe('Testing the event cards.', () => {
 
     ).as('getEvents')
 
+    cy.wait(500);
+
     cy.visit('http://localhost:4200/events')
-
-
 
   })
 
@@ -183,12 +183,103 @@ describe('Testing the event cards.', () => {
       cy.get('.text-center').contains('h1', 'Aanmaken event')
   });
 
-  it ('finds the search bar, and checks if it works', () => {
-    cy.get('.input').should('have.length', 1).type('Dit is een nice event. true story')
-    // cy.get('.example-accordion-item').should('have.length', 1)
-
-    
+  it ('finds the search bar, And check if you can write something in it.', () => {
+    cy.get('.input').should('have.length', 1).type('Testing the input. Yay! it works!')
   });
 
+  it ('finds the search bar, Search for a specific event based on the title, press the button to search', () => {
+    cy.get('.input').should('have.length', 1).type('story');
+
+    cy.intercept(
+      {
+        method: 'GET',
+        url: 'http://localhost:3000/events?searchQuery=story\n',
+      },
+      [
+        {
+          "id": 1,
+          "title": " Dit is een nice event. true story",
+          "description": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
+          "dateOfEvent": "Thu Dec 22 2022",
+          "userId": null,
+          "tags": [
+            {
+              "id": 14,
+              "subject": "Blue"
+            },
+            {
+              "id": 1,
+              "subject": "Finances"
+            },
+            {
+              "id": 8,
+              "subject": "Moving"
+            },
+            {
+              "id": 13,
+              "subject": "no tag"
+            },
+            {
+              "id": 15,
+              "subject": "Red"
+            }
+          ]
+        }
+      ],
+    ).as('getQueryResult')
+    cy.wait(300);
+
+    cy.get('.btn').contains('Zoeken').should('have.length', 1).click()
+
+    cy.get('.example-accordion-item').should('have.length', 1)
+  });
+
+
+  it ('finds the search bar, Search for a specific event based on the title, press enter to search', () => {
+    cy.intercept(
+      {
+        method: 'GET',
+        url: 'http://localhost:3000/events?searchQuery=story\n',
+      },
+      [
+        {
+          "id": 1,
+          "title": " Dit is een nice event. true story",
+          "description": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
+          "dateOfEvent": "Thu Dec 22 2022",
+          "userId": null,
+          "tags": [
+            {
+              "id": 14,
+              "subject": "Blue"
+            },
+            {
+              "id": 1,
+              "subject": "Finances"
+            },
+            {
+              "id": 8,
+              "subject": "Moving"
+            },
+            {
+              "id": 13,
+              "subject": "no tag"
+            },
+            {
+              "id": 15,
+              "subject": "Red"
+            }
+          ]
+        }
+      ],
+    ).as('getQueryResult')
+    cy.wait(300);
+
+    cy.get('.input').should('have.length', 1).type('story').trigger('keydown', {
+      key: 'Enter',
+    });
+
+    cy.get('.example-accordion-item').should('have.length', 1)
+  });
 
 })
