@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
@@ -9,14 +9,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./listevents.component.css'],
 })
 export class ListeventsComponent implements OnInit {
-  searchValue: string = '';
+  _searchValue: string = '';
   events: Event[] | null = [];
   hasSearched: boolean = false;
+  data: any;
 
   constructor(private router: Router, private eventService: EventService) {}
 
   ngOnInit(): void {
     this.getEvents();
+  }
+
+  get searchValue(): string {
+    return this._searchValue;
+  }
+
+  set searchValue(value: string) {
+    if (value !== this._searchValue) {
+      this._searchValue = value;
+      this.automaticSearchReset();
+    }
+  }
+
+  private automaticSearchReset() {
+    if (this._searchValue == '') {
+      this.clearSearch();
+    }
   }
 
   search(query: string) {
@@ -25,7 +43,7 @@ export class ListeventsComponent implements OnInit {
   }
 
   clearSearch() {
-    this.searchValue = '';
+    this._searchValue = '';
     this.getEvents();
     this.hasSearched = false;
   }
