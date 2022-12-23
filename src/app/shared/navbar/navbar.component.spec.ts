@@ -30,9 +30,7 @@ describe('NavbarComponent', function () {
     inject([Router, Location], (router: Router, location: Location) => {
       fixture.debugElement.query(By.css('#events')).nativeElement.click();
       fixture.whenStable().then(() => {
-        console.log(location.path());
         expect(location.path()).toEqual('/events');
-        console.log('after expect');
       });
     }),
   ));
@@ -40,6 +38,5 @@ describe('NavbarComponent', function () {
   it('should be 2 items in navbar', () => {
     const elem = fixture.debugElement.queryAll(By.css('.navbar-nav')).length;
     expect(elem).toBe(2);
-    console.log();
   });
 });
