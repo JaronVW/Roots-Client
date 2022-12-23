@@ -20,10 +20,10 @@
             id="title"
             aria-describedby="titleHelp"
             placeholder="Titel typen..."
+            (input)="onTitleChanged()"
           />
         </div>
       </div>
-
       <div class="col-md-6">
         <div class="form-group">
           <label for="dateOfEvent">Datum:</label>

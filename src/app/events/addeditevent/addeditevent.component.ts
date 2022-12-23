@@ -4,7 +4,7 @@ import { EventService } from '../event.service';
 import { Event, Tag } from '../event.interface';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import {AddtagDialogComponent} from "./addtag-dialog/addtag-dialog.component";
+import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
 
 @Component({
   selector: 'app-addevent',
@@ -36,7 +36,7 @@ export class AddediteventComponent implements OnInit {
     private EventService: EventService,
     private _location: Location,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -120,17 +120,39 @@ export class AddediteventComponent implements OnInit {
     this._location.back();
   }
 
+  tags = ['hallo', 'doei', 'good', 'bye', 'hoi', 'hier'];
+
+  onTitleChanged() {
+    const wordsInTitle = this.event.title
+      .replace(/[^a-z ]/gi, '')
+      .toLowerCase()
+      .split(' ');
+    console.log(wordsInTitle);
+    const tags = this.compareTitleAndTags(wordsInTitle, this.tags);
+  }
+
+  compareTitleAndTags(wordsInTitle: String[], tags: String[]) {
+    const tagsInTitle = [];
+    for (var i = 0; i < wordsInTitle.length; i++) {
+      for (var j = 0; j < tags.length; j++) {
+        if (this.tags[i] == wordsInTitle[j]) {
+          tagsInTitle.push(this.tags[i]);
+        }
+      }
+    }
+    return tagsInTitle;
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(AddtagDialogComponent, {
-      width: '350px'
+      width: '350px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       if (result != undefined) {
-        this.dropdownList.push({id: this.dropdownList.length + 1, subject: result});
+        this.dropdownList.push({ id: this.dropdownList.length + 1, subject: result });
         this.event.tags = [...this.event.tags, result];
-
 
         console.log('event tags:', this.event.tags);
       }
