@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EventService } from '../event.service';
-import { Event, Tag } from '../event.interface';
-import { Location } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EventService} from '../event.service';
+import {Event, Tag} from '../event.interface';
+import {Location} from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import {AddtagDialogComponent} from './addtag-dialog/addtag-dialog.component';
+import {debounceTime, distinctUntilChanged, map, Observable, OperatorFunction} from "rxjs";
+import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-addevent',
@@ -120,27 +122,28 @@ export class AddediteventComponent implements OnInit {
     this._location.back();
   }
 
-  tags = ['hallo', 'doei', 'good', 'bye', 'hoi', 'hier'];
+  search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((term) => {
+        console.log(term);
+        console.log(text$);
+        return term.length < 2 ? [] : [].filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
+      }),
+    );
 
-  onTitleChanged() {
-    const wordsInTitle = this.event.title
-      .replace(/[^a-z ]/gi, '')
-      .toLowerCase()
-      .split(' ');
-    console.log(wordsInTitle);
-    const tags = this.compareTitleAndTags(wordsInTitle, this.tags);
+  addTag(tag: Tag) {
+    console.log('addTag');
+    const newTag: Tag = {
+      subject: tag.subject,
+    }
+    this.dropdownList.push({ id: this.dropdownList.length + 1, subject: newTag });
+    this.event.tags = [...this.event.tags, newTag];
   }
 
-  compareTitleAndTags(wordsInTitle: String[], tags: String[]) {
-    const tagsInTitle = [];
-    for (var i = 0; i < wordsInTitle.length; i++) {
-      for (var j = 0; j < tags.length; j++) {
-        if (this.tags[i] == wordsInTitle[j]) {
-          tagsInTitle.push(this.tags[i]);
-        }
-      }
-    }
-    return tagsInTitle;
+  removeTag(event: Tag) {
+
   }
 
   openDialog() {
