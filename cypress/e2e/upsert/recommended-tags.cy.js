@@ -1,198 +1,114 @@
 describe('Testing the recommended tags.', () => {
   beforeEach(() => {
-
-
     cy.visit('http://localhost:4200/events/create')
 
   })
 
 
-  it('Finds the title input field and can write a title in it.', () => {
+  it('Finds the title input field and can write a title in it. Receives 2 recommended tags based on the title given.', () => {
 
+    cy.get('#title').type('teams meeting for the win').should('have.value', 'teams meeting for the win')
 
+    cy.get('.dropdown').should('have.length', 1)
 
-
-
-  })
-
-  it('finds a single event. Checks if it has a title and some tags', () => {
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('h1')
-
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.info')
-      .find('.tags')
-      .find('span')
-  })
-
-  it('can open a event, go to options, delete the event, and result should be the previous array minus 1', () => {
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.expand-item').click()
-
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.more-options').click()
-
-    cy.get('#cdk-overlay-0')
-      .find('.mat-menu-content')
-      .find('.mat-ripple')
-      .get('.mat-focus-indicator').contains('Archiveren').click()
-
-    // cy.get('.example-accordion-item').should('have.length', 2)
-
-    // to do: fix new list after deletion
+    cy.get('.dropdown').find('.dropdown-item').should('have.length', 2)
 
   })
 
-  it('can open a event, go to options, edit the event, gets send to a new page with the correct routing', () => {
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.expand-item').click()
 
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.more-options').click()
+  it('Finds the title input field and can write a title in it. Receives 2 recommended tags based on the title given.', () => {
 
-    cy.get('#cdk-overlay-0')
-      .find('.mat-menu-content')
-      .find('.mat-ripple')
-      .get('.mat-focus-indicator').contains('Wijzigen').click()
+    cy.get('#title').type(`AB{backspace}{backspace}`).should('have.value', '')
 
-    cy.url().should('include', 'http://localhost:4200/events/edit/12')
+    cy.get('.dropdown').should('have.length', 1)
 
-    // cy.get('.example-accordion-item').should('have.length', 2) fix de bug!!
+    cy.get('.dropdown').find('.dropdown-item').should('have.length', 0)
 
-    // to do: fix new list after deletion
-  })
-
-  it('can open a event, go to options, checks if there are 2 options.', () => {
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.expand-item').click()
-
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.more-options').click()
-
-    cy.get('#cdk-overlay-0')
-      .find('.mat-menu-content')
-      .find('.mat-ripple')
-      .get('.mat-focus-indicator').should('have.length', 2)
   })
 
 
-  it('can open a event, check for both buttons to undo expansion of the accordion to be available and works.', () => {
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.expand-item').click()
-      .find('.ng-star-inserted').click()
+})
 
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.expand-item').click()
 
-    cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.small-expand-item').click()
-  })
-
-  it('find the create event button, and gets directed to a new page with the correct routing.', () => {
-      cy.get('.btn').contains('Aanmaken').should('have.length', 1).click()
-      cy.url().should('include', 'http://localhost:4200/events/create')
-
-      // Double check if the page is loaded by checking if the title is there
-      cy.get('.text-center').contains('h1', 'Aanmaken event')
-  });
-
-  it ('finds the search bar, And check if you can write something in it.', () => {
-    cy.get('.input').should('have.length', 1).type('Testing the input. Yay! it works!')
-  });
-
-  it ('finds the search bar, Search for a specific event based on the title, press the button to search', () => {
-    cy.get('.input').should('have.length', 1).type('story');
+describe('Testing the tags selector.', () => {
+  beforeEach(() => {
 
     cy.intercept(
       {
         method: 'GET',
-        url: 'http://localhost:3000/events?searchQuery=story\n',
+        url: 'http://localhost:3000/tags',
       },
-      [
-        {
-          "id": 1,
-          "title": " Dit is een nice event. true story",
-          "description": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
-          "dateOfEvent": "Thu Dec 22 2022",
-          "userId": null,
-          "tags": [
-            {
-              "id": 14,
-              "subject": "Blue"
-            },
-            {
-              "id": 1,
-              "subject": "Finances"
-            },
-            {
-              "id": 8,
-              "subject": "Moving"
-            },
-            {
-              "id": 13,
-              "subject": "no tag"
-            },
-            {
-              "id": 15,
-              "subject": "Red"
-            }
-          ]
-        }
-      ],
-    ).as('getQueryResult')
-    cy.wait(300);
+      [{"id":6,"subject":"Changing team sizes","organisationId":null,"_count":{"Events":3}},{"id":1,"subject":"Finances","organisationId":null,"_count":{"Events":2}},{"id":8,"subject":"Smaller teams","organisationId":null,"_count":{"Events":2}},{"id":7,"subject":"Work environment","organisationId":null,"_count":{"Events":2}},{"id":9,"subject":"Splitting teams","organisationId":null,"_count":{"Events":1}},{"id":11,"subject":"New office","organisationId":null,"_count":{"Events":0}},{"id":10,"subject":"Moving","organisationId":null,"_count":{"Events":0}},{"id":5,"subject":"Relocation","organisationId":null,"_count":{"Events":0}},{"id":4,"subject":"Infrastructure","organisationId":null,"_count":{"Events":0}},{"id":3,"subject":"Adminstration","organisationId":null,"_count":{"Events":0}},{"id":2,"subject":"Work culture","organisationId":null,"_count":{"Events":0}}],
 
-    cy.get('.btn').contains('Zoeken').should('have.length', 1).click()
+    ).as('getEvents')
 
-    cy.get('.example-accordion-item').should('have.length', 1)
-  });
+    cy.wait(500);
 
 
-  it ('finds the search bar, Search for a specific event based on the title, press enter to search', () => {
+    cy.visit('http://localhost:4200/events/create')
+  })
+
+
+  it('Find the Tags dropdown and click on it. Receives a list of 11 tags.', () => {
+    cy.get('#tags').click()
+
+    cy.get('.dropdown').should('have.length', 1)
+
+    cy.get('.multiselect-dropdown').find('.dropdown-list').should('have.length', 1)
+      .find('.item1').should('have.length', 1)
+
+    cy.get('.multiselect-dropdown').find('.dropdown-list').should('have.length', 1)
+      .find('.item2').should('have.length', 1)
+      .find('li').should('have.length', 11)
+
+  })
+
+  it('Find the Tags dropdown and click on it. Receives a list of 11 tags.', () => {
+    cy.get('#tags').click()
+
+    cy.get('.dropdown').should('have.length', 1)
+
+    cy.get('.multiselect-dropdown').find('.dropdown-list').should('have.length', 1)
+      .find('.item1').should('have.length', 1)
+
+    cy.get('.multiselect-dropdown').find('.dropdown-list').should('have.length', 1)
+      .find('.item2').should('have.length', 1)
+      .find('li').should('have.length', 11)
+
+  })
+})
+
+
+
+describe('Testing the add tag dialog.', () => {
+  beforeEach(() => {
+
     cy.intercept(
       {
         method: 'GET',
-        url: 'http://localhost:3000/events?searchQuery=story\n',
+        url: 'http://localhost:3000/tags',
       },
-      [
-        {
-          "id": 1,
-          "title": " Dit is een nice event. true story",
-          "description": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
-          "dateOfEvent": "Thu Dec 22 2022",
-          "userId": null,
-          "tags": [
-            {
-              "id": 14,
-              "subject": "Blue"
-            },
-            {
-              "id": 1,
-              "subject": "Finances"
-            },
-            {
-              "id": 8,
-              "subject": "Moving"
-            },
-            {
-              "id": 13,
-              "subject": "no tag"
-            },
-            {
-              "id": 15,
-              "subject": "Red"
-            }
-          ]
-        }
-      ],
-    ).as('getQueryResult')
-    cy.wait(300);
+      [{"id":6,"subject":"Changing team sizes","organisationId":null,"_count":{"Events":3}},{"id":1,"subject":"Finances","organisationId":null,"_count":{"Events":2}},{"id":8,"subject":"Smaller teams","organisationId":null,"_count":{"Events":2}},{"id":7,"subject":"Work environment","organisationId":null,"_count":{"Events":2}},{"id":9,"subject":"Splitting teams","organisationId":null,"_count":{"Events":1}},{"id":11,"subject":"New office","organisationId":null,"_count":{"Events":0}},{"id":10,"subject":"Moving","organisationId":null,"_count":{"Events":0}},{"id":5,"subject":"Relocation","organisationId":null,"_count":{"Events":0}},{"id":4,"subject":"Infrastructure","organisationId":null,"_count":{"Events":0}},{"id":3,"subject":"Adminstration","organisationId":null,"_count":{"Events":0}},{"id":2,"subject":"Work culture","organisationId":null,"_count":{"Events":0}}],
 
-    cy.get('.input').should('have.length', 1).type('story').trigger('keydown', {
-      key: 'Enter',
-    });
+    ).as('getEvents')
 
-    cy.get('.example-accordion-item').should('have.length', 1)
-  });
+    cy.wait(500);
+
+
+    cy.visit('http://localhost:4200/events/create')
+  })
+
+
+  it('Find the add tag button and click on it. enter a new tag name, and press Aanmaken. The tag will appear in the tag list.', () => {
+    cy.get('.material-icons').click()
+
+    cy.get('#tag').should('have.length', 1).type('New tag').should('have.value', 'New tag')
+
+    cy.get('.buttons').find('button').contains('Aanmaken').click()
+
+    cy.get('.multiselect-dropdown').find('.dropdown-list').should('have.length', 1)
+
+  })
+
 
 })
