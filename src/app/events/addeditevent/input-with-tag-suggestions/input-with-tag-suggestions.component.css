@@ -24,8 +24,21 @@ ul{
   z-index: 1;
 }
 
-/*remove the dropdown when no long typing*/
+li.selected {
+  background-color: #eee;
+}
 
+.headerTag{
+  font-size: 20px;
+  font-weight: bold;
+  color: #857d7d;
+}
+
+
+.headerTag:hover{
+  background-color: #f6f6f6;
+  cursor: default;
+}
 
 
 

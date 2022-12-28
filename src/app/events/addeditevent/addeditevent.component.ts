@@ -142,10 +142,6 @@ export class AddediteventComponent implements OnInit {
     this.event.tags = [...this.event.tags, newTag];
   }
 
-  removeTag(event: Tag) {
-
-  }
-
   openDialog() {
     const dialogRef = this.dialog.open(AddtagDialogComponent, {
       width: '350px',
@@ -160,5 +156,10 @@ export class AddediteventComponent implements OnInit {
         console.log('event tags:', this.event.tags);
       }
     });
+  }
+
+  getTitle($event: string) {
+    // console.log('reached parent',$event);
+    this.event.title = $event;
   }
 }
