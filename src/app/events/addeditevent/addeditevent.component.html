@@ -11,17 +11,13 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="title">Titel:</label>
-          <input
-            [(ngModel)]="event.title"
-            name="title"
-            type="text"
-            class="form-control"
-            id="title"
-            aria-describedby="titleHelp"
-            placeholder="Titel typen..."
-            (input)="onTitleChanged()"
-          />
+          <app-input-with-tag-suggestions
+            style="position: relative;"
+            [tags]="dropdownList"
+            (addTag)="addTag($event)"
+            (titleChange)="getTitle($event)"
+          >
+          </app-input-with-tag-suggestions>
         </div>
       </div>
       <div class="col-md-6">

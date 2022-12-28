@@ -19,10 +19,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddtagDialogComponent } from './events/addeditevent/addtag-dialog/addtag-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ArchiveComponent } from './events/archive/archive.component';
-import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { InputWithTagSuggestionsComponent } from './events/addeditevent/input-with-tag-suggestions/input-with-tag-suggestions.component';
+import {MatSelectModule} from "@angular/material/select";
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 
 @NgModule({
   declarations: [
@@ -36,22 +38,24 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     AddtagDialogComponent,
 
     ArchiveComponent,
+     InputWithTagSuggestionsComponent,
       LoadingSpinnerComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot(routes),
-    NgbModule,
-    FormsModule,
-    HttpClientModule,
-    NgMultiSelectDropDownModule.forRoot(),
-    BrowserAnimationsModule,
-    MatDialogModule,
-    CdkAccordionModule,
-    MatMenuModule,
-    MatButtonModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterModule.forRoot(routes),
+        NgbModule,
+        FormsModule,
+        HttpClientModule,
+        NgMultiSelectDropDownModule.forRoot(),
+        BrowserAnimationsModule,
+        MatDialogModule,
+        CdkAccordionModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatSelectModule,
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: MatDialogRef, useValue: {} },
