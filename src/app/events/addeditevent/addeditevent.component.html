@@ -11,58 +11,39 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <app-input-with-tag-suggestions
-            style="position: relative;"
-            [tags]="dropdownList"
-            (addTag)="addTag($event)"
-            (titleChange)="getTitle($event)"
-          >
+          <app-input-with-tag-suggestions style="position: relative;" [tags]="dropdownList" (addTag)="addTag($event)"
+            (titleChange)="getTitle($event)">
           </app-input-with-tag-suggestions>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="dateOfEvent">Datum:</label>
-          <input
-            [ngModel]="event.dateOfEvent | date : 'yyyy-MM-dd'"
-            (ngModelChange)="event.dateOfEvent = $event"
-            name="dateOfEvent"
-            type="date"
-            class="form-control"
-            id="dateOfEvent"
-            [value]="event.dateOfEvent | date : 'yyyy-MM-dd'"
-            aria-describedby="dateHelp"
-            lang="fr-CA"
-          />
+          <input [ngModel]="event.dateOfEvent | date : 'yyyy-MM-dd'" (ngModelChange)="event.dateOfEvent = $event"
+            name="dateOfEvent" type="date" class="form-control" id="dateOfEvent"
+            [value]="event.dateOfEvent | date : 'yyyy-MM-dd'" aria-describedby="dateHelp" lang="fr-CA" />
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
           <label for="description">Beschrijving:</label>
-          <textarea
-            [(ngModel)]="event.description"
-            name="description"
-            type="description"
-            class="form-control"
-            id="description"
-            aria-describedby="descriptionHelp"
-            placeholder="Beschrijving typen..."
-          ></textarea>
+          <textarea [(ngModel)]="event.description" name="description" type="description" class="form-control"
+            id="description" aria-describedby="descriptionHelp" placeholder="Beschrijving typen..."></textarea>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="description">Omschrijving:</label>
+          <textarea [(ngModel)]="event.content" name="content" style="height: 300px;" type="content" class="form-control"
+            id="content" aria-describedby="descriptionHelp" placeholder="Omschrijving typen..."></textarea>
         </div>
       </div>
       <div class="col-md-5">
         <div class="form-group">
           <label for="tags">Tags toevoegen:</label>
           <div class="form-tags">
-            <ng-multiselect-dropdown
-              [settings]="dropdownSettings"
-              [data]="dropdownList"
-              [(ngModel)]="event.tags"
-              [required]="error"
-              name="tags"
-              id="tags"
-              placeholder="Selecteren"
-            >
+            <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownList" [(ngModel)]="event.tags"
+              [required]="error" name="tags" id="tags" placeholder="Selecteren">
             </ng-multiselect-dropdown>
           </div>
         </div>

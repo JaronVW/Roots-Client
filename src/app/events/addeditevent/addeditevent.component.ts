@@ -26,6 +26,7 @@ export class AddediteventComponent implements OnInit {
   event: Event = {
     title: '',
     description: '',
+    content: '',
     dateOfEvent: new Date().toISOString(),
     // userId: 'test',
     tags: [],
