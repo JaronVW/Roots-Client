@@ -27,7 +27,7 @@
     <div class="col-md-4 col-xs-0"></div>
 
     <div class="col-md-2 col-xs-12">
-      <button type="submit" class="btn btn-primary " routerLink="/events/create">Aanmaken</button>
+      <button type="submit" class="btn btn-primary" routerLink="/events/create">Aanmaken</button>
     </div>
     <ng-container *ngIf="events">
       <cdk-accordion class="example-accordion">
@@ -50,7 +50,7 @@
                   <!--                  Card field content-->
                   <div class="row">
                     <div class="col-md-12">
-                      <h1>{{ item.title }}</h1>
+                      <h1 class="event-title">{{ item.title }}</h1>
                     </div>
                     <div class="info col-md-12">
                       <div class="tags" *ngFor="let tag of item.tags" style="margin: -8px 2px 20px 0">
@@ -65,42 +65,57 @@
                 </div>
               </li>
             </ul>
-            <div class="example-accordion-item-body" role="region"
-              [style.display]="accordionItem.expanded ? '' : 'none'" [attr.id]="'accordion-body-' + index"
-              [attr.aria-labelledby]="'accordion-header-' + index">
-              <div class="small-expand-item" (click)="accordionItem.toggle()" (click)="clearDetails()"
-                style="cursor: pointer">
+            <div
+              class="example-accordion-item-body"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index"
+            >
+              <div
+                class="small-expand-item"
+                (click)="accordionItem.toggle()"
+                (click)="clearDetails()"
+                style="cursor: pointer"
+              >
                 <div *ngIf="accordionItem.expanded">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                    class="bi bi-arrow-bar-down" viewBox="0 0 16 16" style="transform: rotate(180deg)">
-                    <path fill-rule="evenodd"
-                      d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-arrow-bar-down"
+                    viewBox="0 0 16 16"
+                    style="transform: rotate(180deg)"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                    />
                   </svg>
                 </div>
               </div>
               <!--                Start accordion content-->
-              <div *ngIf="loading else content" class="row text-center">
-                  <app-loading-spinner ></app-loading-spinner>
+              <div *ngIf="loading; else content" class="row text-center">
+                <app-loading-spinner></app-loading-spinner>
               </div>
 
               <ng-template #content>
                 <div>
                   <div class="row">
                     <div class="col-md-12">
-                      <h1>{{item.title}}</h1>
+                      <h1>{{ item.title }}</h1>
                     </div>
                     <div class="col-md-12">
-                      <div class="tags" *ngFor="let tag of item.tags" style=" margin: -8px 2px 20px 0 ">
-                        <span class="badge badge-pill badge-primary">{{tag.subject}}</span>
+                      <div class="tags" *ngFor="let tag of item.tags" style="margin: -8px 2px 20px 0">
+                        <span class="badge badge-pill badge-primary">{{ tag.subject }}</span>
                       </div>
                     </div>
                   </div>
                   <h2>description</h2>
-                  <p>{{item.description}}</p>
-                  <h2>{{eventDetailsObject.content}}</h2>
-                  <p>
-
-                  </p>
+                  <p>{{ item.description }}</p>
+                  <h2>{{ eventDetailsObject.content }}</h2>
+                  <p></p>
                   <div class="row">
                     <div class="col-md-12">
                       <h3>Video[] bestanden</h3>
@@ -124,27 +139,48 @@
                     </mat-menu>
                   </div>
                   <div class="dateOfEvent">
-                    <p>{{item.dateOfEvent}}</p>
+                    <p>{{ item.dateOfEvent }}</p>
                   </div>
                 </div>
               </ng-template>
             </div>
 
-            <div class="expand-item" (click)="accordionItem.toggle()" (click)="getEventDetails(item.id!)"
-              style="cursor: pointer">
+            <div
+              class="expand-item"
+              (click)="accordionItem.toggle()"
+              (click)="getEventDetails(item.id!)"
+              style="cursor: pointer"
+            >
               <div *ngIf="!accordionItem.expanded">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                  class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd"
-                    d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="currentColor"
+                  class="bi bi-arrow-bar-down"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                  />
                 </svg>
               </div>
 
               <div *ngIf="accordionItem.expanded">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                  class="bi bi-arrow-bar-down" viewBox="0 0 16 16" style="transform: rotate(180deg)">
-                  <path fill-rule="evenodd"
-                    d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="currentColor"
+                  class="bi bi-arrow-bar-down"
+                  viewBox="0 0 16 16"
+                  style="transform: rotate(180deg)"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                  />
                 </svg>
               </div>
             </div>
