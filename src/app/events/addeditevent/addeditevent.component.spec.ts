@@ -5,6 +5,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { routes } from 'src/app/app.routing';
+import { mockEvent1 } from '../listevents/listevents.mockdata';
 
 import { AddediteventComponent } from './addeditevent.component';
 
