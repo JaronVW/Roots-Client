@@ -58,4 +58,12 @@ describe('ListeventsComponent', () => {
     expect(compiled[0].nativeElement.textContent).toContain(mockEvent1.title);
     expect(compiled[1].nativeElement.textContent).toContain(mockEvent2.title);
   }));
+
+  it('card 1 should have title that equals mockEvent1.title', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.queryAll(By.css('.event-title'));
+
+    expect(compiled[0].nativeElement.textContent).toEqual(mockEvent1.title);
+  }));
 });
