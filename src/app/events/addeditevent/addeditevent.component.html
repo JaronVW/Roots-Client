@@ -12,7 +12,8 @@
       <div class="col-md-6">
         <div class="form-group">
           <app-input-with-tag-suggestions
-            style="position: relative;"
+            class="title"
+            style="position: relative"
             [tags]="dropdownList"
             (addTag)="addTag($event)"
             (titleChange)="getTitle($event)"
