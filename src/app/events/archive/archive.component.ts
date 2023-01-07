@@ -16,13 +16,11 @@ export class ArchiveComponent implements OnInit {
     this.getEvents();
   }
 
-
   unarchive(id: number) {
     this.getEvents();
     this.eventService.unarchive(id).subscribe(() => {});
   }
 
-  
   getEvents() {
     this.eventService.getEvents(undefined, undefined, undefined, undefined, true).subscribe((response: any[]) => {
       this.events = response;
