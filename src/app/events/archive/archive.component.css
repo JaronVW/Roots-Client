@@ -1,5 +1,9 @@
-.terughalenButton {
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
+button {
+  margin-top: 10px;
+  float: right;
+  width: 150px;
+}
+
+img {
+  margin: 0px 0px 0px 5px;
 }

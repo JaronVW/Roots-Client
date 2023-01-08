@@ -3,20 +3,20 @@
     <div class="container">
       <div class="row archived-events-row">
         <ng-container>
-          <div *ngFor="let item of events" class="col-md-6 mt-2 archived-event" style="display: block">
+          <div *ngFor="let item of events" class="col-md-4 mt-2 archived-event" style="display: block">
             <div class="rounded card">
               <div class="card-body">
-                <h5 class="card-title">{{ item.title }}</h5>
+                <h2 class="card-title">{{ item.title }}</h2>
                 <p class="card-text">{{ item.description.substring(0, 70) }}...</p>
-                <button type="button" class="btn btn-primary terughalenButton">
-                  <img
-                    src="assets/images/back-arrow.png"
-                    (click)="unarchive(item.id!)"
-                    height="28px"
-                    alt="Image of the logo"
-                    class="unarchiveButton"
-                    routerLink="/events"
-                  />
+                <button
+                  class="unarchiveButton"
+                  type="button"
+                  class="btn btn-primary"
+                  routerLink="/events"
+                  (click)="unarchive(item.id!)"
+                >
+                  Terughalen
+                  <img src="assets/images/back-arrow.png" height="28px" alt="Image of the logo" />
                 </button>
               </div>
             </div>
