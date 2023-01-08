@@ -9,9 +9,8 @@
                 <h2 class="card-title">{{ item.title }}</h2>
                 <p class="card-text">{{ item.description.substring(0, 70) }}...</p>
                 <button
-                  class="unarchiveButton"
                   type="button"
-                  class="btn btn-primary"
+                  class="btn btn-primary unarchiveButton terughalenButton"
                   routerLink="/events"
                   (click)="unarchive(item.id!)"
                 >
