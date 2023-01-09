@@ -55,9 +55,14 @@ export class ListeventsComponent implements OnInit {
     this.hasSearched = false;
   }
 
-  archive(id: number) {
-    this.eventService.archive(id).subscribe(() => {});
-    this.router.navigate(['/events/archive']);
+  async archive(id: number) {
+    await this.eventService.archive(id).subscribe(() => {});
+    window.location.reload();
+  }
+
+  async unarchive(id: number) {
+    await this.eventService.unarchive(id).subscribe(() => {});
+    window.location.reload();
   }
 
   getEvents(searchQuery?: string, getArchivedItems?: boolean) {
