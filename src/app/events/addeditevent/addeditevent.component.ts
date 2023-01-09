@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {EventService} from '../event.service';
-import {Event, Tag} from '../event.interface';
-import {Location} from '@angular/common';
-import {MatDialog} from '@angular/material/dialog';
-import {AddtagDialogComponent} from './addtag-dialog/addtag-dialog.component';
-import {debounceTime, distinctUntilChanged, map, Observable, OperatorFunction} from "rxjs";
-import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventService } from '../event.service';
+import { Event, Tag } from '../event.interface';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
+import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
+import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-addevent',
@@ -20,7 +20,7 @@ export class AddediteventComponent implements OnInit {
   errorMessage: string = '';
   isFirstVisit: boolean = true;
   buttonText: string = 'Aanmaken';
-  eventid: number | null =null;
+  eventid: number | null = null;
   isEditing: boolean = false;
 
   event: Event = {
@@ -33,6 +33,8 @@ export class AddediteventComponent implements OnInit {
     // customtags ['test', 'test2'],
     // multiMedia: ['test', 'test2'],
   };
+
+  searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
 
   constructor(
     private router: Router,
@@ -57,6 +59,7 @@ export class AddediteventComponent implements OnInit {
 
     this.EventService.getTags().subscribe((response: any[]) => {
       this.dropdownList = response.map((tag: Tag) => ({ ...tag }));
+      this.searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
     });
 
     this.dropdownSettings = {
@@ -130,17 +133,19 @@ export class AddediteventComponent implements OnInit {
       map((term) => {
         console.log(term);
         console.log(text$);
-        return term.length < 2 ? [] : [].filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
+        return term.length < 2
+          ? []
+          : [].filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
       }),
     );
 
   addTag(tag: Tag) {
     console.log('addTag');
-    const newTag: Tag = {
-      subject: tag.subject,
-    }
-    this.dropdownList.push({ id: this.dropdownList.length + 1, subject: newTag });
-    this.event.tags = [...this.event.tags, newTag];
+    // const newTag: Tag = {
+    //   subject: tag.subject,
+    // };
+    // this.dropdownList.push({ id: undefined, subject: tag.subject });
+    this.event.tags = [...this.event.tags, tag];
   }
 
   openDialog() {

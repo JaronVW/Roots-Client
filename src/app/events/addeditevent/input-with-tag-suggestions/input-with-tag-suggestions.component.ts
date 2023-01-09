@@ -2,32 +2,31 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter, HostListener,
+  EventEmitter,
+  HostListener,
   Input,
   OnInit,
   Output,
-  QueryList, ViewChild,
-  ViewChildren
+  ViewChild,
 } from '@angular/core';
-import {Tag} from "../../event.interface";
-import {ListKeyManager} from "@angular/cdk/a11y";
+import { Tag } from '../../event.interface';
 
 @Component({
   selector: 'app-input-with-tag-suggestions',
   templateUrl: './input-with-tag-suggestions.component.html',
-  styleUrls: ['./input-with-tag-suggestions.component.css']
+  styleUrls: ['./input-with-tag-suggestions.component.css'],
 })
-export class InputWithTagSuggestionsComponent implements OnInit{
+export class InputWithTagSuggestionsComponent implements OnInit {
   @Input() tags: Tag[] = [];
+  @Input() eventTags: Tag[] = [];
+  @Input() title: string = '';
   @Output() addTag = new EventEmitter<Tag>();
   @Output() removeTag = new EventEmitter<Tag>();
-  @Output() titleChange = new EventEmitter<string>();
   @ViewChild('input') input!: ElementRef;
   @ViewChild('input') dropdown!: ElementRef;
   @HostListener('document:click', ['$event'])
-
   onClick(event: MouseEvent) {
-    const emptyTag: Tag = {id: undefined, subject: ''};
+    const emptyTag: Tag = { id: undefined, subject: '' };
     const input = this.input.nativeElement;
     const dropdown = this.dropdown.nativeElement;
     if (event.target !== input && event.target !== dropdown) {
@@ -38,44 +37,43 @@ export class InputWithTagSuggestionsComponent implements OnInit{
   }
   onFocus() {
     if (this.showDropdown) {
-      console.log('focus')
       this.input.nativeElement.blur();
     }
   }
 
   showDropdown = false;
   suggestions: Tag[] = [];
-  title = '';
-  constructor() { }
+
+  constructor() {}
   ngOnInit(): void {
-    this.suggestions = this.tags;
+    this.suggestions = this.tags.filter((tag) => !this.eventTags.includes(tag));
   }
 
-  filterTags(title: string): Tag[] {
-    this.titleChange.emit(title);
-    let words = title.split(' ').map(word => word.toLowerCase());
-    if (title.endsWith('.') || title.endsWith(' ')) {
+  filterTags() {
+    let words = this.title.split(' ').map((word) => word.toLowerCase());
+    if (this.title.endsWith('.') || this.title.endsWith(' ')) {
       words = words.slice(0, -1);
     }
-    this.suggestions = this.tags.filter(tag => words.some(word => tag.subject.toLowerCase().includes(word)));
-    if (title === '') this.suggestions = [];
+    this.suggestions = this.tags.filter((tag) => !this.eventTags.includes(tag));
+    this.suggestions = this.suggestions.filter((tag) => words.some((word) => tag.subject.toLowerCase().includes(word)));
+    if (this.title === '') this.suggestions = [];
     this.showDropdown = this.suggestions.length !== 0;
     console.log('dropdown: ', this.showDropdown);
-    return this.suggestions;
   }
 
   timeout: any;
   onKeyUp() {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      this.suggestions = this.filterTags(this.title);
+      this.filterTags();
       this.showDropdown = this.suggestions.length > 0;
     }, 700);
   }
 
   addTagAndRemoveFromSuggestions(tag: Tag) {
     this.addTag.emit(tag);
-    this.suggestions = this.suggestions.filter(suggestion => suggestion.id !== tag.id);
+    this.eventTags.push(tag);
+    this.filterTags();
   }
 
   selectedTag!: Tag;

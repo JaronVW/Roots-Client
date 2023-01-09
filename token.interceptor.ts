@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor, HttpHeaders
-} from '@angular/common/http';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {switchMap} from "rxjs/operators";
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -15,8 +10,6 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-
     // this.getUserFromLocalStorage()
     //   .pipe(
     //     switchMap((user: UserInfo | undefined) => {
@@ -40,9 +33,9 @@ export class TokenInterceptor implements HttpInterceptor {
         'Content-Type': 'application/json',
         // 'Authorization': `${this.currentUser$.value?.token}`,
       }),
-      url: `http://localhost:3000/${request.url}`
+      url: `http://localhost:3000/${request.url}`,
     });
-    console.log('newRequest',newRequest);
+    console.log('newRequest', newRequest);
     return next.handle(newRequest);
   }
 
