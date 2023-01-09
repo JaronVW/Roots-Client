@@ -18,12 +18,11 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddtagDialogComponent } from './events/addeditevent/addtag-dialog/addtag-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { ArchiveComponent } from './events/archive/archive.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { InputWithTagSuggestionsComponent } from './events/addeditevent/input-with-tag-suggestions/input-with-tag-suggestions.component';
-import {MatSelectModule} from "@angular/material/select";
+import { MatSelectModule } from '@angular/material/select';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 
 @NgModule({
@@ -36,26 +35,24 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     AddediteventComponent,
     ListeventsComponent,
     AddtagDialogComponent,
-
-    ArchiveComponent,
-     InputWithTagSuggestionsComponent,
-      LoadingSpinnerComponent,
+    InputWithTagSuggestionsComponent,
+    LoadingSpinnerComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        RouterModule.forRoot(routes),
-        NgbModule,
-        FormsModule,
-        HttpClientModule,
-        NgMultiSelectDropDownModule.forRoot(),
-        BrowserAnimationsModule,
-        MatDialogModule,
-        CdkAccordionModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatSelectModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule.forRoot(routes),
+    NgbModule,
+    FormsModule,
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    BrowserAnimationsModule,
+    MatDialogModule,
+    CdkAccordionModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatSelectModule,
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: MatDialogRef, useValue: {} },
