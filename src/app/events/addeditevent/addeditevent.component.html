@@ -15,8 +15,9 @@
             class="title"
             style="position: relative"
             [tags]="dropdownList"
+            [eventTags]="event.tags"
+            [title]="event.title"
             (addTag)="addTag($event)"
-            (titleChange)="getTitle($event)"
           >
           </app-input-with-tag-suggestions>
         </div>
