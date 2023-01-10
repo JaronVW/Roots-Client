@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3 bg-blue-green">
+<nav *ngIf="router.url !== '/login' && router.url !== '/register'" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3 bg-blue-green">
   <div class="container-fluid">
     <img src="assets/images/logo-with-circle.png" alt="Image of the logo" routerLink="/events" />
 

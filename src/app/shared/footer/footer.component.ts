@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   template: `
-    <footer class="border-top footer">
+    <footer *ngIf="router.url !== '/login' && router.url !== '/register'" class="border-top footer">
       <div class="container">&copy; 2022 - Roots</div>
     </footer>
   `,
@@ -12,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
   ],
 })
 export class FooterComponent implements OnInit {
-  constructor() {
+  constructor(public router: Router) {
     /* TODO document why this constructor is empty */
   }
 
