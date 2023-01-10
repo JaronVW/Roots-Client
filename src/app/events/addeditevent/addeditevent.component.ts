@@ -52,7 +52,7 @@ export class AddediteventComponent implements OnInit {
         console.log(this.event);
         if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent).toISOString();
         response.tags.forEach((element) => {
-          element.tagText = `${element.count} | ${element.subject}`;
+          element.tagText = `${element.subject}`;
         });
       });
     }
