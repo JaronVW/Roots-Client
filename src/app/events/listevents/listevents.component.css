@@ -38,7 +38,6 @@ button {
   border-bottom-right-radius: 0;
   border: none;
   border-width: 0;
-  /*border: 0;*/
   background: #f3f3f4;
 }
 
@@ -155,5 +154,4 @@ button {
 
 .archive-card {
   background-color: #F2E5D9;
-
 }

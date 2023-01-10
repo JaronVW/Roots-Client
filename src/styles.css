@@ -19,15 +19,12 @@ app-root {
   padding-bottom: 100px;
 }
 
-button {
+.brand-button {
   background-color: #007469 !important;
   outline: black !important;
-}
-
-button:hover {
-  background-color: #0d8478 !important;
-}
-
-.btn {
   border-color: #007469;
+}
+
+.brand-button:hover {
+  background-color: #0d8478 !important;
 }
