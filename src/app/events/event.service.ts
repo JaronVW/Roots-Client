@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Event, Tag } from './event.interface';
 
 @Injectable({
@@ -42,11 +42,10 @@ export class EventService {
   }
 
   updateEvent(id: number, event: Event): Observable<Event> {
-    return this.http
-      .put<Event>(`events/${id}`, event)
-      .pipe
+    return this.http.put<Event>(`events/${id}`, event).pipe(
       // map((body: EventResponse) => body.results[0]),
-      ();
+      tap((body: Event) => console.log('body: ', body)),
+    );
   }
 
   deleteEvent(id: number) {
@@ -57,7 +56,6 @@ export class EventService {
     return this.http.patch(`events/${id}/unarchive`, null);
   }
 
-  
   archive(id: number) {
     return this.http.patch(`events/${id}/archive`, null);
   }

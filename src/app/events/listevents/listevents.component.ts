@@ -15,7 +15,7 @@ export class ListeventsComponent implements OnInit {
   eventDetailsObject: Event = {
     title: '',
     description: '',
-    tags: []
+    tags: [],
   };
   loading: boolean = false;
   showArchived: boolean = false;
@@ -67,20 +67,22 @@ export class ListeventsComponent implements OnInit {
 
   getEvents(searchQuery?: string, getArchivedItems?: boolean) {
     this.events = null;
-    this.eventService.getEvents(undefined, undefined, undefined, searchQuery, getArchivedItems).subscribe((response: any[]) => {
-      this.events = response;
-      for (const element of this.events) {
-        if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
-      }
-      console.log(this.events);
-    });
+    this.eventService
+      .getEvents(undefined, undefined, undefined, searchQuery, getArchivedItems)
+      .subscribe((response: any[]) => {
+        this.events = response;
+        for (const element of this.events) {
+          if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
+        }
+        console.log(this.events);
+      });
   }
 
-  clearDetails(){
+  clearDetails() {
     this.eventDetailsObject = {
       title: '',
       description: '',
-      tags: []
+      tags: [],
     };
   }
 
@@ -99,6 +101,6 @@ export class ListeventsComponent implements OnInit {
   }
 
   logState() {
-    console.log(this.showArchived)
+    console.log(this.showArchived);
   }
 }

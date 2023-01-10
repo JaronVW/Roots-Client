@@ -18,6 +18,7 @@
             [eventTags]="event.tags"
             [title]="event.title"
             (addTag)="addTag($event)"
+            (titleChange)="updateTitle($event)"
           >
           </app-input-with-tag-suggestions>
         </div>
@@ -93,7 +94,15 @@
         <div class="form-group">
           <label for="file"></label>
           Bestand toevoegen:
-          <input type="file" class="form-control" id="file" multiple aria-describedby="fileHelp" name="Image" />
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            class="form-control"
+            id="file"
+            multiple
+            aria-describedby="fileHelp"
+            name="Image"
+          />
         </div>
       </div>
       <div class="col-md-6">
@@ -106,17 +115,17 @@
       <div class="col-md-6">
         <div class="form-group">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
+            <li class="list-group-item" *ngFor="let multimediaItem of event.multimediaItems">
+              {{ multimediaItem.multimedia.name }}
+            </li>
           </ul>
         </div>
       </div>
       <div class="col-md-6">
         <button type="button" class="btn btn-primary brand-button" (click)="backClicked()">Terug</button>
-        <button type="button" class="btn btn-primary submitButton brand-button" (click)="validate()">{{ buttonText }}</button>
+        <button type="button" class="btn btn-primary submitButton brand-button" (click)="validate()">
+          {{ buttonText }}
+        </button>
       </div>
     </div>
   </form>

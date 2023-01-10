@@ -7,7 +7,7 @@ export interface Event {
   files?: string[];
   userId?: string;
 
-  multiMedia?: string[];
+  multimediaItems?: Multimedia[];
   isArchived?: boolean;
   organisationId?: number;
   content?: string;
@@ -20,4 +20,12 @@ export interface Tag {
   subject: string;
   count: number;
   tagText?: string;
+}
+
+export interface Multimedia {
+  id?: number;
+  multimedia: File;
+  description?: string;
+  transcript?: string;
+  alt?: string;
 }
