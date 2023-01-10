@@ -18,6 +18,7 @@ export class ListeventsComponent implements OnInit {
     tags: []
   };
   loading: boolean = false;
+  showArchived: boolean = false;
 
   constructor(private router: Router, private eventService: EventService) {}
 
@@ -43,7 +44,8 @@ export class ListeventsComponent implements OnInit {
   }
 
   search(query: string) {
-    this.getEvents(query);
+    if (this.showArchived) this.getEvents(query, this.showArchived);
+    else this.getEvents(query);
     this.hasSearched = true;
   }
 
@@ -53,14 +55,19 @@ export class ListeventsComponent implements OnInit {
     this.hasSearched = false;
   }
 
-  archive(id: number) {
-    this.eventService.archive(id).subscribe(() => {});
-    this.router.navigate(['/events/archive']);
+  async archive(id: number) {
+    await this.eventService.archive(id).subscribe(() => {});
+    window.location.reload();
   }
 
-  getEvents(searchQuery?: string) {
+  async unarchive(id: number) {
+    await this.eventService.unarchive(id).subscribe(() => {});
+    window.location.reload();
+  }
+
+  getEvents(searchQuery?: string, getArchivedItems?: boolean) {
     this.events = null;
-    this.eventService.getEvents(undefined, undefined, undefined, searchQuery).subscribe((response: any[]) => {
+    this.eventService.getEvents(undefined, undefined, undefined, searchQuery, getArchivedItems).subscribe((response: any[]) => {
       this.events = response;
       for (const element of this.events) {
         if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
@@ -89,5 +96,9 @@ export class ListeventsComponent implements OnInit {
   delete(id: number) {
     this.eventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
     this.getEvents();
+  }
+
+  logState() {
+    console.log(this.showArchived)
   }
 }
