@@ -14,14 +14,7 @@
         [(ngModel)]="searchValue"
       />
     </div>
-    <div class="col-md-3 col-xs-4">
-      <div class="form-check show-archived">
-        <input [(ngModel)]="showArchived" class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-        <label class="form-check-label" for="flexCheckDefault"> Gearchiveerde events tonen? </label>
-      </div>
-    </div>
-    <div class="col-md-3 col-xs-0"></div>
-    <div class="col-md-4 col-xs-12" style="margin-top: 8px;">
+    <div class="col-md-3 col-xs-12">
       <button *ngIf="hasSearched; else searchButton" (click)="clearSearch()" class="btn btn-primary">
         Zoekopdracht wissen
       </button>
@@ -30,8 +23,14 @@
         <button (click)="search(searchValue)" class="btn btn-primary">Zoeken</button>
       </ng-template>
     </div>
-    <div class="col-md-3 col-xs-12" style="margin-top: 8px;">
+    <div class="col-md-3 col-xs-12">
       <button type="submit" class="btn btn-primary" routerLink="/events/create">Aanmaken</button>
+    </div>
+    <div class="col-md-3 col-xs-4">
+      <div class="form-check show-archived">
+        <input [(ngModel)]="showArchived" class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+        <label class="form-check-label" for="flexCheckDefault"> Gearchiveerde events tonen? </label>
+      </div>
     </div>
 
     <ng-container *ngIf="events">
@@ -48,7 +47,10 @@
           [attr.aria-expanded]="accordionItem.expanded"
           [attr.aria-controls]="'accordion-body-' + index"
         >
-          <div class="rounded card" [ngClass]="{ 'disable-rounded-top-left': accordionItem.expanded, 'archive-card': item.isArchived == true}">
+          <div
+            class="rounded card"
+            [ngClass]="{ 'disable-rounded-top-left': accordionItem.expanded, 'archive-card': item.isArchived == true }"
+          >
             <ul class="list-group" style="cursor: default">
               <li class="">
                 <div class="card-body" *ngIf="!accordionItem.expanded">
@@ -158,7 +160,7 @@
 
             <div
               class="expand-item"
-              [ngClass]="{'archive-card': item.isArchived == true }"
+              [ngClass]="{ 'archive-card': item.isArchived == true }"
               (click)="accordionItem.toggle()"
               (click)="getEventDetails(item.id!)"
               style="cursor: pointer"

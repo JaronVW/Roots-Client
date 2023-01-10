@@ -134,12 +134,12 @@ button {
 }
 
 .archive-img {
-  margin-top: -31px;
+  margin-top: -40px;
   margin-left: 30%;
 }
 
 .archive-img img {
-  width: 25px;
+  width: 40px;
 }
 
 @media (max-width: 768px) {
@@ -154,5 +154,6 @@ button {
 }
 
 .archive-card {
-  background-color: #ececec;
+  background-color: #F2E5D9;
+
 }
