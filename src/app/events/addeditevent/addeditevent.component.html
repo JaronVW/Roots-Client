@@ -75,6 +75,8 @@
               [settings]="dropdownSettings"
               [data]="dropdownList"
               [(ngModel)]="event.tags"
+              (click)="changeTagName()"
+              (ngModelChange)="changeTagName()"
               [required]="error"
               name="tags"
               id="tags"

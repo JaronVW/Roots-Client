@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
 import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
-import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-addevent',
@@ -52,24 +51,36 @@ export class AddediteventComponent implements OnInit {
         this.event = response;
         console.log(this.event);
         if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent).toISOString();
+        response.tags.forEach((element) => {
+          element.tagText = `${element.count} | ${element.subject}`;
+        });
       });
     }
 
     if (this.isEditing) this.buttonText = 'Update';
 
     this.EventService.getTags().subscribe((response: any[]) => {
-      this.dropdownList = response.map((tag: Tag) => ({ ...tag }));
+      response.forEach((tag) => {
+        tag.tagText = `${tag.count} | ${tag.subject}`;
+      });
+      this.dropdownList = response;
       this.searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
     });
 
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'id',
-      textField: 'subject',
+      idField: 'subject',
+      textField: 'tagText',
+      subject: 'subject',
       itemsShowLimit: 5,
       allowSearchFilter: true,
       enableCheckAll: false,
+      classes: 'tag-dropdown',
     };
+
+    // document.querySelector('.multiselect-dropdown')?.addEventListener('click', () => {
+
+    // });
   }
 
   validate() {
@@ -96,7 +107,6 @@ export class AddediteventComponent implements OnInit {
   }
 
   createEvent() {
-    console.log(this.event);
     if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
     const data = {
       ...this.event,
@@ -141,11 +151,22 @@ export class AddediteventComponent implements OnInit {
 
   addTag(tag: Tag) {
     console.log('addTag');
-    // const newTag: Tag = {
-    //   subject: tag.subject,
-    // };
-    // this.dropdownList.push({ id: undefined, subject: tag.subject });
     this.event.tags = [...this.event.tags, tag];
+    setTimeout(() => {
+      this.changeTagName();
+    });
+  }
+
+  changeTagName() {
+    console.log('changeTagName');
+    document.querySelectorAll('.multiselect-dropdown span.selected-item span').forEach((element) => {
+      const parts = element.innerHTML.split(' | ');
+      if (parts.length > 1) element.innerHTML = parts[1];
+      else element.innerHTML = parts[0];
+    });
+    document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {
+      console.log(element); // selector for dropdown item
+    });
   }
 
   openDialog() {
@@ -156,16 +177,20 @@ export class AddediteventComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       if (result != undefined) {
-        this.dropdownList.push({ id: this.dropdownList.length + 1, subject: result });
-        this.event.tags = [...this.event.tags, result];
+        const newTag: Tag = {
+          ...result,
+          id: this.dropdownList.length + 1,
+          tagText: `0 | ${result.subject}`,
+        };
+        console.log(newTag);
+        this.dropdownList = [...this.dropdownList, { ...result, tagText: `0 | ${result.subject}` }];
+        this.event.tags = [...this.event.tags, { ...result, tagText: `0 | ${result.subject}` }];
+        setTimeout(() => {
+          this.changeTagName();
+        });
 
         console.log('event tags:', this.event.tags);
       }
     });
-  }
-
-  getTitle($event: string) {
-    // console.log('reached parent',$event);
-    this.event.title = $event;
   }
 }
