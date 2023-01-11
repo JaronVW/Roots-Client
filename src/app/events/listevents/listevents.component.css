@@ -109,10 +109,11 @@ button {
 .info {
   float: right;
 }
+
 .badge {
   margin: 0.2rem 0;
   border-radius: 0.2rem;
-  background-color: #202049;
+  background-color: #007469;
   float: left;
   margin-right: 10px;
 }
@@ -123,7 +124,6 @@ button {
   right: 0;
   margin: 0.5rem;
   text-align: end;
-
   font-style: oblique;
   font-weight: lighter;
 }
@@ -154,4 +154,8 @@ button {
 
 .archive-card {
   background-color: #F2E5D9;
+}
+
+.description {
+  font-size: 17px;
 }

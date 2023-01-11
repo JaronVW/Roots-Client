@@ -26,7 +26,7 @@ export class InputWithTagSuggestionsComponent implements OnInit {
   @ViewChild('input') dropdown!: ElementRef;
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
-    const emptyTag: Tag = { id: undefined, subject: '' };
+    const emptyTag: Tag = { id: undefined, subject: '', count: 0 };
     const input = this.input.nativeElement;
     const dropdown = this.dropdown.nativeElement;
     if (event.target !== input && event.target !== dropdown) {
@@ -44,7 +44,10 @@ export class InputWithTagSuggestionsComponent implements OnInit {
   showDropdown = false;
   suggestions: Tag[] = [];
 
-  constructor() {}
+  constructor() {
+    /* TODO document why this constructor is empty */
+  }
+
   ngOnInit(): void {
     this.suggestions = this.tags.filter((tag) => !this.eventTags.includes(tag));
   }

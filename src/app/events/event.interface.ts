@@ -18,4 +18,6 @@ export interface Event {
 export interface Tag {
   id?: number;
   subject: string;
+  count: number;
+  tagText?: string;
 }
