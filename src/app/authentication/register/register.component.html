@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-12 col-md-8 mx-auto">
-    <div class="card">
+    <div class="card register-card">
       <div class="card-body">
         <h1 class="card-title">Registreren</h1>
         <form>
-          <div class="row gy-lg-3">
+          <div class="row gy-3">
             <div class="col-6">
               <label for="firstNameInput">Voornaam</label>
               <div class="input-group">
@@ -127,18 +127,52 @@
                 <input type="password" class="form-control" id="passwordInput" placeholder="Wachtwoord invoeren..." />
               </div>
             </div>
-            <div class="col-12 mt-4">
-              <div class="input-group">
-                <input id="organisationsCheckbox" class="form-check-input" type="checkbox" />
-                <label for="organisationsCheckbox" class="form-check-label"> Een organisatie toevoegen? </label>
-              </div>
-            </div>
+
             <div class="col-12">
-              <label for="organisationNameInput">Organisatie naam</label>
-              <div class="input-group">
-                <input type="text" class="form-control" id="organisationNameInput" placeholder="Naam invoeren..." />
+              <p>
+                <strong>Note:</strong> U wordt automatisch toegevoegt aan een organisatie indien die door de een ander
+                al is aangemaakt. Er wordt automatisch naar het domain binnen u mail gekeken om u toe te voegena an een
+                organisatie.
+              </p>
+            </div>
+
+            <div class="col-12">
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingThree">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseThree"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseThree"
+                    >
+                      Een organisatie toevoegen?
+                    </button>
+                  </h2>
+                  <div
+                    id="flush-collapseThree"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="flush-headingThree"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div class="accordion-body">
+                      <label for="organisationNameInput">Organisatie naam</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="organisationNameInput"
+                          placeholder="Naam invoeren..."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div class="col-12 text-center">
               <button type="submit" class="btn btn-primary registerButton brand-button">Registreren</button>
             </div>
