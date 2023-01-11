@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-footer',
   template: `
-    <footer *ngIf="router.url !== '/login' && router.url !== '/register'" class="border-top footer">
+    <footer *ngIf="router.url !== '/login' && router.url !== '/register' && router.url !== '/accountrecovery'" class="border-top footer">
       <div class="container">&copy; 2022 - Roots</div>
     </footer>
   `,
