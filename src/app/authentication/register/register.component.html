@@ -73,7 +73,15 @@
                     </svg>
                   </span>
                 </div>
-                <input type="email" class="form-control" id="emailInput" placeholder="Email invoeren..." />
+                <input
+                  type="email"
+                  class="form-control"
+                  id="emailInput"
+                  placeholder="Email invoeren..."
+                  (input)="createDomain()"
+                  [(ngModel)]="email"
+                  [ngModelOptions]="{ standalone: true }"
+                />
               </div>
             </div>
 
@@ -129,44 +137,56 @@
             </div>
 
             <div class="col-12">
-              <p>
-                <strong>Note:</strong> U wordt automatisch toegevoegt aan een organisatie indien die door de een ander
-                al is aangemaakt. Er wordt automatisch naar het domain binnen u mail gekeken om u toe te voegena an een
-                organisatie.
-              </p>
-            </div>
-
-            <div class="col-12">
-              <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="flush-headingThree">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#flush-collapseThree"
-                      aria-expanded="false"
-                      aria-controls="flush-collapseThree"
-                    >
-                      Een organisatie toevoegen?
-                    </button>
-                  </h2>
-                  <div
-                    id="flush-collapseThree"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="flush-headingThree"
-                    data-bs-parent="#accordionFlushExample"
-                  >
-                    <div class="accordion-body">
+              <button
+                type="button"
+                class="btn btn-outline-primary brand-button mb-3"
+                (click)="collapse.toggle()"
+                [attr.aria-expanded]="!isCollapsed"
+                aria-controls="collapseExample"
+              >
+                Een organisatie toevoegen?
+              </button>
+              <div style="min-height: 100px">
+                <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                  <div class="card">
+                    <div class="card-body">
                       <label for="organisationNameInput">Organisatie naam</label>
-                      <div class="input-group">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="organisationNameInput"
-                          placeholder="Naam invoeren..."
-                        />
+                      <div class="row">
+                        <div class="col-9">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  fill="currentColor"
+                                  class="bi bi-building"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"
+                                  />
+                                  <path
+                                    d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="organisationNameInput"
+                              placeholder="Naam invoeren..."
+                            />
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <button class="btn btn-primary brand-button">Aanmaken</button>
+                        </div>
                       </div>
+
+                      <div class="text-muted mt-3">Het domein voor deze organisatie wordt: {{ this.domain }}</div>
                     </div>
                   </div>
                 </div>
@@ -174,7 +194,7 @@
             </div>
 
             <div class="col-12 text-center">
-              <button type="submit" class="btn btn-primary registerButton brand-button">Registreren</button>
+              <button type="submit" class="btn btn-primary register-button brand-button">Registreren</button>
             </div>
             <div class="col-12 text-center">
               <p>
