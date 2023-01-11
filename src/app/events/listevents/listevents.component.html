@@ -64,10 +64,12 @@
                         <img *ngIf="item.isArchived" src="assets/images/archived.png" />
                       </div>
                     </div>
-                    <div class="info col-md-12">
+                    <div class="info col-md-9">
                       <div class="tags" *ngFor="let tag of item.tags" style="margin: -8px 2px 20px 0">
                         <span class="badge badge-pill badge-primary">{{ tag.subject }}</span>
                       </div>
+                    </div>
+                    <div class="info col-md-3">
                       <p style="text-align: end; margin: -8px 2px 20px 0; font-style: oblique; font-weight: lighter">
                         {{ item.dateOfEvent }}
                       </p>
