@@ -22,7 +22,7 @@ textarea {
   border-bottom-left-radius: 5px;
   height: 160px;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: white;
 }
 

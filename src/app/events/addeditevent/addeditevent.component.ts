@@ -185,12 +185,25 @@ export class AddediteventComponent implements OnInit {
       for (const element of event.target.files) {
         console.log(element);
         if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
-        this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element }];
+        this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
       }
     }
   }
 
   updateTitle(event: any) {
     this.event.title = event;
+  }
+
+  filterMultimedia(multimedia: string) {
+    if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+    this.event.multimediaItems = this.event.multimediaItems.filter((item) => item.multimedia != multimedia);
+  }
+
+  onFileDropped(files: Array<any>) {
+    for (const element of files) {
+      console.log(element);
+      if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+      this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
+    }
   }
 }

@@ -113,10 +113,11 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group dropzone" appDragAndDrop (fileDropped)="onFileDropped($event)">
           <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let multimediaItem of event.multimediaItems">
-              {{ multimediaItem.multimedia.name }}
+              {{ multimediaItem.multimedia }}
+              <button (click)="filterMultimedia(multimediaItem.multimedia)">X</button>
             </li>
           </ul>
         </div>
