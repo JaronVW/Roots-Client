@@ -15,8 +15,9 @@ export class ListeventsComponent implements OnInit {
   eventDetailsObject: Event = {
     title: '',
     description: '',
-    tags: []
+    tags: [],
   };
+  
   loading: boolean = false;
 
   constructor(private router: Router, private eventService: EventService) {}
@@ -69,11 +70,11 @@ export class ListeventsComponent implements OnInit {
     });
   }
 
-  clearDetails(){
+  clearDetails() {
     this.eventDetailsObject = {
       title: '',
       description: '',
-      tags: []
+      tags: [],
     };
   }
 

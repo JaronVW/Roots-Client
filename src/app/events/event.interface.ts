@@ -7,7 +7,10 @@ export interface Event {
   files?: string[];
   userId?: string;
 
-  multiMedia?: string[];
+  multimediaItems?: {
+    path: string;
+    multimedia: string;
+  }[];
   isArchived?: boolean;
   organisationId?: number;
   content?: string;
