@@ -9,30 +9,65 @@ import { Router } from '@angular/router';
   styleUrls: ['./listevents.component.css'],
 })
 export class ListeventsComponent implements OnInit {
-  searchValue: string = '';
+  _searchValue: string = '';
   events: Event[] | null = [];
   hasSearched: boolean = false;
+  eventDetailsObject: Event = {
+    title: '',
+    description: '',
+    tags: []
+  };
+  loading: boolean = false;
+  showArchived: boolean = false;
 
-  constructor(private router: Router, private EventService: EventService) {}
+  constructor(private router: Router, private eventService: EventService) {}
 
   ngOnInit(): void {
     this.getEvents();
   }
 
+  get searchValue(): string {
+    return this._searchValue;
+  }
+
+  set searchValue(value: string) {
+    if (value !== this._searchValue) {
+      this._searchValue = value;
+      this.automaticSearchReset();
+    }
+  }
+
+  private automaticSearchReset() {
+    if (this._searchValue == '') {
+      this.clearSearch();
+    }
+  }
+
   search(query: string) {
-    this.getEvents(query);
+    if (this.showArchived) this.getEvents(query, this.showArchived);
+    else this.getEvents(query);
     this.hasSearched = true;
   }
 
   clearSearch() {
-    this.searchValue = '';
+    this._searchValue = '';
     this.getEvents();
     this.hasSearched = false;
   }
 
-  getEvents(searchQuery?: string) {
+  async archive(id: number) {
+    await this.eventService.archive(id).subscribe(() => {});
+    window.location.reload();
+  }
+
+  async unarchive(id: number) {
+    await this.eventService.unarchive(id).subscribe(() => {});
+    window.location.reload();
+  }
+
+  getEvents(searchQuery?: string, getArchivedItems?: boolean) {
     this.events = null;
-    this.EventService.getEvents(undefined, undefined, undefined, searchQuery).subscribe((response: any[]) => {
+    this.eventService.getEvents(undefined, undefined, undefined, searchQuery, getArchivedItems).subscribe((response: any[]) => {
       this.events = response;
       for (const element of this.events) {
         if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
@@ -41,8 +76,29 @@ export class ListeventsComponent implements OnInit {
     });
   }
 
+  clearDetails(){
+    this.eventDetailsObject = {
+      title: '',
+      description: '',
+      tags: []
+    };
+  }
+
+  getEventDetails(id: number) {
+    this.loading = true;
+    this.eventService.getEvent(id).subscribe((response: any) => {
+      this.eventDetailsObject = response;
+      console.log(this.eventDetailsObject);
+      this.loading = false;
+    });
+  }
+
   delete(id: number) {
-    this.EventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
+    this.eventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
     this.getEvents();
+  }
+
+  logState() {
+    console.log(this.showArchived)
   }
 }

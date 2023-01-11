@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Event, Tag } from './event.interface';
 
 @Injectable({
@@ -17,16 +17,23 @@ export class EventService {
     return this.http.post<Event>('events', event);
   }
 
-  getEvents(min?: number, max?: number, order?: string, searchQuery?: string): Observable<Array<Event>> {
+  getEvents(
+    min?: number,
+    max?: number,
+    order?: string,
+    searchQuery?: string,
+    getArchivedItems?: boolean,
+  ): Observable<Array<Event>> {
     let queryparams = '?';
     if (min) queryparams += `min=${min}&`;
     if (max) queryparams += `max=${max}&`;
     if (order) queryparams += `order=${order}&`;
-    if (searchQuery) queryparams += `searchQuery=${searchQuery}`;
+    if (searchQuery) queryparams += `searchQuery=${searchQuery}&`;
+    if (getArchivedItems) queryparams += `getArchivedItems=${getArchivedItems}`;
     return this.http.get<Array<Event>>('events' + queryparams);
   }
 
-  getEvent(id: string): Observable<any> {
+  getEvent(id: number): Observable<any> {
     return this.http.get<Event>(`events/${id}`).pipe(map((body: Event) => body));
   }
 
@@ -34,7 +41,7 @@ export class EventService {
     return this.http.get<Tag[]>('tags');
   }
 
-  updateEvent(id: string, event: Event): Observable<Event> {
+  updateEvent(id: number, event: Event): Observable<Event> {
     return this.http
       .put<Event>(`events/${id}`, event)
       .pipe
@@ -45,8 +52,13 @@ export class EventService {
   deleteEvent(id: number) {
     return this.http.delete(`events/${id}`);
   }
-}
 
-export interface EventResponse {
-  results: Event[];
+  unarchive(id: number) {
+    return this.http.patch(`events/${id}/unarchive`, null);
+  }
+
+  
+  archive(id: number) {
+    return this.http.patch(`events/${id}/archive`, null);
+  }
 }

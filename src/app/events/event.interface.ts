@@ -8,6 +8,9 @@ export interface Event {
   userId?: string;
 
   multiMedia?: string[];
+  isArchived?: boolean;
+  organisationId?: number;
+  content?: string;
 
   //   Nog te doen: Tags, files, userId referencen naar andere interfaces
 }
@@ -15,4 +18,6 @@ export interface Event {
 export interface Tag {
   id?: number;
   subject: string;
+  count: number;
+  tagText?: string;
 }

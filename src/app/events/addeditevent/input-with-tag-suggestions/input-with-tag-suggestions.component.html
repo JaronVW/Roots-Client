@@ -1,0 +1,31 @@
+<div class="titleTag">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input
+      type="text"
+      autocomplete="off"
+      class="form-control"
+      [(ngModel)]="title"
+      placeholder="Enter titel"
+      (focus)="onFocus()"
+      (keydown)="onKeyDown($event)"
+      (keyup)="onKeyUp()"
+      id="title"
+      #input
+    />
+  </div>
+  <!-- dropdown select list -->
+  <div class="dropdown">
+    <ul *ngIf="showDropdown" (keydown)="onKeyDown($event); $event.stopPropagation()" tabindex="0" #dropdown>
+      <li class="headerTag" disabled="true">Kies alvast een tag.</li>
+      <li
+        class="dropdown-item"
+        *ngFor="let tag of suggestions"
+        [class.selected]="tag === selectedTag"
+        (click)="addTagAndRemoveFromSuggestions(tag)"
+      >
+        {{ tag.subject }}
+      </li>
+    </ul>
+  </div>
+</div>

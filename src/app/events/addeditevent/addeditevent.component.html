@@ -11,20 +11,17 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="title">Titel:</label>
-          <input
-            [(ngModel)]="event.title"
-            name="title"
-            type="text"
-            class="form-control"
-            id="title"
-            aria-describedby="titleHelp"
-            placeholder="Titel typen..."
-          />
+          <app-input-with-tag-suggestions
+            class="title"
+            style="position: relative"
+            [tags]="dropdownList"
+            [eventTags]="event.tags"
+            [title]="event.title"
+            (addTag)="addTag($event)"
+          >
+          </app-input-with-tag-suggestions>
         </div>
       </div>
-
-
       <div class="col-md-6">
         <div class="form-group">
           <label for="dateOfEvent">Datum:</label>
@@ -55,6 +52,21 @@
           ></textarea>
         </div>
       </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="description">Omschrijving:</label>
+          <textarea
+            [(ngModel)]="event.content"
+            name="content"
+            style="height: 300px"
+            type="content"
+            class="form-control"
+            id="content"
+            aria-describedby="descriptionHelp"
+            placeholder="Omschrijving typen..."
+          ></textarea>
+        </div>
+      </div>
       <div class="col-md-5">
         <div class="form-group">
           <label for="tags">Tags toevoegen:</label>
@@ -63,6 +75,8 @@
               [settings]="dropdownSettings"
               [data]="dropdownList"
               [(ngModel)]="event.tags"
+              (click)="changeTagName()"
+              (ngModelChange)="changeTagName()"
               [required]="error"
               name="tags"
               id="tags"
@@ -101,8 +115,8 @@
         </div>
       </div>
       <div class="col-md-6">
-        <button type="submit" class="btn btn-primary" (click)="backClicked()">Terug</button>
-        <button type="submit" class="btn btn-primary" (click)="validate()">{{ buttonText }}</button>
+        <button type="button" class="btn btn-primary brand-button" (click)="backClicked()">Terug</button>
+        <button type="button" class="btn btn-primary submitButton brand-button" (click)="validate()">{{ buttonText }}</button>
       </div>
     </div>
   </form>

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { routes } from './app.routing';
@@ -17,12 +17,13 @@ import { TokenInterceptor } from '../../token.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddtagDialogComponent } from './events/addeditevent/addtag-dialog/addtag-dialog.component';
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import { ArchiveComponent } from './events/archive/archive.component';
-import {CdkAccordionModule} from "@angular/cdk/accordion";
-import {MatMenuModule} from "@angular/material/menu";
-import {MatButtonModule} from "@angular/material/button";
-
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { InputWithTagSuggestionsComponent } from './events/addeditevent/input-with-tag-suggestions/input-with-tag-suggestions.component';
+import { MatSelectModule } from '@angular/material/select';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 
 @NgModule({
   declarations: [
@@ -34,8 +35,8 @@ import {MatButtonModule} from "@angular/material/button";
     AddediteventComponent,
     ListeventsComponent,
     AddtagDialogComponent,
-
-    ArchiveComponent,
+    InputWithTagSuggestionsComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,11 +50,12 @@ import {MatButtonModule} from "@angular/material/button";
     MatDialogModule,
     CdkAccordionModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    {provide: MatDialogRef, useValue: {}},
+    { provide: MatDialogRef, useValue: {} },
   ],
   bootstrap: [AppComponent],
 })

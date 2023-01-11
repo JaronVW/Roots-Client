@@ -1,4 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { routes } from 'src/app/app.routing';
+import { mockEvent1 } from '../listevents/listevents.mockdata';
 
 import { AddediteventComponent } from './addeditevent.component';
 
@@ -9,6 +17,14 @@ describe('AddeventComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AddediteventComponent],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatDialogModule,
+        NgMultiSelectDropDownModule,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AddediteventComponent);
@@ -19,4 +35,39 @@ describe('AddeventComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('form invalid when empty', fakeAsync(() => {
+    spyOn(component, 'validate');
+
+    let button = fixture.debugElement.nativeElement.querySelector('.submitButton');
+    button.click();
+    tick();
+    expect(component.validate).toHaveBeenCalled();
+  }));
+
+  //testing if all fields are present
+  it('there should be a field for the event title', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('.title'));
+    expect(compiled.length).toEqual(1);
+  }));
+
+  it('there should be a field for the event description', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('#description'));
+    expect(compiled.length).toEqual(1);
+  }));
+
+  it('there should be a field for the event date', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('#dateOfEvent'));
+    expect(compiled.length).toEqual(1);
+  }));
+
+  it('there should be a field for the event tags', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('#tags'));
+    expect(compiled.length).toEqual(1);
+  }));
+
+  it('there should be a field for the event files', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('#file'));
+    expect(compiled.length).toEqual(1);
+  }));
 });
