@@ -178,15 +178,22 @@
                               class="form-control"
                               id="organisationNameInput"
                               placeholder="Naam invoeren..."
+                              [(ngModel)]="organization.name"
+                              [ngModelOptions]="{ standalone: true }"
                             />
                           </div>
                         </div>
                         <div class="col-3">
-                          <button class="btn btn-primary brand-button">Aanmaken</button>
+                          <button (click)="validate()" class="btn btn-primary brand-button create-organization-button">Aanmaken</button>
                         </div>
                       </div>
-
-                      <div class="text-muted mt-3">Het domein voor deze organisatie wordt: {{ this.domain }}</div>
+                      <div class="text-muted mt-3">Het domein voor deze organisatie wordt: {{ this.organization.domain }}</div>
+                      <div *ngIf="error" class="col-md-12">
+                        <br>
+                        <div class="alert alert-danger" role="alert">
+                          {{ errorMessage }}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

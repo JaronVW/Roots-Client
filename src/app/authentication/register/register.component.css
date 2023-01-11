@@ -38,6 +38,10 @@ a:hover {
   color: white;
 }
 
+.create-organization-button {
+  width: 100%;
+}
+
 .form-check-input {
   border-radius: 0px !important;
   margin: 0px 20px 0px 8px;
