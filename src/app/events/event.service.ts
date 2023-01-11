@@ -7,6 +7,7 @@ import { Event, Tag } from './event.interface';
   providedIn: 'root',
 })
 export class EventService {
+
   public currentUser$ = new BehaviorSubject<null | undefined>(undefined);
   private readonly CURRENT_USER = 'currentuser';
 
@@ -39,6 +40,10 @@ export class EventService {
 
   getTags(): Observable<Tag[]> {
     return this.http.get<Tag[]>('tags');
+  }
+
+  getFile(filename: string) {
+    return this.http.get(`file/${filename}`)
   }
 
   updateEvent(id: number, event: Event): Observable<Event> {

@@ -5,8 +5,8 @@ import {
   HttpEvent,
   HttpInterceptor, HttpHeaders
 } from '@angular/common/http';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {switchMap} from "rxjs/operators";
+import {Observable, of} from 'rxjs';
+
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

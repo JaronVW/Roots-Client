@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-listevents',
@@ -20,7 +21,7 @@ export class ListeventsComponent implements OnInit {
   
   loading: boolean = false;
 
-  constructor(private router: Router, private eventService: EventService) {}
+  constructor(private router: Router, private eventService: EventService,@Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -85,6 +86,12 @@ export class ListeventsComponent implements OnInit {
       console.log(this.eventDetailsObject);
       this.loading = false;
     });
+  }
+
+  getFile(filename: string, originalFilename: string){
+    this.document.location.href = `http://localhost:3000/file/${filename}?originalFilename=${originalFilename}`;
+    // this.router.navigate([`http://localhost:3000/file/${filename}`]);	
+   
   }
 
   delete(id: number) {
