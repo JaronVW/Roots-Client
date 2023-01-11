@@ -25,6 +25,7 @@ import { InputWithTagSuggestionsComponent } from './events/addeditevent/input-wi
 import { MatSelectModule } from '@angular/material/select';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.directive';
+import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.direct
     InputWithTagSuggestionsComponent,
     LoadingSpinnerComponent,
     DragAndDropDirective,
+    AccountrecoveryComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,9 @@ html {
   position: relative;
 }
 
-html, body, app-root {
+html,
+body,
+app-root {
   min-height: 100%;
   margin: 0;
   padding: 0;
@@ -11,7 +13,7 @@ html, body, app-root {
 
 body {
   font-family: sans-serif;
-  background-color: #DAE0E6;
+  background-color: #dae0e6;
 }
 
 app-root {
@@ -23,8 +25,11 @@ app-root {
   background-color: #007469 !important;
   outline: black !important;
   border-color: #007469;
+  text-decoration: none !important;
+  color: white !important;
 }
 
 .brand-button:hover {
   background-color: #0d8478 !important;
+  border-color: white;
 }

@@ -1,1 +1,40 @@
-/* TODO: add css content */
+.form-group {
+    padding: 0px 0px 10px 0px
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 7px;
+}
+
+span {
+    height: 100%;
+}
+
+.input-group-text {
+    border-top-right-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+
+.card {
+    padding: 1%;
+    margin-top: 25px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 60%;
+}
+
+.form-check-input {
+    transform: scale(2);
+    border-radius: 0px !important;
+    margin: 0px 20px 0px 8px;
+}
