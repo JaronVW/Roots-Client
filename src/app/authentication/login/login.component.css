@@ -18,7 +18,7 @@ span {
 
 .card {
     padding: 1%;
-    transform: translateY(45%);
+    margin-top: 25px;
 }
 
 a {
@@ -37,8 +37,4 @@ a:hover {
     transform: scale(2);
     border-radius: 0px !important;
     margin: 0px 20px 0px 8px;
-}
-
-.wrapper {
-    position: relative;
 }
