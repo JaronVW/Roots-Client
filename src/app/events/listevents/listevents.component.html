@@ -49,8 +49,7 @@
           <div
             class="rounded card"
             [ngClass]="{
-              'disable-rounded-top-left': accordionItem.expanded,
-              'archive-card': item.isArchived == true
+              'disable-rounded-top-left': accordionItem.expanded
             }"
           >
             <ul class="list-group timeline" style="cursor: default">
@@ -61,11 +60,16 @@
                 <div class="timeline-icon">
                   <p>&nbsp;</p>
                 </div>
-                <div class="card-body timeline-body">
+                <div class="card-body timeline-body" [ngClass]="{ 'archive-card': item.isArchived == true }">
                   <div class="event-content">
                     <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-10">
                         <h1>{{ item.title }}</h1>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="archive-img">
+                          <img *ngIf="item.isArchived" src="assets/images/archived.png" alt="archive icon" />
+                        </div>
                       </div>
                       <div class="col-md-12">
                         <div class="tags" *ngFor="let tag of item.tags" style="margin: -8px 2px 20px 0">

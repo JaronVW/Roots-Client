@@ -74,13 +74,13 @@ button {
   background-color: transparent;
   text-align: left;
   position: absolute;
-  margin-left: -43px;
+  margin-left: -2.3rem;
   top: 33px;
 }
 
-.disable-rounded-top-left {
+/* .disable-rounded-top-left {
   border-top-left-radius: 0 !important;
-}
+} */
 
 .small-expand-item:hover {
   color: #0d8478;
@@ -129,7 +129,7 @@ button {
 }
 
 .archive-img {
-  margin-top: -40px;
+  margin-top: -44px;
   margin-left: 30%;
 }
 
@@ -146,10 +146,6 @@ button {
   .archive-img img {
     width: 25px;
   }
-}
-
-.archive-card {
-  background-color: #f2e5d9;
 }
 
 .description {
@@ -199,14 +195,14 @@ button {
 .timeline .timeline-body {
   margin-left: 23%;
   position: relative;
-  /* padding: 20px 25px; */
   padding: 0;
   border-radius: 6px;
   background: #f3f3f4;
-  margin-bottom: 2em;
+  margin-bottom: 2.5em;
 }
 
 .timeline .timeline-body .event-content {
+  border-radius: 6px;
   padding: 20px 20px;
   padding-bottom: 0;
 }
@@ -220,10 +216,6 @@ button {
   left: -20px;
   top: 25px;
 }
-
-/* .timeline .timeline-body > div + div {
-  margin-top: 10px;
-} */
 
 .timeline .timeline-icon {
   left: 15%;
@@ -244,4 +236,18 @@ button {
   color: #fff;
   font-size: 14px;
   border: 2px solid #2d353c;
+}
+
+.expand-item.archive-card,
+.timeline .timeline-body.archive-card,
+.timeline .timeline-body.archive-card .event-content {
+  background-color: #f2e5d9;
+}
+
+.expand-item.archive-card:hover {
+  background-color: #f7f2ed;
+}
+
+.timeline .timeline-body.archive-card:before {
+  border-right-color: #f2e5d9;
 }
