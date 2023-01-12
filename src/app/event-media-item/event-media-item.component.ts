@@ -1,25 +1,35 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-event-media-item',
-  template: ` <h2>{{ path }}</h2>
+  template: ` <h2>{{ media }}</h2>
     <div *ngIf="isImage; else loggedOut">
-      <img src="{{ imageUrl }}" class="img-fluid img-size" alt="{{ path }}" />
+      <img src="{{ imageUrl }}" class="img-fluid img-size" alt="{{ media }}" />
     </div>
 
-    <ng-template #loggedOut><div>bruh</div></ng-template>`,
+    <ng-template #loggedOut>
+      <button class="btn btn-primary brand-button" (click)="getFile()">Download</button></ng-template
+    >`,
   styles: ['.img-size { max-height: 10rem;  }'],
 })
 export class EventMediaItemComponent implements OnInit {
+  constructor(@Inject(DOCUMENT) private document: Document) {}
   imageUrl: string = '';
+
   ngOnInit(): void {
-    if (this.media || this.path) {
-      this.imageUrl = `${environment.apiUrl}file/${this.media}?originalFilename=${this.path}`;
+    if (this.path || this.media) {
+      this.imageUrl = `${environment.apiUrl}file/${this.path}?originalFilename=${this.media}`;
     }
   }
+
   @Input() path!: string;
   @Input() media!: string;
+
+  getFile() {
+    this.document.location.href = `http://localhost:3000/file/${this.path}?originalFilename=${this.media}`;
+  }
 
   isImage(): boolean {
     return (
@@ -30,8 +40,4 @@ export class EventMediaItemComponent implements OnInit {
       this.path.includes('svg')
     );
   }
-
-  // <button class="btn btn-primary brand-button" (click)="getFile(media.multimedia,media.path)">Download</button>
-  // <!-- http://localhost:3000/file/3cd75898c2763b497c01535f884ad5ff?originalFilename=buttahdoggo.jpg -->
-  //                     <img src="{{getFile(media.multimedia,media.path)}}" alt="">
 }

@@ -88,11 +88,7 @@ export class ListeventsComponent implements OnInit {
     });
   }
 
-  getFile(filename: string, originalFilename: string){
-    this.document.location.href = `http://localhost:3000/file/${filename}?originalFilename=${originalFilename}`;
-    // this.router.navigate([`http://localhost:3000/file/${filename}`]);	
-   
-  }
+ 
 
   delete(id: number) {
     this.eventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
