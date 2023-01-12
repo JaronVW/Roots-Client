@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  public isCollapsed = false;
+  public isCollapsed = true;
   organization = {
     name: '',
     domain: '',
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
       this.organization.name != '' &&
       this.testOrganizationName != this.organization.name &&
       this.organization.domain != '' &&
-      this.testDomain != this.organization.domain 
+      this.testDomain != this.organization.domain
     ) {
       this.setError(false, '');
     }

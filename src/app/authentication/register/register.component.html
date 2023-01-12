@@ -146,7 +146,7 @@
               >
                 Een organisatie toevoegen?
               </button>
-              <div style="min-height: 100px">
+              <div>
                 <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
                   <div class="card">
                     <div class="card-body">
@@ -184,13 +184,17 @@
                           </div>
                         </div>
                         <div class="col-3">
-                          <button (click)="validate()" class="btn btn-primary brand-button create-organization-button">Aanmaken</button>
+                          <button (click)="validate()" class="btn btn-primary brand-button create-organization-button">
+                            Aanmaken
+                          </button>
                         </div>
                       </div>
-                      <div class="text-muted mt-3">Het domein voor deze organisatie wordt: {{ this.organization.domain }}</div>
+                      <div class="text-muted mt-3">
+                        Het domein voor deze organisatie wordt: {{ this.organization.domain }}
+                      </div>
                       <div *ngIf="error" class="col-md-12">
-                        <br>
-                        <div class="alert alert-danger" role="alert">
+                        <br />
+                        <div class="alert alert-danger" rolea="alert">
                           {{ errorMessage }}
                         </div>
                       </div>
