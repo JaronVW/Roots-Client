@@ -55,16 +55,12 @@
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="description">Omschrijving:</label>
+          <label for="longer-description">Omschrijving:</label>
           <textarea
             [(ngModel)]="event.content"
-            name="content"
-            style="height: 300px"
-            type="content"
+            name="longer-description"
+            id="longer-description"
             class="form-control"
-            id="content"
-            aria-describedby="descriptionHelp"
-            placeholder="Omschrijving typen..."
           ></textarea>
         </div>
       </div>
@@ -116,8 +112,10 @@
         <div class="form-group dropzone" appDragAndDrop (fileDropped)="onFileDropped($event)">
           <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let multimediaItem of event.multimediaItems">
-              {{ multimediaItem.multimedia }}
-              <button (click)="filterMultimedia(multimediaItem.multimedia)">X</button>
+              <div class="file-item-wrapper">
+                <span>{{ multimediaItem.multimedia }}</span>
+                <button (click)="filterMultimedia(multimediaItem.multimedia)" class="btn brand-button-danger">x</button>
+              </div>
             </li>
           </ul>
         </div>
