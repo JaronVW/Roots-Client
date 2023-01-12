@@ -27,7 +27,6 @@ export class TokenInterceptor implements HttpInterceptor {
     //   )
     //   .subscribe(() => console.log('Startup auth done'));
 
-    console.log('reached the api interceptor');
     const newRequest = request.clone({
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -35,7 +34,6 @@ export class TokenInterceptor implements HttpInterceptor {
       }),
       url: `http://localhost:3000/${request.url}`,
     });
-    console.log('newRequest', newRequest);
     return next.handle(newRequest);
   }
 
