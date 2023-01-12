@@ -19,7 +19,6 @@ export class ListeventsComponent implements OnInit {
     tags: [],
   };
   
-  loading: boolean = false;
   showArchived: boolean = false;
 
   constructor(private router: Router, private eventService: EventService,@Inject(DOCUMENT) private document: Document) {}
@@ -57,15 +56,6 @@ export class ListeventsComponent implements OnInit {
     this.hasSearched = false;
   }
 
-  async archive(id: number) {
-    await this.eventService.archive(id).subscribe(() => {});
-    window.location.reload();
-  }
-
-  async unarchive(id: number) {
-    await this.eventService.unarchive(id).subscribe(() => {});
-    window.location.reload();
-  }
 
   getEvents(searchQuery?: string, getArchivedItems?: boolean) {
     this.events = null;
@@ -80,22 +70,7 @@ export class ListeventsComponent implements OnInit {
       });
   }
 
-  clearDetails() {
-    this.eventDetailsObject = {
-      title: '',
-      description: '',
-      tags: [],
-    };
-  }
 
-  getEventDetails(id: number) {
-    this.loading = true;
-    this.eventService.getEvent(id).subscribe((response: any) => {
-      this.eventDetailsObject = response;
-      console.log(this.eventDetailsObject);
-      this.loading = false;
-    });
-  }
 
  
 

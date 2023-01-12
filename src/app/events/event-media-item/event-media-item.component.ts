@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-event-media-item',
   template: ` <h2>{{ media }}</h2>
-    <div *ngIf="isImage; else loggedOut">
+    <div *ngIf="isImage(); else loggedOut">
       <img src="{{ imageUrl }}" class="img-fluid img-size" alt="{{ media }}" />
     </div>
 

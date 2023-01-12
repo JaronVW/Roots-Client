@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventMediaItemComponent } from './event-media-item.component';
+import { EventComponent } from '../event/event.component';
 
-describe('EventMediaItemComponent', () => {
-  let component: EventMediaItemComponent;
-  let fixture: ComponentFixture<EventMediaItemComponent>;
+describe('EventDetailsComponent', () => {
+  let component: EventComponent;
+  let fixture: ComponentFixture<EventComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventMediaItemComponent ]
+      declarations: [ EventComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EventMediaItemComponent);
+    fixture = TestBed.createComponent(EventComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
