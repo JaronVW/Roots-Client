@@ -5,11 +5,10 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-event-media-item',
   template: ` <h2>{{ media }}</h2>
-    <div *ngIf="isImage; else loggedOut">
-      <img src="{{ imageUrl }}" class="img-fluid img-size" alt="{{ media }}" />
-    </div>
+    <img *ngIf="isImage(); else downloadFile" src="{{ imageUrl }}" class="img-fluid img-size" alt="{{ media }}" />
+    <img />
 
-    <ng-template #loggedOut>
+    <ng-template #downloadFile>
       <button class="btn btn-primary brand-button" (click)="getFile()">Download</button></ng-template
     >`,
   styles: ['.img-size { max-height: 10rem;  }'],
@@ -35,11 +34,12 @@ export class EventMediaItemComponent implements OnInit {
 
   isImage(): boolean {
     return (
-      this.path.includes('jpg') ||
-      this.path.includes('png') ||
-      this.path.includes('jpeg') ||
-      this.path.includes('gif') ||
-      this.path.includes('svg')
-    );
+      this.media.includes('jpg') ||
+      this.media.includes('png') ||
+      this.media.includes('jpeg') ||
+      this.media.includes('gif') ||
+      this.media.includes('svg')
+    ) 
+    
   }
 }
