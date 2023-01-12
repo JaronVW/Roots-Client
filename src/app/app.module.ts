@@ -25,6 +25,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { InputWithTagSuggestionsComponent } from './events/addeditevent/input-with-tag-suggestions/input-with-tag-suggestions.component';
 import {MatSelectModule} from "@angular/material/select";
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { EventMediaItemComponent } from './event-media-item/event-media-item.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     ArchiveComponent,
      InputWithTagSuggestionsComponent,
       LoadingSpinnerComponent,
+      EventMediaItemComponent,
   ],
     imports: [
         BrowserModule,
