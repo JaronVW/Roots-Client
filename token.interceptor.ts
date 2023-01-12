@@ -15,8 +15,6 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-
     // this.getUserFromLocalStorage()
     //   .pipe(
     //     switchMap((user: UserInfo | undefined) => {
@@ -36,13 +34,12 @@ export class TokenInterceptor implements HttpInterceptor {
 
     console.log('reached the api interceptor');
     const newRequest = request.clone({
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        // 'Authorization': `${this.currentUser$.value?.token}`,
-      }),
-      url: `http://localhost:3000/${request.url}`
+      // headers: new HttpHeaders({
+      //   // 'Authorization': `${this.currentUser$.value?.token}`,
+      // }),
+      url: `http://localhost:3000/${request.url}`,
     });
-    console.log('newRequest',newRequest);
+    console.log('newRequest', newRequest);
     return next.handle(newRequest);
   }
 

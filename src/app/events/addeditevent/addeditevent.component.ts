@@ -1,12 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {EventService} from '../event.service';
-import {Event, Tag} from '../event.interface';
-import {Location} from '@angular/common';
-import {MatDialog} from '@angular/material/dialog';
-import {AddtagDialogComponent} from './addtag-dialog/addtag-dialog.component';
-import {debounceTime, distinctUntilChanged, map, Observable, OperatorFunction} from "rxjs";
-import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventService } from '../event.service';
+import { Event, Tag } from '../event.interface';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
+import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
 
 @Component({
   selector: 'app-addevent',
@@ -20,7 +19,7 @@ export class AddediteventComponent implements OnInit {
   errorMessage: string = '';
   isFirstVisit: boolean = true;
   buttonText: string = 'Aanmaken';
-  eventid: number | null =null;
+  eventid: number | null = null;
   isEditing: boolean = false;
 
   event: Event = {
@@ -31,8 +30,10 @@ export class AddediteventComponent implements OnInit {
     // userId: 'test',
     tags: [],
     // customtags ['test', 'test2'],
-    // multiMedia: ['test', 'test2'],
+    multimediaItems: [],
   };
+
+  searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
 
   constructor(
     private router: Router,
@@ -50,22 +51,31 @@ export class AddediteventComponent implements OnInit {
         this.event = response;
         console.log(this.event);
         if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent).toISOString();
+        response.tags.forEach((element) => {
+          element.tagText = `${element.subject}`;
+        });
       });
     }
 
     if (this.isEditing) this.buttonText = 'Update';
 
     this.EventService.getTags().subscribe((response: any[]) => {
-      this.dropdownList = response.map((tag: Tag) => ({ ...tag }));
+      response.forEach((tag) => {
+        tag.tagText = `${tag.count} | ${tag.subject}`;
+      });
+      this.dropdownList = response;
+      this.searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
     });
 
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'id',
-      textField: 'subject',
+      idField: 'subject',
+      textField: 'tagText',
+      subject: 'subject',
       itemsShowLimit: 5,
       allowSearchFilter: true,
       enableCheckAll: false,
+      classes: 'tag-dropdown',
     };
   }
 
@@ -93,7 +103,6 @@ export class AddediteventComponent implements OnInit {
   }
 
   createEvent() {
-    console.log(this.event);
     if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
     const data = {
       ...this.event,
@@ -105,7 +114,9 @@ export class AddediteventComponent implements OnInit {
   }
 
   updateEvent() {
+    console.log(this.event.title);
     if (this.eventid != null) {
+      console.log(this.event);
       if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
       this.EventService.updateEvent(this.eventid, this.event).subscribe((response: Event) => {
         this.router.navigate(['/events']);
@@ -130,17 +141,26 @@ export class AddediteventComponent implements OnInit {
       map((term) => {
         console.log(term);
         console.log(text$);
-        return term.length < 2 ? [] : [].filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
+        return term.length < 2
+          ? []
+          : [].filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
       }),
     );
 
   addTag(tag: Tag) {
-    console.log('addTag');
-    const newTag: Tag = {
-      subject: tag.subject,
-    }
-    this.dropdownList.push({ id: this.dropdownList.length + 1, subject: newTag });
-    this.event.tags = [...this.event.tags, newTag];
+    this.event.tags = [...this.event.tags, tag];
+    setTimeout(() => {
+      this.changeTagName();
+    });
+  }
+
+  changeTagName() {
+    document.querySelectorAll('.multiselect-dropdown span.selected-item span').forEach((element) => {
+      const parts = element.innerHTML.split(' | ');
+      if (parts.length > 1) element.innerHTML = parts[1];
+      else element.innerHTML = parts[0];
+    });
+    // document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {});
   }
 
   openDialog() {
@@ -151,16 +171,39 @@ export class AddediteventComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       if (result != undefined) {
-        this.dropdownList.push({ id: this.dropdownList.length + 1, subject: result });
-        this.event.tags = [...this.event.tags, result];
-
-        console.log('event tags:', this.event.tags);
+        this.dropdownList = [...this.dropdownList, { ...result, tagText: `0 | ${result.subject}` }];
+        this.event.tags = [...this.event.tags, { ...result, tagText: `0 | ${result.subject}` }];
+        setTimeout(() => {
+          this.changeTagName();
+        });
       }
     });
   }
 
-  getTitle($event: string) {
-    // console.log('reached parent',$event);
-    this.event.title = $event;
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      for (const element of event.target.files) {
+        console.log(element);
+        if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+        this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
+      }
+    }
+  }
+
+  updateTitle(event: any) {
+    this.event.title = event;
+  }
+
+  filterMultimedia(multimedia: string) {
+    if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+    this.event.multimediaItems = this.event.multimediaItems.filter((item) => item.multimedia != multimedia);
+  }
+
+  onFileDropped(files: Array<any>) {
+    for (const element of files) {
+      console.log(element);
+      if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+      this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
+    }
   }
 }

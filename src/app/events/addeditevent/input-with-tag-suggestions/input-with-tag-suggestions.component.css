@@ -1,4 +1,4 @@
-li{
+li {
   padding: 8px;
   cursor: pointer;
   list-style-type: none;
@@ -7,11 +7,11 @@ li{
 
 }
 
-li:hover{
+li:hover {
   background-color: #857d7d;
 }
 
-ul{
+ul {
   margin-top: 10px;
   padding: 0;
   list-style-type: none;
@@ -19,7 +19,7 @@ ul{
   min-width: 200px;
 }
 
-.dropdown{
+.dropdown {
   position: absolute;
   width: 100%;
   z-index: 1;
@@ -29,20 +29,14 @@ li.selected {
   background-color: #eee;
 }
 
-.headerTag{
+.headerTag {
   font-size: 20px;
   font-weight: bold;
   color: #857d7d;
 }
 
 
-.headerTag:hover{
+.headerTag:hover {
   background-color: #f6f6f6;
   cursor: default;
 }
-
-
-
-
-
-

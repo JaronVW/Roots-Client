@@ -28,7 +28,9 @@ export class EventMediaItemComponent implements OnInit {
   @Input() media!: string;
 
   getFile() {
-    this.document.location.href = `http://localhost:3000/file/${this.path}?originalFilename=${this.media}`;
+    if (this.path || this.media) {
+      this.document.location.href = `http://localhost:3000/file/${this.path}?originalFilename=${this.media}`;
+    }
   }
 
   isImage(): boolean {

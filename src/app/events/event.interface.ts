@@ -2,15 +2,12 @@ export interface Event {
   id?: number;
   title: string;
   description: string;
-  dateOfEvent?: string;
+  dateOfEvent?: string | null;
   tags: Tag[];
-  files?: string[];
-  userId?: string;
+  files?: string[] | null;
+  userId?: string | null;
 
-  multimediaItems?: {
-    path: string;
-    multimedia: string;
-  }[];
+  multimediaItems?: Multimedia[];
   isArchived?: boolean;
   organisationId?: number;
   content?: string;
@@ -21,4 +18,13 @@ export interface Event {
 export interface Tag {
   id?: number;
   subject: string;
+  count: number;
+  tagText?: string;
+}
+
+export interface Multimedia {
+  id?: number;
+  multimedia: string;
+  path?: string;
+  file: File;
 }

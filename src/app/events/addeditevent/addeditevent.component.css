@@ -22,7 +22,7 @@ textarea {
   border-bottom-left-radius: 5px;
   height: 160px;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: white;
 }
 
@@ -50,6 +50,10 @@ a:hover {
 
 ::ng-deep .multiselect-dropdown .dropdown-btn:focus {
   outline: none !important;
+}
+
+.tag-dropdown:nth-last-of-type(-n + 2) {
+  display: none;
 }
 
 .form-tags {

@@ -1,54 +1,66 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-4 col-xs-12">
+    <div class="col-md-6 col-xs-12">
       <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
         <path
           d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
         </path>
       </svg>
-      <input placeholder="Zoeken..." (keydown.enter)="search(searchValue)" type="search" class="input"
+      <input placeholder="Zoeken..." (keydown.enter)="search(searchValue)" type="search" class="search-input"
         [(ngModel)]="searchValue" />
     </div>
-    <div class="col-md-2 col-xs-12">
-      <button *ngIf="hasSearched; else searchButton" (click)="clearSearch()" class="btn btn-primary">
+    <div class="col-md-3 col-xs-12">
+      <button *ngIf="hasSearched; else searchButton" (click)="clearSearch()" class="btn btn-primary brand-button">
         Zoekopdracht wissen
       </button>
 
       <ng-template #searchButton (click)="search(searchValue)">
-        <button (click)="search(searchValue)" class="btn btn-primary">Zoeken</button>
+        <button (click)="search(searchValue)" class="btn btn-primary brand-button">Zoeken</button>
       </ng-template>
     </div>
-
-    <div class="col-md-4 col-xs-0"></div>
-
-    <div class="col-md-2 col-xs-12">
-      <button type="submit" class="btn btn-primary" routerLink="/events/create">Aanmaken</button>
+    <div class="col-md-3 col-xs-12">
+      <button type="submit" class="btn btn-primary brand-button" routerLink="/events/create">Aanmaken</button>
     </div>
+    <div class="col-md-3 col-xs-4">
+      <div class="form-check show-archived">
+        <input [(ngModel)]="showArchived" class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+        <label class="form-check-label" for="flexCheckDefault"> Gearchiveerde events tonen? </label>
+      </div>
+    </div>
+
     <ng-container *ngIf="events">
       <cdk-accordion class="example-accordion">
         <cdk-accordion-item class="example-accordion col-md-12" *ngFor="let item of events; let index = index"
           style="display: block; cursor: default" #accordionItem="cdkAccordionItem" class="example-accordion-item"
           role="button" tabindex="0" [attr.id]="'accordion-header-' + index"
           [attr.aria-expanded]="accordionItem.expanded" [attr.aria-controls]="'accordion-body-' + index">
-          <div class="rounded card" [ngClass]="{ 'disable-rounded-top-left': accordionItem.expanded }">
+          <div class="rounded card"
+            [ngClass]="{ 'disable-rounded-top-left': accordionItem.expanded, 'archive-card': item.isArchived == true }">
             <ul class="list-group" style="cursor: default">
               <li class="">
                 <div class="card-body" *ngIf="!accordionItem.expanded">
                   <!--                  Card field content-->
                   <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                       <h1 class="event-title">{{ item.title }}</h1>
                     </div>
-                    <div class="info col-md-12">
+                    <div class="col-md-2">
+                      <div class="archive-img">
+                        <img *ngIf="item.isArchived" src="assets/images/archived.png" />
+                      </div>
+                    </div>
+                    <div class="info col-md-9">
                       <div class="tags" *ngFor="let tag of item.tags" style="margin: -8px 2px 20px 0">
                         <span class="badge badge-pill badge-primary">{{ tag.subject }}</span>
                       </div>
+                    </div>
+                    <div class="info col-md-3">
                       <p style="text-align: end; margin: -8px 2px 20px 0; font-style: oblique; font-weight: lighter">
                         {{ item.dateOfEvent }}
                       </p>
                     </div>
                   </div>
-                  <p>{{ item.description }}</p>
+                  <p class="description">{{ item.description }}</p>
                 </div>
               </li>
             </ul>
@@ -89,14 +101,16 @@
                   <div class="row">
                     <div class="tags" *ngFor="let media of eventDetailsObject.multimediaItems"
                       style="margin: -8px 2px 20px 0">
-                      <app-event-media-item [path]="media.path" [media]="media.multimedia"></app-event-media-item>
+                      <app-event-media-item [path]="media.path? media.path: ''"
+                        [media]="media.multimedia"></app-event-media-item>
                     </div>
                   </div>
                   <div class="more-options">
                     <i class="material-icons" [matMenuTriggerFor]="menu">&#xe5d4;</i>
                     <mat-menu #menu="matMenu">
                       <button mat-menu-item [routerLink]="['edit', item.id]">Wijzigen</button>
-                      <button mat-menu-item (click)="archive(item.id!)">Archiveren</button>
+                      <button *ngIf="!item.isArchived" mat-menu-item (click)="archive(item.id!)">Archiveren</button>
+                      <button *ngIf="item.isArchived" mat-menu-item (click)="unarchive(item.id!)">De-archiveren</button>
                     </mat-menu>
                   </div>
                   <div class="dateOfEvent">
@@ -106,8 +120,8 @@
               </ng-template>
             </div>
 
-            <div class="expand-item" (click)="accordionItem.toggle()" (click)="getEventDetails(item.id!)"
-              style="cursor: pointer">
+            <div class="expand-item" [ngClass]="{ 'archive-card': item.isArchived == true }"
+              (click)="accordionItem.toggle()" (click)="getEventDetails(item.id!)" style="cursor: pointer">
               <div *ngIf="!accordionItem.expanded">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                   class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
