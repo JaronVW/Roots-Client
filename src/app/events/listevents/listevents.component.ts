@@ -56,12 +56,12 @@ export class ListeventsComponent implements OnInit {
   }
 
   async archive(id: number) {
-    await this.eventService.archive(id).subscribe(() => {});
+    this.eventService.archive(id).subscribe(() => {});
     window.location.reload();
   }
 
   async unarchive(id: number) {
-    await this.eventService.unarchive(id).subscribe(() => {});
+    this.eventService.unarchive(id).subscribe(() => {});
     window.location.reload();
   }
 
@@ -89,8 +89,7 @@ export class ListeventsComponent implements OnInit {
   getEventDetails(id: number) {
     this.loading = true;
     this.eventService.getEvent(id).subscribe((response: any) => {
-      this.eventDetailsObject = response;
-      console.log(this.eventDetailsObject);
+      if (this.events) this.events.filter((event) => event.id == id)[0]! = response;
       this.loading = false;
     });
   }

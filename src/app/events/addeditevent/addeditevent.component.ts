@@ -47,7 +47,6 @@ export class AddediteventComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // tinymce.
     tinymce.init({
       selector: '#longer-description',
       base_url: '/tinymce',
