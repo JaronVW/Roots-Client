@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User } from './user.interface';
+import { LoginUser, RegisterUser } from './user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  register(user: User) {
-    return this.http.post<User>(`auth/register`, user).subscribe();
+  login(user: LoginUser) {
+    return this.http.post(`auth/login`, user);
+  }
+
+  register(user: RegisterUser) {
+    return this.http.post(`auth/register`, user).subscribe();
   }
 }
