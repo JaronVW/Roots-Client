@@ -29,10 +29,9 @@ export class TokenInterceptor implements HttpInterceptor {
 
     console.log('reached the api interceptor');
     const newRequest = request.clone({
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        // 'Authorization': `${this.currentUser$.value?.token}`,
-      }),
+      // headers: new HttpHeaders({
+      //   // 'Authorization': `${this.currentUser$.value?.token}`,
+      // }),
       url: `http://localhost:3000/${request.url}`,
     });
     console.log('newRequest', newRequest);

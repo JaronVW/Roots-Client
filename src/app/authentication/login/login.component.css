@@ -17,8 +17,8 @@ span {
 }
 
 .card {
-    top: 50%;
     padding: 1%;
+    margin-top: 25px;
 }
 
 a {
@@ -27,4 +27,14 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.login-button {
+    width: 60%;
+}
+
+.form-check-input {
+    transform: scale(2);
+    border-radius: 0px !important;
+    margin: 0px 20px 0px 8px;
 }

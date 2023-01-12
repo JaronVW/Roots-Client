@@ -22,6 +22,7 @@ export class InputWithTagSuggestionsComponent implements OnInit {
   @Input() title: string = '';
   @Output() addTag = new EventEmitter<Tag>();
   @Output() removeTag = new EventEmitter<Tag>();
+  @Output() titleChange = new EventEmitter<string>();
   @ViewChild('input') input!: ElementRef;
   @ViewChild('input') dropdown!: ElementRef;
   @HostListener('document:click', ['$event'])
@@ -53,6 +54,8 @@ export class InputWithTagSuggestionsComponent implements OnInit {
   }
 
   filterTags() {
+    this.titleChange.emit(this.title);
+    console.log(this.title);
     let words = this.title.split(' ').map((word) => word.toLowerCase());
     if (this.title.endsWith('.') || this.title.endsWith(' ')) {
       words = words.slice(0, -1);

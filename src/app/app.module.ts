@@ -24,6 +24,8 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { InputWithTagSuggestionsComponent } from './events/addeditevent/input-with-tag-suggestions/input-with-tag-suggestions.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.directive';
+import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     AddtagDialogComponent,
     InputWithTagSuggestionsComponent,
     LoadingSpinnerComponent,
+    DragAndDropDirective,
+    AccountrecoveryComponent,
   ],
   imports: [
     BrowserModule,

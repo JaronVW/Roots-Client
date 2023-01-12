@@ -30,7 +30,7 @@ export class AddediteventComponent implements OnInit {
     // userId: 'test',
     tags: [],
     // customtags ['test', 'test2'],
-    // multiMedia: ['test', 'test2'],
+    multimediaItems: [],
   };
 
   searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
@@ -77,10 +77,6 @@ export class AddediteventComponent implements OnInit {
       enableCheckAll: false,
       classes: 'tag-dropdown',
     };
-
-    // document.querySelector('.multiselect-dropdown')?.addEventListener('click', () => {
-
-    // });
   }
 
   validate() {
@@ -118,7 +114,9 @@ export class AddediteventComponent implements OnInit {
   }
 
   updateEvent() {
+    console.log(this.event.title);
     if (this.eventid != null) {
+      console.log(this.event);
       if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
       this.EventService.updateEvent(this.eventid, this.event).subscribe((response: Event) => {
         this.router.navigate(['/events']);
@@ -150,7 +148,6 @@ export class AddediteventComponent implements OnInit {
     );
 
   addTag(tag: Tag) {
-    console.log('addTag');
     this.event.tags = [...this.event.tags, tag];
     setTimeout(() => {
       this.changeTagName();
@@ -158,15 +155,12 @@ export class AddediteventComponent implements OnInit {
   }
 
   changeTagName() {
-    console.log('changeTagName');
     document.querySelectorAll('.multiselect-dropdown span.selected-item span').forEach((element) => {
       const parts = element.innerHTML.split(' | ');
       if (parts.length > 1) element.innerHTML = parts[1];
       else element.innerHTML = parts[0];
     });
-    document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {
-      console.log(element); // selector for dropdown item
-    });
+    // document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {});
   }
 
   openDialog() {
@@ -177,20 +171,39 @@ export class AddediteventComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       if (result != undefined) {
-        const newTag: Tag = {
-          ...result,
-          id: this.dropdownList.length + 1,
-          tagText: `0 | ${result.subject}`,
-        };
-        console.log(newTag);
         this.dropdownList = [...this.dropdownList, { ...result, tagText: `0 | ${result.subject}` }];
         this.event.tags = [...this.event.tags, { ...result, tagText: `0 | ${result.subject}` }];
         setTimeout(() => {
           this.changeTagName();
         });
-
-        console.log('event tags:', this.event.tags);
       }
     });
+  }
+
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      for (const element of event.target.files) {
+        console.log(element);
+        if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+        this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
+      }
+    }
+  }
+
+  updateTitle(event: any) {
+    this.event.title = event;
+  }
+
+  filterMultimedia(multimedia: string) {
+    if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+    this.event.multimediaItems = this.event.multimediaItems.filter((item) => item.multimedia != multimedia);
+  }
+
+  onFileDropped(files: Array<any>) {
+    for (const element of files) {
+      console.log(element);
+      if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+      this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
+    }
   }
 }
