@@ -72,7 +72,13 @@ export class ListeventsComponent implements OnInit {
       .subscribe((response: any[]) => {
         this.events = response;
         for (const element of this.events) {
-          if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
+          if (element.dateOfEvent)
+            element.dateOfEvent = new Date(element.dateOfEvent).toLocaleDateString('nl-NL', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            });
         }
         console.log(this.events);
       });

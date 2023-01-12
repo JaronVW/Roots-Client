@@ -27,6 +27,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.directive';
 import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
     MatButtonModule,
     MatSelectModule,
     EditorModule,
+    NgbCollapseModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
