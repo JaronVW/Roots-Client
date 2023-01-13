@@ -7,10 +7,10 @@ export interface Event {
   files?: string[] | null;
   userId?: string | null;
 
-  multimediaItems?: Multimedia[];
-  isArchived?: boolean;
-  organisationId?: number;
-  content?: string;
+  multimediaItems?: Multimedia[] | null;
+  isArchived?: boolean | null;
+  organisationId?: number | null;
+  content?: string | null;
 
   //   Nog te doen: Tags, files, userId referencen naar andere interfaces
 }

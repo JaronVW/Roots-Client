@@ -45,6 +45,10 @@ import { AccountrecoveryComponent } from './authentication/accountrecovery/accou
     EventMediaItemComponent,
     InputWithTagSuggestionsComponent,
     LoadingSpinnerComponent,
+    InputWithTagSuggestionsComponent,
+    LoadingSpinnerComponent,
+    DragAndDropDirective,
+    AccountrecoveryComponent,
   ],
   imports: [
     BrowserModule,
