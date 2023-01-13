@@ -37,7 +37,7 @@
       <cdk-accordion class="example-accordion">
         <cdk-accordion-item
           class="example-accordion-item col-md-12"
-          *ngFor="let item of events; let index = index"
+          *ngFor="let item of events; let index = index; trackBy: trackItem"
           style="display: block; cursor: default"
           #accordionItem="cdkAccordionItem"
           role="button"
@@ -107,11 +107,18 @@
 
                     <div
                       role="region"
-                      [style.display]="accordionItem.expanded && item.content ? '' : 'none'"
+                      [style.display]="accordionItem.expanded ? '' : 'none'"
                       [attr.id]="'accordion-content-' + index"
                       [attr.aria-labelledby]="'accordion-header-' + index"
                     >
-                      <p>{{ item.content }}</p>
+                      <div [attr.id]="'event-content-field-' + index"></div>
+
+                      <div *ngFor="let media of item.multimediaItems" style="margin: -8px 2px 20px 0">
+                        <app-event-media-item
+                          [path]="media.path ? media.path : ''"
+                          [media]="media.multimedia"
+                        ></app-event-media-item>
+                      </div>
                       <div class="more-options">
                         <i class="material-icons" [matMenuTriggerFor]="menu">&#xe5d4;</i>
                         <mat-menu #menu="matMenu">
@@ -128,9 +135,12 @@
                     class="expand-item"
                     [ngClass]="{ 'archive-card': item.isArchived == true }"
                     (click)="accordionItem.toggle()"
-                    (click)="getEventDetails(item.id!)"
+                    (click)="getEventDetails(index, item.id!)"
                     style="cursor: pointer"
                   >
+                    <div *ngIf="loading && accordionItem.expanded">
+                      <app-loading-spinner></app-loading-spinner>
+                    </div>
                     <div *ngIf="!accordionItem.expanded">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +157,7 @@
                       </svg>
                     </div>
 
-                    <div *ngIf="accordionItem.expanded">
+                    <div *ngIf="!loading && accordionItem.expanded">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="30"

@@ -56,12 +56,29 @@
       <div class="col-md-12">
         <div class="form-group">
           <label for="longer-description">Omschrijving:</label>
-          <textarea
+          <editor
+            [apiKey]="apiKeyTinymce"
             [(ngModel)]="event.content"
+            [init]="{
+              base_url: '/tinymce',
+              suffix: '.min',
+              plugins: 'lists link image table code help wordcount',
+              branding: false,
+              promotion: false,
+
+              placeholder: 'Omschrijving typen...',
+              toolbar:
+                'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | table | \
+          bullist numlist outdent indent code',
+              height: 300,
+              menubar: false,
+              inline_boundaries: false
+            }"
             name="longer-description"
             id="longer-description"
-            class="form-control"
-          ></textarea>
+          >
+          </editor>
         </div>
       </div>
       <div class="col-md-5">

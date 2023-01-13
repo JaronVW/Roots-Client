@@ -24,6 +24,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { InputWithTagSuggestionsComponent } from './events/addeditevent/input-with-tag-suggestions/input-with-tag-suggestions.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { EventMediaItemComponent } from './event-media-item/event-media-item.component';
 import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.directive';
 import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
@@ -39,6 +40,13 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     AddediteventComponent,
     ListeventsComponent,
     AddtagDialogComponent,
+    DragAndDropDirective,
+    AccountrecoveryComponent,
+    InputWithTagSuggestionsComponent,
+    LoadingSpinnerComponent,
+    EventMediaItemComponent,
+    InputWithTagSuggestionsComponent,
+    LoadingSpinnerComponent,
     InputWithTagSuggestionsComponent,
     LoadingSpinnerComponent,
     DragAndDropDirective,

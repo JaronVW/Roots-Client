@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-listevents',
@@ -12,15 +13,14 @@ export class ListeventsComponent implements OnInit {
   _searchValue: string = '';
   events: Event[] | null = [];
   hasSearched: boolean = false;
-  eventDetailsObject: Event = {
-    title: '',
-    description: '',
-    tags: [],
-  };
   loading: boolean = false;
   showArchived: boolean = false;
 
-  constructor(private router: Router, private eventService: EventService) {}
+  constructor(
+    private router: Router,
+    private eventService: EventService,
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -84,20 +84,30 @@ export class ListeventsComponent implements OnInit {
       });
   }
 
-  clearDetails() {
-    this.eventDetailsObject = {
-      title: '',
-      description: '',
-      tags: [],
-    };
-  }
-
-  getEventDetails(id: number) {
+  getEventDetails(accIndex: number, id: number) {
     this.loading = true;
-    this.eventService.getEvent(id).subscribe((response: any) => {
-      if (this.events) this.events.filter((event) => event.id == id)[0]! = response;
+    this.eventService.getEvent(id).subscribe((response: Event) => {
+      this.events?.forEach((event, index) => {
+        if (event.id == id) {
+          this.events![index] = response;
+          if (response.dateOfEvent)
+            this.events![index].dateOfEvent = new Date(response.dateOfEvent).toLocaleDateString('nl-NL', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            });
+          this.trackItem(accIndex, this.events![index]);
+        }
+      });
+      let contentWrapper = this.document.querySelector(`#event-content-field-` + accIndex);
+      if (contentWrapper && contentWrapper != null) contentWrapper.innerHTML = response.content ? response.content : '';
       this.loading = false;
     });
+  }
+
+  trackItem(index: number, item: Event) {
+    return item.id;
   }
 
   delete(id: number) {

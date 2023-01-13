@@ -31,8 +31,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     const newRequest = request.clone({
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
       url: `http://localhost:3000/${request.url}`,
     });

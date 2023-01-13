@@ -47,32 +47,32 @@ export class AddediteventComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    tinymce.init({
-      selector: '#longer-description',
-      base_url: '/tinymce',
-      suffix: '.min',
-      plugins: 'lists link image table code help wordcount',
-      branding: false,
-      promotion: false,
+    // tinymce.init({
+    //   selector: '#longer-description',
+    //   base_url: '/tinymce',
+    //   suffix: '.min',
+    //   plugins: 'lists link image table code help wordcount',
+    //   branding: false,
+    //   promotion: false,
 
-      placeholder: 'Omschrijving typen...',
-      toolbar:
-        'undo redo | formatselect | bold italic backcolor | \
-          alignleft aligncenter alignright alignjustify | image table file | \
-          bullist numlist outdent indent code',
-      automatic_uploads: true,
-      file_picker_types: 'image',
-      file_picker_callback: function (cb, value, meta) {
-        let input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
+    //   placeholder: 'Omschrijving typen...',
+    //   toolbar:
+    //     'undo redo | formatselect | bold italic backcolor | \
+    //       alignleft aligncenter alignright alignjustify | table | \
+    //       bullist numlist outdent indent code',
+    //   // automatic_uploads: true,
+    //   // file_picker_types: 'image',
+    //   // file_picker_callback: function (cb, value, meta) {
+    //   //   let input = document.createElement('input');
+    //   //   input.setAttribute('type', 'file');
+    //   //   input.setAttribute('accept', 'image/*');
 
-        input.onchange = function () {}; // TODO: add functionility to upload image
-      },
-      height: 300,
-      menubar: false,
-      inline_boundaries: false,
-    });
+    //   //   input.onchange = function () {}; // TODO: add functionility to upload image
+    //   // },
+    //   height: 300,
+    //   menubar: false,
+    //   inline_boundaries: false,
+    // });
     this.eventid = Number(this.route.snapshot.paramMap.get('id'));
     if (this.eventid) {
       this.isEditing = true;
