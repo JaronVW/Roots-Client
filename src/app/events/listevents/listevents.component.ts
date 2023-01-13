@@ -13,12 +13,6 @@ export class ListeventsComponent implements OnInit {
   _searchValue: string = '';
   events: Event[] | null = [];
   hasSearched: boolean = false;
-  eventDetailsObject: Event = {
-    title: '',
-    description: '',
-    tags: [],
-  };
-
   loading: boolean = false;
   showArchived: boolean = false;
 
@@ -90,14 +84,6 @@ export class ListeventsComponent implements OnInit {
       });
   }
 
-  clearDetails() {
-    this.eventDetailsObject = {
-      title: '',
-      description: '',
-      tags: [],
-    };
-  }
-
   getEventDetails(accIndex: number, id: number) {
     this.loading = true;
     this.eventService.getEvent(id).subscribe((response: Event) => {
@@ -114,6 +100,8 @@ export class ListeventsComponent implements OnInit {
           this.trackItem(accIndex, this.events![index]);
         }
       });
+      let contentWrapper = this.document.querySelector(`#event-content-field-` + accIndex);
+      if (contentWrapper && contentWrapper != null) contentWrapper.innerHTML = response.content ? response.content : '';
       this.loading = false;
     });
   }
