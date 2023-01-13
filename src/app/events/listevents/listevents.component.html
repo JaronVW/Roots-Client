@@ -30,13 +30,23 @@
 
     <ng-container *ngIf="events">
       <cdk-accordion class="example-accordion">
-        <cdk-accordion-item class="example-accordion-item col-md-12" *ngFor="let item of events; let index = index"
-          style="display: block; cursor: default" #accordionItem="cdkAccordionItem" role="button" tabindex="0"
-          [attr.id]="'accordion-header-' + index" [attr.aria-expanded]="accordionItem.expanded"
-          [attr.aria-controls]="'accordion-content-' + index">
-          <div class="rounded card" [ngClass]="{
+        <cdk-accordion-item
+          class="example-accordion-item col-md-12"
+          *ngFor="let item of events; let index = index"
+          style="display: block; cursor: default"
+          #accordionItem="cdkAccordionItem"
+          role="button"
+          tabindex="0"
+          [attr.id]="'accordion-header-' + index"
+          [attr.aria-expanded]="accordionItem.expanded"
+          [attr.aria-controls]="'accordion-content-' + index"
+        >
+          <div
+            class="rounded card"
+            [ngClass]="{
               'disable-rounded-top-left': accordionItem.expanded
-            }">
+            }"
+          >
             <ul class="list-group timeline" style="cursor: default">
               <li class="">
                 <div class="timeline-time">
@@ -45,15 +55,27 @@
                 <div class="timeline-icon">
                   <p>&nbsp;</p>
                 </div>
-                <div class="example-accordion-item-body" role="region"
+                <div
+                  class="example-accordion-item-body"
+                  role="region"
                   [style.display]="accordionItem.expanded ? '' : 'none'"
-                  [attr.aria-labelledby]="'accordion-header-' + index">
+                  [attr.aria-labelledby]="'accordion-header-' + index"
+                >
                   <div class="small-expand-item" (click)="accordionItem.toggle()" style="cursor: pointer">
                     <div *ngIf="accordionItem.expanded">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-arrow-bar-down" viewBox="0 0 16 16" style="transform: rotate(180deg)">
-                        <path fill-rule="evenodd"
-                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="30"
+                        height="30"
+                        fill="currentColor"
+                        class="bi bi-arrow-bar-down"
+                        viewBox="0 0 16 16"
+                        style="transform: rotate(180deg)"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                        />
                       </svg>
                     </div>
                   </div>
@@ -98,21 +120,43 @@
                       </div>
                     </div>
                   </div>
-                  <div class="expand-item" [ngClass]="{ 'archive-card': item.isArchived == true }"
-                    (click)="accordionItem.toggle()" (click)="getEventDetails(item.id!)" style="cursor: pointer">
+                  <div
+                    class="expand-item"
+                    [ngClass]="{ 'archive-card': item.isArchived == true }"
+                    (click)="accordionItem.toggle()"
+                    (click)="getEventDetails(item.id!)"
+                    style="cursor: pointer"
+                  >
                     <div *ngIf="!accordionItem.expanded">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="30"
+                        height="30"
+                        fill="currentColor"
+                        class="bi bi-arrow-bar-down"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                        />
                       </svg>
                     </div>
 
                     <div *ngIf="accordionItem.expanded">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                        class="bi bi-arrow-bar-down" viewBox="0 0 16 16" style="transform: rotate(180deg)">
-                        <path fill-rule="evenodd"
-                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="30"
+                        height="30"
+                        fill="currentColor"
+                        class="bi bi-arrow-bar-down"
+                        viewBox="0 0 16 16"
+                        style="transform: rotate(180deg)"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                        />
                       </svg>
                     </div>
                   </div>
