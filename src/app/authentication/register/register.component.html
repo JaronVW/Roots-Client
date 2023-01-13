@@ -218,11 +218,34 @@
                         </div>
                         <div class="col-3">
                           <button
-                            (click)="validateOrganisation()"
+                            (click)="open(content)"
                             class="btn btn-primary brand-button create-organization-button"
                           >
                             Aanmaken
                           </button>
+                          <ng-template #content let-modal>
+                            <div class="modal-header">  
+                              <h1 class="modal-title">{{ this.organisation.name }}</h1>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                (click)="modal.dismiss('Cross click')"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body">
+                              <p>
+                                Weet u zeker dat u organisatie  "{{ this.organisation.name }}" met domein
+                                "{{ this.organisation.domainName }}" wilt aanmaken?
+                              </p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn brand-button" (click)="modal.dismiss('Cross click')">Terug</button>
+                              <button type="button" class="btn brand-button" (click)="validateOrganisation(); modal.close('Save click');">
+                                Organisatie aanmaken
+                              </button>
+                            </div>
+                          </ng-template>
                         </div>
                       </div>
                       <div class="text-muted mt-3">
@@ -232,6 +255,12 @@
                         <br />
                         <div class="alert alert-danger" role="alert">
                           {{ organisationErrorMessage }}
+                        </div>
+                      </div>
+                      <div *ngIf="organisationSuccess" class="col-md-12">
+                        <br />
+                        <div class="alert alert-success" role="alert">
+                          {{ this.organisationSuccessMessage }}
                         </div>
                       </div>
                     </div>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { OrganisationService } from '../organisation.service';
 import jwt_decode from 'jwt-decode';
+import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-register',
@@ -27,14 +28,15 @@ export class RegisterComponent implements OnInit {
   userErrorMessage: String = '';
   organisationError: boolean = false;
   organisationErrorMessage: String = '';
-  success: boolean = false;
-  successMessage: String = '';
+  organisationSuccess: boolean = false;
+  organisationSuccessMessage: String = '';
   res: any;
 
   constructor(
     private userService: UserService,
     private organisationService: OrganisationService,
     private router: Router,
+    private modalService: NgbModal,
   ) {}
 
   ngOnInit(): void {
@@ -103,17 +105,14 @@ export class RegisterComponent implements OnInit {
     if (this.organisation.domainName == '') {
       this.setOrganisationError(true, 'Domein kan niet leeg zijn; voer uw email in.');
     }
-    if (
-      this.organisation.name != '' &&
-      this.organisation.domainName != ''
-    ) {
+    if (this.organisation.name != '' && this.organisation.domainName != '') {
       this.organisationService.create(this.organisation).subscribe(
         (response) => {
           this.setOrganisationError(false, '');
           this.res = response;
           this.setSuccess(
             true,
-            'Organisatie: "' +
+            'Organisatie "' +
               this.organisation.name +
               '" met domein "' +
               this.organisation.domainName +
@@ -138,7 +137,32 @@ export class RegisterComponent implements OnInit {
   }
 
   setSuccess(success: boolean, successMessage: string) {
-    this.success = success;
-    this.successMessage = successMessage;
+    this.organisationSuccess = success;
+    this.organisationSuccessMessage = successMessage;
+  }
+
+  open(content: any) {
+    if (this.organisation.name == '') {
+      this.setOrganisationError(true, 'Organisatienaam kan niet leeg zijn.');
+    }
+    if (this.organisation.domainName == '') {
+      this.setOrganisationError(true, 'Domein kan niet leeg zijn; voer uw email in.');
+    }
+    if (
+      !this.user.username.match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
+      this.setOrganisationError(true, 'Email moet valide zijn.');
+    }
+    if (
+      this.organisation.name != '' &&
+      this.organisation.domainName != '' &&
+      this.user.username.match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    }
   }
 }
