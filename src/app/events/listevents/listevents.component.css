@@ -74,7 +74,7 @@ button {
   background-color: transparent;
   text-align: left;
   position: absolute;
-  left: 20%;
+  left: 17%;
   margin-left: -18.5px;
   top: 33px;
 }
@@ -167,7 +167,7 @@ button {
   bottom: 0px;
   width: 2px;
   background: #2d353c;
-  left: 20%;
+  left: 17%;
   margin-left: -2.5px;
 }
 
@@ -180,7 +180,7 @@ button {
 .timeline .timeline-time {
   position: absolute;
   left: 0;
-  width: 18%;
+  width: 15%;
   text-align: right;
   top: 22px;
 }
@@ -194,7 +194,7 @@ button {
 }
 
 .timeline .timeline-body {
-  margin-left: 23%;
+  margin-left: 20%;
   position: relative;
   padding: 0;
   border-radius: 6px;
@@ -219,7 +219,7 @@ button {
 }
 
 .timeline .timeline-icon {
-  left: 15%;
+  left: 12%;
   position: absolute;
   width: 9.5%;
   text-align: center;
