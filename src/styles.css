@@ -33,3 +33,16 @@ app-root {
   background-color: #0d8478 !important;
   border-color: white;
 }
+
+.brand-button-danger {
+  background-color: #740000;
+  outline: black !important;
+  border-color: #740000;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.brand-button-danger:hover {
+  background-color: #8a0000;
+  border-color: white;
+}

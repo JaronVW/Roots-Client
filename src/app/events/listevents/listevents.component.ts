@@ -58,12 +58,12 @@ export class ListeventsComponent implements OnInit {
   }
 
   async archive(id: number) {
-    await this.eventService.archive(id).subscribe(() => {});
+    this.eventService.archive(id).subscribe(() => {});
     window.location.reload();
   }
 
   async unarchive(id: number) {
-    await this.eventService.unarchive(id).subscribe(() => {});
+    this.eventService.unarchive(id).subscribe(() => {});
     window.location.reload();
   }
 
@@ -74,7 +74,13 @@ export class ListeventsComponent implements OnInit {
       .subscribe((response: any[]) => {
         this.events = response;
         for (const element of this.events) {
-          if (element.dateOfEvent) element.dateOfEvent = new Date(element.dateOfEvent).toDateString();
+          if (element.dateOfEvent)
+            element.dateOfEvent = new Date(element.dateOfEvent).toLocaleDateString('nl-NL', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            });
         }
         console.log(this.events);
       });
@@ -91,8 +97,7 @@ export class ListeventsComponent implements OnInit {
   getEventDetails(id: number) {
     this.loading = true;
     this.eventService.getEvent(id).subscribe((response: any) => {
-      this.eventDetailsObject = response;
-      console.log(this.eventDetailsObject);
+      if (this.events) this.events.filter((event) => event.id == id)[0]! = response;
       this.loading = false;
     });
   }

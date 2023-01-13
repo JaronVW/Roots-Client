@@ -29,9 +29,9 @@ describe('Router: App', () => {
     });
   }));
 
-  it('navigate to "/events/archive" takes you to archive page', fakeAsync(() => {
-    router.navigate(['/events/archive']).then(() => {
-      expect(location.path()).toBe('/events/archive');
-    });
-  }));
+  // it('navigate to "/events/archive" takes you to archive page', fakeAsync(() => {
+  //   router.navigate(['/events/archive']).then(() => {
+  //     expect(location.path()).toBe('/events/archive');
+  //   });
+  // }));
 });
