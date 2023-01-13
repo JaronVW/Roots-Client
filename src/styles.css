@@ -21,15 +21,31 @@ app-root {
   padding-bottom: 100px;
 }
 
+nav, footer, .brand-button {
+  background-color: #007469!important;
+  color: white;
+}
+
 .brand-button {
-  background-color: #007469 !important;
   outline: black !important;
   border-color: #007469;
   text-decoration: none !important;
-  color: white !important;
 }
 
 .brand-button:hover {
   background-color: #0d8478 !important;
+  border-color: white;
+}
+
+.brand-button-danger {
+  background-color: #740000;
+  outline: black !important;
+  border-color: #740000;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.brand-button-danger:hover {
+  background-color: #8a0000;
   border-color: white;
 }
