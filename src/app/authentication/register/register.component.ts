@@ -1,4 +1,8 @@
+import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-register',
@@ -11,40 +15,88 @@ export class RegisterComponent implements OnInit {
     name: '',
     domain: '',
   };
-  email: String = '';
-  error: boolean = false;
-  errorMessage: String = '';
+  user = {
+    username: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+  };
+  repeatpassword: String = '';
+  userError: boolean = false;
+  userErrorMessage: String = '';
+  organizationError: boolean = false;
+  organizationErrorMessage: String = '';
+  res: any;
   testOrganizationName: String = 'iHomer';
   testDomain: String = 'gmail.com';
 
-  constructor() {
-    /* TODO document why this constructor is empty */
-  }
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     // TODO document why this method 'ngOnInit' is empty
   }
 
   createDomain() {
-    this.organization.domain = this.email.split('@')[1];
+    this.organization.domain = this.user.username.split('@')[1];
   }
 
-  validate() {
+  validateUser() {
+    if (this.repeatpassword != this.user.password) {
+      this.setUserError(true, 'Wachtwoorden komen niet overeen.');
+    }
+    if (this.user.password.length < 8 || this.user.password.length > 20) {
+      this.setUserError(true, 'Wachtwoord moet tussen de 8-20 tekens lang zijn.');
+    }
+    if (this.user.password == '') {
+      this.setUserError(true, 'Wachtwoord kan niet leeg zijn.');
+    }
+    if (!this.user.username.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      this.setUserError(true, 'Email moet valide zijn.');
+    }
+    if (this.user.lastName == '') {
+      this.setUserError(true, 'Achternaam kan niet leeg zijn.');
+    }
+    if (this.user.firstName == '') {
+      this.setUserError(true, 'Voornaam kan niet leeg zijn.');
+    }
+    if (
+      this.user.firstName != '' &&
+      this.user.lastName != '' &&
+      this.user.username.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) &&
+      this.user.password != '' &&
+      this.user.password.length > 7 &&
+      this.user.password.length < 21 &&
+      this.user.password == this.repeatpassword
+    ) {
+      this.setUserError(false, '');
+      this.userService.register(this.user).subscribe(
+        (response) => {
+          this.setUserError(false, '');
+          this.res = response;
+          var decoded: any = jwt_decode(this.res.access_token);
+          localStorage.setItem('token', this.res.access_token)
+          localStorage.setItem('email', decoded.username);
+          this.router.navigate(['/events'])
+        },
+        (error) => {
+          this.setUserError(true, 'Email of wachtwoord incorrect.');
+        },
+      );
+    }
+  }
+
+  validateOrganization() {
     if (this.testOrganizationName == this.organization.name) {
-      this.setError(true, 'Deze organisatie bestaat al.');
-      throw new Error('Deze organisatie bestaat al.');
+      this.setOrganizationError(true, 'Deze organisatie bestaat al.');
     }
     if (this.organization.name == '') {
-      this.setError(true, 'Organisatienaam kan niet leeg zijn.');
-      throw new Error('Organisatienaam kan niet leeg zijn.');
+      this.setOrganizationError(true, 'Organisatienaam kan niet leeg zijn.');
     }
     if (this.testDomain == this.organization.domain) {
-      this.setError(true, 'Dit domein bestaat al.');
-      throw new Error('Dit domein bestaat al.');
+      this.setOrganizationError(true, 'Dit domein bestaat al.');
     }
     if (this.organization.domain == '') {
-      this.setError(true, 'Domein kan niet leeg zijn; voer uw email in.');
-      throw new Error('Domein kan niet leeg zijn; voer uw email in.');
+      this.setOrganizationError(true, 'Domein kan niet leeg zijn; voer uw email in.');
     }
     if (
       this.organization.name != '' &&
@@ -52,12 +104,17 @@ export class RegisterComponent implements OnInit {
       this.organization.domain != '' &&
       this.testDomain != this.organization.domain
     ) {
-      this.setError(false, '');
+      this.setOrganizationError(false, '');
     }
   }
 
-  setError(error: boolean, errorMessage: string) {
-    this.error = error;
-    this.errorMessage = errorMessage;
+  setUserError(error: boolean, errorMessage: string) {
+    this.userError = error;
+    this.userErrorMessage = errorMessage;
+  }
+
+  setOrganizationError(error: boolean, errorMessage: string) {
+    this.organizationError = error;
+    this.organizationErrorMessage = errorMessage;
   }
 }
