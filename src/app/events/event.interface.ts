@@ -26,5 +26,5 @@ export interface Multimedia {
   id?: number;
   multimedia: string;
   path?: string;
-  file: File;
+  file?: File;
 }

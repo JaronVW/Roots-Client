@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
   errorMessage: String = '';
   res: any;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     // TODO document why this method 'ngOnInit' is empty
@@ -42,7 +44,10 @@ export class LoginComponent implements OnInit {
         (response) => {
           this.setError(false, '');
           this.res = response;
-          console.log(this.res.access_token)
+          var decoded: any = jwt_decode(this.res.access_token);
+          localStorage.setItem('token', this.res.access_token);
+          localStorage.setItem('email', decoded.username);
+          this.router.navigate(['/events']);
         },
         (error) => {
           this.setError(true, 'Email of wachtwoord incorrect.');

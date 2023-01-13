@@ -55,17 +55,30 @@
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="description">Omschrijving:</label>
-          <textarea
+          <label for="longer-description">Omschrijving:</label>
+          <editor
+            [apiKey]="apiKeyTinymce"
             [(ngModel)]="event.content"
-            name="content"
-            style="height: 300px"
-            type="content"
-            class="form-control"
-            id="content"
-            aria-describedby="descriptionHelp"
-            placeholder="Omschrijving typen..."
-          ></textarea>
+            [init]="{
+              base_url: '/tinymce',
+              suffix: '.min',
+              plugins: 'lists link image table code help wordcount',
+              branding: false,
+              promotion: false,
+
+              placeholder: 'Omschrijving typen...',
+              toolbar:
+                'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | table | \
+          bullist numlist outdent indent code',
+              height: 300,
+              menubar: false,
+              inline_boundaries: false
+            }"
+            name="longer-description"
+            id="longer-description"
+          >
+          </editor>
         </div>
       </div>
       <div class="col-md-5">
@@ -116,8 +129,10 @@
         <div class="form-group dropzone" appDragAndDrop (fileDropped)="onFileDropped($event)">
           <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let multimediaItem of event.multimediaItems">
-              {{ multimediaItem.multimedia }}
-              <button (click)="filterMultimedia(multimediaItem.multimedia)">X</button>
+              <div class="file-item-wrapper">
+                <span>{{ multimediaItem.multimedia }}</span>
+                <button (click)="filterMultimedia(multimediaItem.multimedia)" class="btn brand-button-danger">x</button>
+              </div>
             </li>
           </ul>
         </div>

@@ -1,6 +1,8 @@
 import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-register',
@@ -24,10 +26,11 @@ export class RegisterComponent implements OnInit {
   userErrorMessage: String = '';
   organizationError: boolean = false;
   organizationErrorMessage: String = '';
+  res: any;
   testOrganizationName: String = 'iHomer';
   testDomain: String = 'gmail.com';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     // TODO document why this method 'ngOnInit' is empty
@@ -66,7 +69,19 @@ export class RegisterComponent implements OnInit {
       this.user.password == this.repeatpassword
     ) {
       this.setUserError(false, '');
-      this.userService.register(this.user);
+      this.userService.register(this.user).subscribe(
+        (response) => {
+          this.setUserError(false, '');
+          this.res = response;
+          var decoded: any = jwt_decode(this.res.access_token);
+          localStorage.setItem('token', this.res.access_token)
+          localStorage.setItem('email', decoded.username);
+          this.router.navigate(['/events'])
+        },
+        (error) => {
+          this.setUserError(true, 'Email of wachtwoord incorrect.');
+        },
+      );
     }
   }
 
