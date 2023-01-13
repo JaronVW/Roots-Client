@@ -7,11 +7,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  constructor(public router: Router) {
-    /* TODO document why this constructor is empty */
+  username = '';
+
+  constructor(public router: Router) {}
+
+  ngOnInit(): void {}
+
+  logout() {
+    localStorage.setItem('token', '');
+    this.router.navigate(['/login']);
   }
 
-  ngOnInit(): void {
-    /* TODO document why this method 'ngOnInit' is empty */
+  getUsername() {
+    return localStorage.getItem('email');
   }
 }

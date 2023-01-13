@@ -30,12 +30,14 @@
           <p>|</p>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/login" routerLinkActive="disabled" ariaCurrentWhenActive="page">Inloggen</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/register" routerLinkActive="disabled" ariaCurrentWhenActive="page"
-            >Registreren</a
-          >
+          <div ngbDropdown class="d-inline-block">
+            <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+              {{ getUsername() }}
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button (click)="logout()" ngbDropdownItem>Uitloggen</button>
+            </div>
+          </div>
         </li>
       </ul>
     </div>

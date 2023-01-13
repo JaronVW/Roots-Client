@@ -17,6 +17,6 @@ export class UserService {
   }
 
   register(user: RegisterUser) {
-    return this.http.post(`auth/register`, user).subscribe();
+    return this.http.post(`auth/register`, user);
   }
 }
