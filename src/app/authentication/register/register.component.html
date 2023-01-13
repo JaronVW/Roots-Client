@@ -211,14 +211,14 @@
                               class="form-control"
                               id="organisationNameInput"
                               placeholder="Naam invoeren..."
-                              [(ngModel)]="organization.name"
+                              [(ngModel)]="organisation.name"
                               [ngModelOptions]="{ standalone: true }"
                             />
                           </div>
                         </div>
                         <div class="col-3">
                           <button
-                            (click)="validateOrganization()"
+                            (click)="validateOrganisation()"
                             class="btn btn-primary brand-button create-organization-button"
                           >
                             Aanmaken
@@ -226,12 +226,12 @@
                         </div>
                       </div>
                       <div class="text-muted mt-3">
-                        Het domein voor deze organisatie wordt: {{ this.organization.domain }}
+                        Het domein voor deze organisatie wordt: {{ this.organisation.domainName }}
                       </div>
-                      <div *ngIf="organizationError" class="col-md-12">
+                      <div *ngIf="organisationError" class="col-md-12">
                         <br />
                         <div class="alert alert-danger" role="alert">
-                          {{ organizationErrorMessage }}
+                          {{ organisationErrorMessage }}
                         </div>
                       </div>
                     </div>

@@ -2,6 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { OrganisationService } from '../organisation.service';
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -11,9 +12,9 @@ import jwt_decode from 'jwt-decode';
 })
 export class RegisterComponent implements OnInit {
   public isCollapsed = true;
-  organization = {
+  organisation = {
     name: '',
-    domain: '',
+    domainName: '',
   };
   user = {
     username: '',
@@ -24,20 +25,24 @@ export class RegisterComponent implements OnInit {
   repeatpassword: String = '';
   userError: boolean = false;
   userErrorMessage: String = '';
-  organizationError: boolean = false;
-  organizationErrorMessage: String = '';
+  organisationError: boolean = false;
+  organisationErrorMessage: String = '';
+  success: boolean = false;
+  successMessage: String = '';
   res: any;
-  testOrganizationName: String = 'iHomer';
-  testDomain: String = 'gmail.com';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private organisationService: OrganisationService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     // TODO document why this method 'ngOnInit' is empty
   }
 
   createDomain() {
-    this.organization.domain = this.user.username.split('@')[1];
+    this.organisation.domainName = this.user.username.split('@')[1];
   }
 
   validateUser() {
@@ -50,7 +55,11 @@ export class RegisterComponent implements OnInit {
     if (this.user.password == '') {
       this.setUserError(true, 'Wachtwoord kan niet leeg zijn.');
     }
-    if (!this.user.username.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+    if (
+      !this.user.username.match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
       this.setUserError(true, 'Email moet valide zijn.');
     }
     if (this.user.lastName == '') {
@@ -62,7 +71,9 @@ export class RegisterComponent implements OnInit {
     if (
       this.user.firstName != '' &&
       this.user.lastName != '' &&
-      this.user.username.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) &&
+      this.user.username.match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      ) &&
       this.user.password != '' &&
       this.user.password.length > 7 &&
       this.user.password.length < 21 &&
@@ -74,9 +85,9 @@ export class RegisterComponent implements OnInit {
           this.setUserError(false, '');
           this.res = response;
           var decoded: any = jwt_decode(this.res.access_token);
-          localStorage.setItem('token', this.res.access_token)
+          localStorage.setItem('token', this.res.access_token);
           localStorage.setItem('email', decoded.username);
-          this.router.navigate(['/events'])
+          this.router.navigate(['/events']);
         },
         (error) => {
           this.setUserError(true, 'Email of wachtwoord incorrect.');
@@ -85,26 +96,34 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  validateOrganization() {
-    if (this.testOrganizationName == this.organization.name) {
-      this.setOrganizationError(true, 'Deze organisatie bestaat al.');
+  validateOrganisation() {
+    if (this.organisation.name == '') {
+      this.setOrganisationError(true, 'Organisatienaam kan niet leeg zijn.');
     }
-    if (this.organization.name == '') {
-      this.setOrganizationError(true, 'Organisatienaam kan niet leeg zijn.');
-    }
-    if (this.testDomain == this.organization.domain) {
-      this.setOrganizationError(true, 'Dit domein bestaat al.');
-    }
-    if (this.organization.domain == '') {
-      this.setOrganizationError(true, 'Domein kan niet leeg zijn; voer uw email in.');
+    if (this.organisation.domainName == '') {
+      this.setOrganisationError(true, 'Domein kan niet leeg zijn; voer uw email in.');
     }
     if (
-      this.organization.name != '' &&
-      this.testOrganizationName != this.organization.name &&
-      this.organization.domain != '' &&
-      this.testDomain != this.organization.domain
+      this.organisation.name != '' &&
+      this.organisation.domainName != ''
     ) {
-      this.setOrganizationError(false, '');
+      this.organisationService.create(this.organisation).subscribe(
+        (response) => {
+          this.setOrganisationError(false, '');
+          this.res = response;
+          this.setSuccess(
+            true,
+            'Organisatie: "' +
+              this.organisation.name +
+              '" met domein "' +
+              this.organisation.domainName +
+              '" is succesvol aangemaakt.',
+          );
+        },
+        (error) => {
+          this.setOrganisationError(true, 'Organisatienaam/domein is al in gebruik.');
+        },
+      );
     }
   }
 
@@ -113,8 +132,13 @@ export class RegisterComponent implements OnInit {
     this.userErrorMessage = errorMessage;
   }
 
-  setOrganizationError(error: boolean, errorMessage: string) {
-    this.organizationError = error;
-    this.organizationErrorMessage = errorMessage;
+  setOrganisationError(error: boolean, errorMessage: string) {
+    this.organisationError = error;
+    this.organisationErrorMessage = errorMessage;
+  }
+
+  setSuccess(success: boolean, successMessage: string) {
+    this.success = success;
+    this.successMessage = successMessage;
   }
 }
