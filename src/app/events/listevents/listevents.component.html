@@ -107,11 +107,11 @@
 
                     <div
                       role="region"
-                      [style.display]="accordionItem.expanded && item.content ? '' : 'none'"
+                      [style.display]="accordionItem.expanded ? '' : 'none'"
                       [attr.id]="'accordion-content-' + index"
                       [attr.aria-labelledby]="'accordion-header-' + index"
                     >
-                      <p>{{ item.content }}</p>
+                      {{ item.content }}
                       <div class="more-options">
                         <i class="material-icons" [matMenuTriggerFor]="menu">&#xe5d4;</i>
                         <mat-menu #menu="matMenu">
@@ -131,6 +131,9 @@
                     (click)="getEventDetails(item.id!)"
                     style="cursor: pointer"
                   >
+                    <div *ngIf="loading && accordionItem.expanded">
+                      <app-loading-spinner></app-loading-spinner>
+                    </div>
                     <div *ngIf="!accordionItem.expanded">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +150,7 @@
                       </svg>
                     </div>
 
-                    <div *ngIf="accordionItem.expanded">
+                    <div *ngIf="!loading && accordionItem.expanded">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="30"
