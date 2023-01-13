@@ -51,6 +51,7 @@ export class ListeventsComponent implements OnInit {
 
   clearSearch() {
     this._searchValue = '';
+    this.showArchived = false;
     this.getEvents();
     this.hasSearched = false;
   }
