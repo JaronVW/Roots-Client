@@ -18,11 +18,15 @@ export class ListeventsComponent implements OnInit {
     description: '',
     tags: [],
   };
-  
+
   loading: boolean = false;
   showArchived: boolean = false;
 
-  constructor(private router: Router, private eventService: EventService,@Inject(DOCUMENT) private document: Document) {}
+  constructor(
+    private router: Router,
+    private eventService: EventService,
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -94,15 +98,29 @@ export class ListeventsComponent implements OnInit {
     };
   }
 
-  getEventDetails(id: number) {
+  getEventDetails(accIndex: number, id: number) {
     this.loading = true;
-    this.eventService.getEvent(id).subscribe((response: any) => {
-      if (this.events) this.events.filter((event) => event.id == id)[0]! = response;
+    this.eventService.getEvent(id).subscribe((response: Event) => {
+      this.events?.forEach((event, index) => {
+        if (event.id == id) {
+          this.events![index] = response;
+          if (response.dateOfEvent)
+            this.events![index].dateOfEvent = new Date(response.dateOfEvent).toLocaleDateString('nl-NL', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            });
+          this.trackItem(accIndex, this.events![index]);
+        }
+      });
       this.loading = false;
     });
   }
 
- 
+  trackItem(index: number, item: Event) {
+    return item.id;
+  }
 
   delete(id: number) {
     this.eventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));

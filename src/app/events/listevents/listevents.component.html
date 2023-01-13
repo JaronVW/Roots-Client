@@ -37,7 +37,7 @@
       <cdk-accordion class="example-accordion">
         <cdk-accordion-item
           class="example-accordion-item col-md-12"
-          *ngFor="let item of events; let index = index"
+          *ngFor="let item of events; let index = index; trackBy: trackItem"
           style="display: block; cursor: default"
           #accordionItem="cdkAccordionItem"
           role="button"
@@ -135,7 +135,7 @@
                     class="expand-item"
                     [ngClass]="{ 'archive-card': item.isArchived == true }"
                     (click)="accordionItem.toggle()"
-                    (click)="getEventDetails(item.id!)"
+                    (click)="getEventDetails(index, item.id!)"
                     style="cursor: pointer"
                   >
                     <div *ngIf="loading && accordionItem.expanded">
