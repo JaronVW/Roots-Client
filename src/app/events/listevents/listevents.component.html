@@ -102,7 +102,7 @@
 
                     <div
                       role="region"
-                      [style.display]="accordionItem.expanded && item.content ? '' : 'none'"
+                      [style.display]="accordionItem.expanded ? '' : 'none'"
                       [attr.id]="'accordion-content-' + index"
                       [attr.aria-labelledby]="'accordion-header-' + index"
                     >
