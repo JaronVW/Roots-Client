@@ -219,7 +219,8 @@ button {
 }
 
 .timeline .timeline-icon {
-  left: 12%;
+  left: 12.25%;
+  margin-left: -1.5px;
   position: absolute;
   width: 9.5%;
   text-align: center;
