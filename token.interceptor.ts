@@ -27,14 +27,12 @@ export class TokenInterceptor implements HttpInterceptor {
     //   )
     //   .subscribe(() => console.log('Startup auth done'));
 
-    console.log('reached the api interceptor');
     const newRequest = request.clone({
       // headers: new HttpHeaders({
       //   // 'Authorization': `${this.currentUser$.value?.token}`,
       // }),
       url: `http://localhost:3000/${request.url}`,
     });
-    console.log('newRequest', newRequest);
     return next.handle(newRequest);
   }
 

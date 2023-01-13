@@ -3,6 +3,11 @@
     <div class="card register-card">
       <div class="card-body">
         <h1 class="card-title">Registreren</h1>
+        <div *ngIf="userError" class="userError">
+          <div class="alert alert-danger" role="alert">
+            {{ userErrorMessage }}
+          </div>
+        </div>
         <form>
           <div class="row gy-3">
             <div class="col-6">
@@ -24,7 +29,14 @@
                     </svg>
                   </span>
                 </div>
-                <input type="text" class="form-control" id="firstNameInput" placeholder="Voornaam invoeren..." />
+                <input
+                  [(ngModel)]="user.firstName"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="text"
+                  class="form-control"
+                  id="firstNameInput"
+                  placeholder="Voornaam invoeren..."
+                />
               </div>
             </div>
 
@@ -47,7 +59,14 @@
                     </svg>
                   </span>
                 </div>
-                <input type="text" class="form-control" id="lastNameInput" placeholder="Achternaam invoeren..." />
+                <input
+                  [(ngModel)]="user.lastName"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="text"
+                  class="form-control"
+                  id="lastNameInput"
+                  placeholder="Achternaam invoeren..."
+                />
               </div>
             </div>
 
@@ -79,7 +98,7 @@
                   id="emailInput"
                   placeholder="Email invoeren..."
                   (input)="createDomain()"
-                  [(ngModel)]="email"
+                  [(ngModel)]="user.username"
                   [ngModelOptions]="{ standalone: true }"
                 />
               </div>
@@ -107,7 +126,14 @@
                     </svg>
                   </span>
                 </div>
-                <input type="password" class="form-control" id="passwordInput" placeholder="Wachtwoord invoeren..." />
+                <input
+                  [(ngModel)]="user.password"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="password"
+                  class="form-control"
+                  id="passwordInput"
+                  placeholder="Wachtwoord invoeren..."
+                />
               </div>
             </div>
             <div class="col-12">
@@ -132,7 +158,15 @@
                     </svg>
                   </span>
                 </div>
-                <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Wachtwoord invoeren..." />
+                <input
+                  [(ngModel)]="repeatpassword"
+                  [ngModelOptions]="{ standalone: true }"
+                  type="password"
+                  class="form-control"
+                  id="confirmPasswordInput"
+                  placeholder="Wachtwoord invoeren..."
+                />
+                  
               </div>
             </div>
 
@@ -184,7 +218,10 @@
                           </div>
                         </div>
                         <div class="col-3">
-                          <button (click)="validate()" class="btn btn-primary brand-button create-organization-button">
+                          <button
+                            (click)="validateOrganization()"
+                            class="btn btn-primary brand-button create-organization-button"
+                          >
                             Aanmaken
                           </button>
                         </div>
@@ -192,10 +229,10 @@
                       <div class="text-muted mt-3">
                         Het domein voor deze organisatie wordt: {{ this.organization.domain }}
                       </div>
-                      <div *ngIf="error" class="col-md-12">
+                      <div *ngIf="organizationError" class="col-md-12">
                         <br />
-                        <div class="alert alert-danger" rolea="alert">
-                          {{ errorMessage }}
+                        <div class="alert alert-danger" role="alert">
+                          {{ organizationErrorMessage }}
                         </div>
                       </div>
                     </div>
@@ -205,7 +242,9 @@
             </div>
 
             <div class="col-12 text-center">
-              <button type="submit" class="btn btn-primary register-button brand-button">Registreren</button>
+              <button (click)="validateUser()" type="submit" class="btn btn-primary register-button brand-button">
+                Registreren
+              </button>
             </div>
             <div class="col-12 text-center">
               <p>
