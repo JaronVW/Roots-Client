@@ -111,7 +111,14 @@
                       [attr.id]="'accordion-content-' + index"
                       [attr.aria-labelledby]="'accordion-header-' + index"
                     >
-                      {{ item.content }}
+                      <p>{{ item.content }}</p>
+
+                      <div *ngFor="let media of item.multimediaItems" style="margin: -8px 2px 20px 0">
+                        <app-event-media-item
+                          [path]="media.path ? media.path : ''"
+                          [media]="media.multimedia"
+                        ></app-event-media-item>
+                      </div>
                       <div class="more-options">
                         <i class="material-icons" [matMenuTriggerFor]="menu">&#xe5d4;</i>
                         <mat-menu #menu="matMenu">

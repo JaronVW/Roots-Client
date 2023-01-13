@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-listevents',
@@ -17,10 +18,11 @@ export class ListeventsComponent implements OnInit {
     description: '',
     tags: [],
   };
+  
   loading: boolean = false;
   showArchived: boolean = false;
 
-  constructor(private router: Router, private eventService: EventService) {}
+  constructor(private router: Router, private eventService: EventService,@Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit(): void {
     this.getEvents();
@@ -99,6 +101,8 @@ export class ListeventsComponent implements OnInit {
       this.loading = false;
     });
   }
+
+ 
 
   delete(id: number) {
     this.eventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
