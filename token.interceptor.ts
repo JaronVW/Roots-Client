@@ -17,9 +17,13 @@ export class TokenInterceptor implements HttpInterceptor {
     let token = localStorage.getItem('token');
     if (token) {
       if (this.helper.isTokenExpired(token)) {
+        localStorage.setItem('token', '');
+        localStorage.setItem('email', '');
         this.router.navigate(['/login']);
       }
     } else {
+      localStorage.setItem('token', '');
+      localStorage.setItem('email', '');
       this.router.navigate(['/login']);
     }
 
