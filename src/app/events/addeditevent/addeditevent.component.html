@@ -55,7 +55,7 @@
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="longer-description">Omschrijving:</label>
+          <label for="longerDescription">Omschrijving:</label>
           <editor
             [apiKey]="apiKeyTinymce"
             [(ngModel)]="event.content"
@@ -72,10 +72,10 @@
           bullist numlist outdent indent code',
               height: 300,
               menubar: false,
-              inline_boundaries: false
+              inline_boundaries: false,
+              id: 'longerDescription'
             }"
-            name="longer-description"
-            id="longer-description"
+            name="longerDescription"
           >
           </editor>
         </div>

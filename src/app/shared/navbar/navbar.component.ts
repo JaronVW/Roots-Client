@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   username = '';
+  isNavbarCollapsed = true;
 
   constructor(public router: Router) {}
 

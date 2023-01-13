@@ -30,9 +30,7 @@ export class AddediteventComponent implements OnInit {
     description: '',
     content: '',
     dateOfEvent: new Date().toISOString(),
-    // userId: 'test',
     tags: [],
-    // customtags ['test', 'test2'],
     multimediaItems: [],
   };
 
