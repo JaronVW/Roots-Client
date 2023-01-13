@@ -18,11 +18,12 @@ textarea {
 }
 
 .list-group-flush {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  /* border-top-left-radius: 5px; */
+  /* border-bottom-left-radius: 5px; */
+  border-radius: 5px;
   height: 160px;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: white;
 }
 
@@ -63,4 +64,23 @@ a:hover {
 
 .material-icons:hover {
   cursor: pointer;
+}
+
+#long-description {
+  border: 1px solid #ccc !important;
+}
+
+.dropzone button.btn.brand-button-danger {
+  max-width: fit-content;
+  margin: 0;
+  padding: 0px 6px;
+}
+
+.dropzone span {
+  overflow: hidden;
+  align-self: center;
+}
+
+.file-item-wrapper {
+  display: flex; justify-content: space-between; gap: 10px
 }

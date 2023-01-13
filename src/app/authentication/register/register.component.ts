@@ -10,7 +10,7 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  public isCollapsed = false;
+  public isCollapsed = true;
   organization = {
     name: '',
     domain: '',

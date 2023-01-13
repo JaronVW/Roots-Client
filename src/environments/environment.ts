@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  tinymceApiKey: '8t9lcyq2za7u1abogrdhv3e4tom7pubr2x7jhcbscjss47on',
 };
 
 /*
