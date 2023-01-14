@@ -173,7 +173,7 @@
               <button
                 type="button"
                 class="btn btn-outline-primary brand-button mb-3"
-                (click)="collapse.toggle()"
+                (click)="isCollapsed =! isCollapsed"
                 [attr.aria-expanded]="!isCollapsed"
                 aria-controls="collapseExample"
               >

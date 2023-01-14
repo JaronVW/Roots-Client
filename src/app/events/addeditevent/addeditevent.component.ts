@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event, Tag } from '../event.interface';
@@ -23,7 +23,9 @@ export class AddediteventComponent implements OnInit {
   buttonText: string = 'Aanmaken';
   eventid: number | null = null;
   isEditing: boolean = false;
+
   apiKeyTinymce = environment['tinymceApiKey'] || 'nokey';
+  editor: any;
 
   event: Event = {
     title: '',
@@ -45,6 +47,63 @@ export class AddediteventComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (tinymce.activeEditor != null) tinymce.EditorManager.execCommand('mceRemoveEditor', true, 'longerdescription');
+    tinymce.init({
+      selector: '#longerdescription',
+      base_url: '/tinymce',
+      suffix: '.min',
+      setup: (editor) => {
+        this.editor = editor;
+
+        editor.on('init', () => {
+          if (this.event.content) {
+            editor.setContent(this.event.content);
+          }
+        });
+
+        editor.on('keyup, blur', () => {
+          this.event.content = editor.getContent();
+          console.log(this.event.content);
+        });
+      },
+      plugins: 'lists link image table code help wordcount',
+      branding: false,
+      promotion: false,
+      placeholder: 'Omschrijving typen...',
+      // add image before table to get image button in toolbar
+      toolbar:
+        'undo redo | formatselect | bold italic backcolor | \
+    alignleft aligncenter alignright alignjustify | table | \
+    bullist numlist outdent indent code',
+      height: 300,
+      menubar: false,
+      inline_boundaries: false,
+      automatic_uploads: true,
+      file_picker_types: 'image',
+      file_picker_callback: function (cb, value, meta) {
+        let input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+
+        input.onchange = function () {
+          if (input.files && input.files.length > 0) {
+            let file = input.files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+              let id = 'blobid' + new Date().getTime();
+              let blobCache = tinymce.activeEditor?.editorUpload.blobCache;
+              let base64 = reader.result?.toString().split(',')[1];
+              if (blobCache == null || base64 == null) return;
+              let blobInfo = blobCache.create(id, file, base64);
+              blobCache.add(blobInfo);
+              cb(blobInfo.blobUri(), { title: file.name });
+            };
+          }
+        };
+        input.click();
+      },
+    });
     this.eventid = Number(this.route.snapshot.paramMap.get('id'));
     if (this.eventid) {
       this.isEditing = true;

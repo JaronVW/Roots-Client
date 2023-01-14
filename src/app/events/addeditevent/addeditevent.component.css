@@ -66,10 +66,6 @@ a:hover {
   cursor: pointer;
 }
 
-#long-description {
-  border: 1px solid #ccc !important;
-}
-
 .dropzone button.btn.brand-button-danger {
   max-width: fit-content;
   margin: 0;
@@ -82,5 +78,11 @@ a:hover {
 }
 
 .file-item-wrapper {
-  display: flex; justify-content: space-between; gap: 10px
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+editor.form-control {
+  min-height: 300px;
 }
