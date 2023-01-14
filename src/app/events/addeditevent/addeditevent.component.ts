@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
 import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import tinymce from 'tinymce';
 
 @Component({
@@ -24,7 +23,6 @@ export class AddediteventComponent implements OnInit {
   eventid: number | null = null;
   isEditing: boolean = false;
 
-  apiKeyTinymce = environment['tinymceApiKey'] || 'nokey';
   editor: any;
 
   event: Event = {
@@ -70,11 +68,9 @@ export class AddediteventComponent implements OnInit {
       branding: false,
       promotion: false,
       placeholder: 'Omschrijving typen...',
-      // add image before table to get image button in toolbar
+      // add image (just before table) to get image button in toolbar
       toolbar:
-        'undo redo | formatselect | bold italic backcolor | \
-    alignleft aligncenter alignright alignjustify | table | \
-    bullist numlist outdent indent code',
+        'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent code',
       height: 300,
       menubar: false,
       inline_boundaries: false,
@@ -104,6 +100,7 @@ export class AddediteventComponent implements OnInit {
         input.click();
       },
     });
+
     this.eventid = Number(this.route.snapshot.paramMap.get('id'));
     if (this.eventid) {
       this.isEditing = true;
@@ -220,6 +217,11 @@ export class AddediteventComponent implements OnInit {
       if (parts.length > 1) element.innerHTML = parts[1];
       else element.innerHTML = parts[0];
     });
+    let dropzone = document.getElementById('dropzone');
+    let tagSize = document.querySelector('#tags')?.getBoundingClientRect().height;
+    if (tagSize && dropzone) {
+      dropzone.style.marginTop = +tagSize - 38 + 'px';
+    }
     // document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {});
   }
 

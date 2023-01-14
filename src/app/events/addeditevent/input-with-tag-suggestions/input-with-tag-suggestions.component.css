@@ -4,7 +4,6 @@ li {
   list-style-type: none;
   background-color: #f6f6f6;
   border-bottom: 1px solid #ddd;
-
 }
 
 li:hover {
@@ -22,7 +21,7 @@ ul {
 .dropdown {
   position: absolute;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
 }
 
 li.selected {
@@ -34,7 +33,6 @@ li.selected {
   font-weight: bold;
   color: #857d7d;
 }
-
 
 .headerTag:hover {
   background-color: #f6f6f6;
