@@ -10,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
 
     <ng-template #downloadFile>
       <button class="btn btn-primary brand-button" (click)="getFile()">Download</button></ng-template
-    >`,
+    > `,
   styles: ['.img-size { max-height: 10rem;  }'],
 })
 export class EventMediaItemComponent implements OnInit {

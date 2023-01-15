@@ -71,6 +71,7 @@ export class ListeventsComponent implements OnInit {
     this.eventService
       .getEvents(undefined, undefined, undefined, searchQuery, getArchivedItems)
       .subscribe((response: any[]) => {
+        console.log(response);
         this.events = response;
         for (const element of this.events) {
           if (element.dateOfEvent)
