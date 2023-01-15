@@ -60,7 +60,6 @@
         <div
           class="rounded card"
           [ngClass]="{
-            'disable-rounded-top-left': accordionItem.expanded,
             'archive-card': item.isArchived == true
           }"
         >
@@ -91,7 +90,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body timeline-body">
+              <div class="card-body timeline-body" [ngClass]="{ 'disable-rounded-top-left': accordionItem.expanded }">
                 <div class="event-content">
                   <div class="row">
                     <div class="col-md-10 event-title">
