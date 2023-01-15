@@ -62,6 +62,6 @@ ng-multiselect-dropdown#tags div.multiselect-dropdown div span.dropdown-btn {
 }
 
 .a-for-accessibility,
-.a-for-accessibility {
+.a-for-accessibility:hover {
   color: black;
 }
