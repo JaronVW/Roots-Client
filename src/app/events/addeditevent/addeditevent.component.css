@@ -116,8 +116,3 @@ div.dropzone:hover div.dropzone-text {
 editor.form-control {
   min-height: 300px;
 }
-
-.addtag-wrapper,
-.addtag-wrapper:hover {
-  color: black;
-}

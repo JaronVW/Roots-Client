@@ -118,16 +118,29 @@
                     [attr.aria-labelledby]="'accordion-header-' + index"
                     class="expandable-content"
                   >
-                    <div [attr.id]="'event-content-field-' + index"></div>
-
-                    <div *ngFor="let media of item.multimediaItems" style="margin: -8px 2px 20px 0">
-                      <app-event-media-item
-                        [path]="media.path ? media.path : ''"
-                        [media]="media.multimedia"
-                      ></app-event-media-item>
+                    <div
+                      *ngIf="
+                        (!item.content || item.content == null || item.content == '') &&
+                          (!item.multimediaItems || item.multimediaItems == null || item.multimediaItems.length == 0);
+                        else othercontent
+                      "
+                    >
+                      <p>Er is niet meer informatie vastgelegd over deze gebeurtenis.</p>
                     </div>
+                    <ng-template #othercontent>
+                      <div [attr.id]="'event-content-field-' + index"></div>
+
+                      <div *ngFor="let media of item.multimediaItems" style="margin: -8px 2px 20px 0">
+                        <app-event-media-item
+                          [path]="media.path ? media.path : ''"
+                          [media]="media.multimedia"
+                        ></app-event-media-item>
+                      </div>
+                    </ng-template>
                     <div class="more-options">
-                      <i class="material-icons" [matMenuTriggerFor]="menu">&#xe5d4;</i>
+                      <a class="a-for-accessibility" href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                        <i class="material-icons">&#xe5d4;</i>
+                      </a>
                       <mat-menu #menu="matMenu">
                         <button mat-menu-item [routerLink]="['edit', item.id]">Wijzigen</button>
                         <button *ngIf="!item.isArchived" mat-menu-item (click)="archive(item.id!)">Archiveren</button>

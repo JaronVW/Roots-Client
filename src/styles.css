@@ -60,3 +60,8 @@ div.form-group div.tox.tox-tinymce {
 ng-multiselect-dropdown#tags div.multiselect-dropdown div span.dropdown-btn {
   border: 1px solid #ced4da;
 }
+
+.a-for-accessibility,
+.a-for-accessibility {
+  color: black;
+}
