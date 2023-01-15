@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event, Tag } from '../event.interface';
@@ -16,6 +16,7 @@ import tinymce from 'tinymce';
 export class AddediteventComponent implements OnInit {
   dropdownList: any = [];
   dropdownSettings = {};
+
   error: boolean = false;
   errorMessage: string = '';
   isFirstVisit: boolean = true;
@@ -134,6 +135,10 @@ export class AddediteventComponent implements OnInit {
       enableCheckAll: false,
       classes: 'tag-dropdown',
     };
+
+    window.addEventListener('resize', () => {
+      this.changeTagName();
+    });
   }
 
   validate() {
@@ -220,8 +225,10 @@ export class AddediteventComponent implements OnInit {
     let dropzone = document.getElementById('dropzone');
     let tagSize = document.querySelector('#tags')?.getBoundingClientRect().height;
     if (tagSize && dropzone) {
-      dropzone.style.marginTop = +tagSize - 38 + 'px';
+      if (window.innerWidth >= 768) dropzone.style.marginTop = +tagSize - 38 + 'px';
+      else dropzone.style.marginTop = 0 + 'px';
     }
+
     // document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {});
   }
 

@@ -38,7 +38,17 @@
         </li>
         <li class="nav-item">
           <div ngbDropdown class="d-inline-block">
-            <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+            <a
+              class="nav-link"
+              id="dropdownBasic1"
+              routerLinkActive="active"
+              ariaCurrentWhenActive="page"
+              ngbDropdownToggle
+              role="combobox"
+              aria-expanded="false"
+              aria-label="Toggle dropdown"
+              href="javascript:void(0)"
+            >
               {{ getUsername() }}
             </a>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">

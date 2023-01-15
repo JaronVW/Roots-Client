@@ -54,6 +54,8 @@
         [attr.id]="'accordion-header-' + index"
         [attr.aria-expanded]="accordionItem.expanded"
         [attr.aria-controls]="'accordion-content-' + index"
+        (keydown.enter)="accordionItem.toggle()"
+        (keydown.enter)="getEventDetails(index, item.id!)"
       >
         <div
           class="rounded card"

@@ -54,7 +54,7 @@ footer,
 
 div.form-group div.tox.tox-tinymce {
   border: 1px solid #ced4da;
-  border-radius: 5px;
+  border-radius: 0.375rem;
 }
 
 ng-multiselect-dropdown#tags div.multiselect-dropdown div span.dropdown-btn {
