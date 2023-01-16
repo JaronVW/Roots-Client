@@ -36,7 +36,7 @@ export class AddediteventComponent implements OnInit {
     multimediaItems: [],
   };
 
-  searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
+  tagSuggestions: Tag[] = [];
 
   modalmode = {
     title: '',
@@ -139,7 +139,9 @@ export class AddediteventComponent implements OnInit {
         tag.tagText = `${tag.count} | ${tag.subject}`;
       });
       this.dropdownList = response;
-      this.searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
+      this.tagSuggestions = this.dropdownList.filter(
+        (tag: Tag) => !this.event.tags.map((tag) => tag.subject).includes(tag.subject),
+      );
     });
 
     this.dropdownSettings = {
@@ -235,14 +237,17 @@ export class AddediteventComponent implements OnInit {
       }),
     );
 
-  addTag(tag: Tag) {
-    this.event.tags = [...this.event.tags, tag];
+  tagChange() {
     setTimeout(() => {
       this.changeTagName();
     });
   }
 
   changeTagName() {
+    this.tagSuggestions = this.dropdownList.filter(
+      (tag: Tag) => !this.event.tags.map((tag) => tag.subject).includes(tag.subject),
+    );
+
     document.querySelectorAll('.multiselect-dropdown span.selected-item span').forEach((element) => {
       const parts = element.innerHTML.split(' | ');
       if (parts.length > 1) element.innerHTML = parts[1];
@@ -283,10 +288,6 @@ export class AddediteventComponent implements OnInit {
         this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
       }
     }
-  }
-
-  updateTitle(event: any) {
-    this.event.title = event;
   }
 
   filterMultimedia(multimedia: string) {

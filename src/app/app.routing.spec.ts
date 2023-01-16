@@ -1,11 +1,10 @@
 import { Location } from '@angular/common';
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 
 import { routes } from './app.routing';
 import { ListeventsComponent } from './events/listevents/listevents.component';
-import { AppComponent } from './app.component';
 
 describe('Router: App', () => {
   let location: Location;
@@ -29,6 +28,17 @@ describe('Router: App', () => {
     });
   }));
 
+  it('navigate to "/login" takes you to login page', fakeAsync(() => {
+    router.navigate(['/login']).then(() => {
+      expect(location.path()).toBe('/login');
+    });
+  }));
+
+  it('navigate to "/register" takes you to register page', fakeAsync(() => {
+    router.navigate(['/register']).then(() => {
+      expect(location.path()).toBe('/register');
+    });
+  }));
   // it('navigate to "/events/archive" takes you to archive page', fakeAsync(() => {
   //   router.navigate(['/events/archive']).then(() => {
   //     expect(location.path()).toBe('/events/archive');

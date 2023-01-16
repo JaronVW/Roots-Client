@@ -14,11 +14,10 @@
           <app-input-with-tag-suggestions
             class="title"
             style="position: relative"
-            [tags]="dropdownList"
-            [eventTags]="event.tags"
-            [title]="event.title"
-            (addTag)="addTag($event)"
-            (titleChange)="updateTitle($event)"
+            [(tags)]="tagSuggestions"
+            [(eventTags)]="event.tags"
+            [(title)]="event.title"
+            (eventTagsChange)="tagChange()"
           >
           </app-input-with-tag-suggestions>
         </div>

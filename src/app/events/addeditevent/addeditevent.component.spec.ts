@@ -6,9 +6,10 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { routes } from 'src/app/app.routing';
-import { mockEvent1 } from '../listevents/listevents.mockdata';
+import { mockTags } from './addeditevent.mockdata.tags';
 
 import { AddediteventComponent } from './addeditevent.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 describe('AddeventComponent', () => {
   let component: AddediteventComponent;
@@ -24,6 +25,7 @@ describe('AddeventComponent', () => {
         FormsModule,
         MatDialogModule,
         NgMultiSelectDropDownModule,
+        EditorModule,
       ],
     }).compileComponents();
 
@@ -69,5 +71,42 @@ describe('AddeventComponent', () => {
   it('there should be a field for the event files', fakeAsync(() => {
     let compiled = fixture.debugElement.queryAll(By.css('#file'));
     expect(compiled.length).toEqual(1);
+  }));
+
+  it('there should be a add custom tag button', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('.material-icons'));
+    expect(compiled.length).toEqual(1);
+  }));
+
+  it('add custom tag button should be clickable', fakeAsync(() => {
+    spyOn(component, 'openDialog');
+    let button = fixture.debugElement.nativeElement.querySelector('.material-icons');
+    button.click();
+    tick();
+    expect(component.openDialog).toHaveBeenCalled();
+  }));
+
+  it('there should be tags in the dropdown menu', fakeAsync(() => {
+    component.dropdownList = mockTags;
+    fixture.detectChanges();
+    component.changeTagName();
+    let tagDropdown = fixture.debugElement.nativeElement.querySelector('#tags');
+    tagDropdown.click();
+    tick();
+    let compiled = fixture.debugElement.queryAll(By.css('.multiselect-item-checkbox'));
+    expect(compiled.length).toEqual(2);
+  }));
+
+  //Hier nog naar kijken!!!
+  xit('there should be displayed how much one tag is used', fakeAsync(() => {
+    component.dropdownList = mockTags;
+    fixture.detectChanges();
+    let tagDropdown = fixture.debugElement.nativeElement.querySelector('#tags');
+    tagDropdown.click();
+    tick();
+
+    let compiled = fixture.debugElement.nativeElement.querySelector('.multiselect-item-checkbox');
+    console.log(compiled);
+    expect(compiled.length).toEqual(2);
   }));
 });

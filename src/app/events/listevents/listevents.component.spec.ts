@@ -66,4 +66,12 @@ describe('ListeventsComponent', () => {
 
     expect(compiled[0].nativeElement.textContent).toEqual(mockEvent1.title);
   }));
+
+  it('there should be a checkbox to display archived events', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.queryAll(By.css('.form-check-label'));
+
+    expect(compiled.length).toEqual(1);
+  }));
 });
