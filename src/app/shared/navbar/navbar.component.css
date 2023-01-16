@@ -59,3 +59,7 @@ p {
   display: flex;
   align-items: center;
 }
+
+.dropdown-menu {
+  width: 320px;
+}

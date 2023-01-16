@@ -29,6 +29,7 @@ import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.direct
 import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrganisationComponent } from './organisation/organisation.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     LoadingSpinnerComponent,
     DragAndDropDirective,
     AccountrecoveryComponent,
+    OrganisationComponent,
   ],
   imports: [
     BrowserModule,
