@@ -1,185 +1,227 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6 col-xs-12">
-      <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-        <path
-          d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
-        ></path>
-      </svg>
-      <input
-        placeholder="Zoeken..."
-        (keydown.enter)="search(searchValue)"
-        type="search"
-        class="search-input"
-        [(ngModel)]="searchValue"
-      />
-    </div>
-    <div class="col-md-3 col-xs-12">
-      <button *ngIf="hasSearched; else searchButton" (click)="clearSearch()" class="btn btn-primary brand-button">
-        Zoekopdracht wissen
-      </button>
+  <div class="top-wrapper">
+    <div class="search-wrapper">
+      <div class="row">
+        <div class="col-md-9 col-xs-12">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+            <path
+              d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+            ></path>
+          </svg>
+          <input
+            placeholder="Zoeken..."
+            (keydown.enter)="search(searchValue)"
+            type="search"
+            class="search-input"
+            [(ngModel)]="searchValue"
+          />
+        </div>
+        <div class="col-md-3 col-5 search-button">
+          <button *ngIf="hasSearched; else searchButton" (click)="clearSearch()" class="btn btn-primary brand-button">
+            Zoekopdracht wissen
+          </button>
 
-      <ng-template #searchButton (click)="search(searchValue)">
-        <button (click)="search(searchValue)" class="btn btn-primary brand-button">Zoeken</button>
-      </ng-template>
-    </div>
-    <div class="col-md-3 col-xs-12">
-      <button type="submit" class="btn btn-primary brand-button" routerLink="/events/create">Aanmaken</button>
-    </div>
-    <div class="col-md-3 col-xs-4">
-      <div class="form-check show-archived">
-        <input [(ngModel)]="showArchived" class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-        <label class="form-check-label" for="flexCheckDefault"> Gearchiveerde events tonen? </label>
+          <ng-template #searchButton (click)="search(searchValue)">
+            <button (click)="search(searchValue)" class="btn btn-primary brand-button">Zoeken</button>
+          </ng-template>
+        </div>
+        <div class="col-md-12 col-7">
+          <div class="form-check show-archived p-y-auto">
+            <input [(ngModel)]="showArchived" class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> Gearchiveerde events tonen? </label>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="create-button">
+      <div class="row">
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary brand-button" routerLink="/events/create">Aanmaken</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <ng-container *ngIf="events">
-      <cdk-accordion class="example-accordion">
-        <cdk-accordion-item
-          class="example-accordion-item col-md-12"
-          *ngFor="let item of events; let index = index; trackBy: trackItem"
-          style="display: block; cursor: default"
-          #accordionItem="cdkAccordionItem"
-          role="button"
-          tabindex="0"
-          [attr.id]="'accordion-header-' + index"
-          [attr.aria-expanded]="accordionItem.expanded"
-          [attr.aria-controls]="'accordion-content-' + index"
+  <ng-container *ngIf="events">
+    <cdk-accordion class="example-accordion">
+      <cdk-accordion-item
+        class="example-accordion-item col-md-12"
+        *ngFor="let item of events; let index = index; trackBy: trackItem"
+        style="display: block; cursor: default"
+        #accordionItem="cdkAccordionItem"
+        role="button"
+        tabindex="0"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-content-' + index"
+        (keydown.enter)="accordionItem.toggle()"
+        (keydown.enter)="getEventDetails(index, item.id!)"
+      >
+        <div
+          class="rounded card"
+          [ngClass]="{
+            'archive-card': item.isArchived == true
+          }"
         >
-          <div
-            class="rounded card"
-            [ngClass]="{
-              'disable-rounded-top-left': accordionItem.expanded
-            }"
-          >
-            <ul class="list-group timeline" style="cursor: default">
-              <li class="">
-                <div class="timeline-time">
-                  <span class="date">{{ item.dateOfEvent }}</span>
+          <ul class="list-group timeline" style="cursor: default">
+            <li class="">
+              <div
+                class="example-accordion-item-body"
+                role="region"
+                [style.display]="accordionItem.expanded ? '' : 'none'"
+                [attr.aria-labelledby]="'accordion-header-' + index"
+              >
+                <div class="small-expand-item" (click)="accordionItem.toggle()" style="cursor: pointer">
+                  <div *ngIf="accordionItem.expanded">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-arrow-bar-down"
+                      viewBox="0 0 16 16"
+                      style="transform: rotate(180deg)"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                      />
+                    </svg>
+                  </div>
                 </div>
-                <div class="timeline-icon">
-                  <p>&nbsp;</p>
+              </div>
+              <div class="card-body timeline-body" [ngClass]="{ 'disable-rounded-top-left': accordionItem.expanded }">
+                <div class="event-content">
+                  <div class="row">
+                    <div class="col-md-10 event-title">
+                      <h1>{{ item.title }}</h1>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="archive-img">
+                        <img *ngIf="item.isArchived" src="assets/images/archived.png" alt="archive icon" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="tags" *ngFor="let tag of item.tags" style="margin: -8px 2px 20px 0">
+                        <span class="badge badge-pill badge-primary">{{ tag.subject }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="description">{{ item.description }}</p>
+
+                  <div
+                    role="region"
+                    [style.display]="accordionItem.expanded ? '' : 'none'"
+                    [attr.id]="'accordion-content-' + index"
+                    [attr.aria-labelledby]="'accordion-header-' + index"
+                    class="expandable-content"
+                  >
+                    <div
+                      *ngIf="
+                        (!item.content || item.content == null || item.content == '') &&
+                          (!item.multimediaItems || item.multimediaItems == null || item.multimediaItems.length == 0);
+                        else othercontent
+                      "
+                    >
+                      <p>Er is niet meer informatie vastgelegd over deze gebeurtenis.</p>
+                    </div>
+                    <ng-template #othercontent>
+                      <div [attr.id]="'event-content-field-' + index"></div>
+                      <div class="mt-4">
+                        <div
+                          *ngFor="let media of item.multimediaItems"
+                          style="margin: -8px 2px 20px 0"
+                          class="shadow p-3 rounded"
+                        >
+                          <app-event-media-item
+                            [path]="media.path ? media.path : ''"
+                            [media]="media.multimedia"
+                          ></app-event-media-item>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <div class="more-options">
+                      <a class="a-for-accessibility" href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                        <i class="material-icons">&#xe5d4;</i>
+                      </a>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="['edit', item.id]">Wijzigen</button>
+                        <button *ngIf="!item.isArchived" mat-menu-item (click)="archive(item.id!)">Archiveren</button>
+                        <button *ngIf="item.isArchived" mat-menu-item (click)="unarchive(item.id!)">
+                          De-archiveren
+                        </button>
+                      </mat-menu>
+                    </div>
+                  </div>
                 </div>
                 <div
-                  class="example-accordion-item-body"
-                  role="region"
-                  [style.display]="accordionItem.expanded ? '' : 'none'"
-                  [attr.aria-labelledby]="'accordion-header-' + index"
+                  class="expand-item"
+                  [ngClass]="{ 'archive-card': item.isArchived == true }"
+                  (click)="accordionItem.toggle()"
+                  (click)="getEventDetails(index, item.id!)"
+                  style="cursor: pointer"
                 >
-                  <div class="small-expand-item" (click)="accordionItem.toggle()" style="cursor: pointer">
-                    <div *ngIf="accordionItem.expanded">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30"
-                        height="30"
-                        fill="currentColor"
-                        class="bi bi-arrow-bar-down"
-                        viewBox="0 0 16 16"
-                        style="transform: rotate(180deg)"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
-                        />
-                      </svg>
-                    </div>
+                  <div *ngIf="loading && accordionItem.expanded">
+                    <app-loading-spinner></app-loading-spinner>
                   </div>
-                </div>
-                <div class="card-body timeline-body" [ngClass]="{ 'archive-card': item.isArchived == true }">
-                  <div class="event-content">
-                    <div class="row">
-                      <div class="col-md-10 event-title">
-                        <h1>{{ item.title }}</h1>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="archive-img">
-                          <img *ngIf="item.isArchived" src="assets/images/archived.png" alt="archive icon" />
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="tags" *ngFor="let tag of item.tags" style="margin: -8px 2px 20px 0">
-                          <span class="badge badge-pill badge-primary">{{ tag.subject }}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <p class="description">{{ item.description }}</p>
-
-                    <div
-                      role="region"
-                      [style.display]="accordionItem.expanded ? '' : 'none'"
-                      [attr.id]="'accordion-content-' + index"
-                      [attr.aria-labelledby]="'accordion-header-' + index"
+                  <div *ngIf="!accordionItem.expanded">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-arrow-bar-down"
+                      viewBox="0 0 16 16"
                     >
-                      <div [attr.id]="'event-content-field-' + index"></div>
-
-                      <div *ngFor="let media of item.multimediaItems" style="margin: -8px 2px 20px 0">
-                        <app-event-media-item
-                          [path]="media.path ? media.path : ''"
-                          [media]="media.multimedia"
-                        ></app-event-media-item>
-                      </div>
-                      <div class="more-options">
-                        <i class="material-icons" [matMenuTriggerFor]="menu">&#xe5d4;</i>
-                        <mat-menu #menu="matMenu">
-                          <button mat-menu-item [routerLink]="['edit', item.id]">Wijzigen</button>
-                          <button *ngIf="!item.isArchived" mat-menu-item (click)="archive(item.id!)">Archiveren</button>
-                          <button *ngIf="item.isArchived" mat-menu-item (click)="unarchive(item.id!)">
-                            De-archiveren
-                          </button>
-                        </mat-menu>
-                      </div>
-                    </div>
+                      <path
+                        fill-rule="evenodd"
+                        d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                      />
+                    </svg>
                   </div>
-                  <div
-                    class="expand-item"
-                    [ngClass]="{ 'archive-card': item.isArchived == true }"
-                    (click)="accordionItem.toggle()"
-                    (click)="getEventDetails(index, item.id!)"
-                    style="cursor: pointer"
-                  >
-                    <div *ngIf="loading && accordionItem.expanded">
-                      <app-loading-spinner></app-loading-spinner>
-                    </div>
-                    <div *ngIf="!accordionItem.expanded">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30"
-                        height="30"
-                        fill="currentColor"
-                        class="bi bi-arrow-bar-down"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
-                        />
-                      </svg>
-                    </div>
 
-                    <div *ngIf="!loading && accordionItem.expanded">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30"
-                        height="30"
-                        fill="currentColor"
-                        class="bi bi-arrow-bar-down"
-                        viewBox="0 0 16 16"
-                        style="transform: rotate(180deg)"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
-                        />
-                      </svg>
-                    </div>
+                  <div *ngIf="!loading && accordionItem.expanded">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="30"
+                      fill="currentColor"
+                      class="bi bi-arrow-bar-down"
+                      viewBox="0 0 16 16"
+                      style="transform: rotate(180deg)"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"
+                      />
+                    </svg>
                   </div>
                 </div>
-              </li>
-            </ul>
-          </div>
-        </cdk-accordion-item>
-      </cdk-accordion>
-    </ng-container>
+              </div>
+              <div class="timeline-icon">
+                <p>&nbsp;</p>
+              </div>
+              <div class="timeline-time">
+                <span class="date">{{ item.dateOfEvent }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </cdk-accordion-item>
+    </cdk-accordion>
+  </ng-container>
+  <div class="pagination-wrapper">
+    <ngb-pagination
+      [collectionSize]="currentEventCount"
+      [page]="currentPage"
+      [pageSize]="pageSize"
+      (pageChange)="changePage($event)"
+      [maxSize]="5"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      [ellipses]="true"
+      [size]="'sm'"
+    ></ngb-pagination>
   </div>
 </div>

@@ -7,7 +7,6 @@ import { Event, Tag } from './event.interface';
   providedIn: 'root',
 })
 export class EventService {
-
   public currentUser$ = new BehaviorSubject<null | undefined>(undefined);
   private readonly CURRENT_USER = 'currentuser';
 
@@ -50,6 +49,13 @@ export class EventService {
     return this.http.get<Array<Event>>('events' + queryparams);
   }
 
+  getEventsCount(searchQuery?: string, getArchivedItems?: boolean): Observable<number> {
+    let queryparams = '?';
+    if (searchQuery) queryparams += `searchQuery=${searchQuery}&`;
+    if (getArchivedItems) queryparams += `getArchivedItems=${getArchivedItems}`;
+    return this.http.get<number>('events/count' + queryparams);
+  }
+
   getEvent(id: number): Observable<any> {
     return this.http.get<Event>(`events/${id}`).pipe(map((body: Event) => body));
   }
@@ -59,16 +65,16 @@ export class EventService {
   }
 
   getFile(filename: string) {
-    return this.http.get(`file/${filename}`)
+    return this.http.get(`file/${filename}`);
   }
 
   updateEvent(id: number, event: Event): Observable<Event> {
     let formData = new FormData();
     event.multimediaItems?.forEach((element, index) => {
-      if (element.file != undefined) {
-        formData.append('files', element.file);
-        formData.append(`multimediaItems[${index}][multimedia]`, element.multimedia);
-      }
+      console.log('element: ', element);
+      if (element.path) formData.append(`multimediaItems[${index}][path]`, element.path);
+      formData.append('files', element.file ? element.file : '');
+      formData.append(`multimediaItems[${index}][multimedia]`, element.multimedia);
     });
 
     event.tags.forEach((element, index) => {

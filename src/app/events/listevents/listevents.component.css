@@ -1,6 +1,6 @@
 .search-input {
   width: 100%;
-  height: 40px;
+  height: 38px;
   padding-left: 2.5rem;
   border: 2px solid transparent;
   border-radius: 8px;
@@ -32,6 +32,26 @@ button {
   width: 100%;
 }
 
+.top-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 80%;
+  /* padding-right: 2.6em; */
+}
+
+.create-button {
+  width: 17%;
+}
+
+div.form-check-label {
+  align-self: center;
+}
+
 .card {
   /* margin-top: 40px; */
   border-bottom-left-radius: 0;
@@ -49,6 +69,33 @@ button {
 @media only screen and (max-width: 768px) {
   button {
     margin-top: 10px;
+  }
+
+  .top-wrapper {
+    flex-direction: column;
+  }
+
+  .create-button {
+    width: 100%;
+  }
+
+  .search-wrapper {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .form-check.show-archived {
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .form-check.show-archived {
+    margin-top: 4px;
+  }
+
+  .search-button {
+    padding-left: 0px;
   }
 }
 
@@ -71,20 +118,18 @@ button {
   border: 2px solid transparent;
   border-bottom-left-radius: 8px;
   border-top-left-radius: 8px;
-  background-color: transparent;
+  background-color: #f3f3f4;
   text-align: left;
   position: absolute;
-  left: 17%;
-  margin-left: -18.5px;
-  top: 33px;
+  margin-left: -31px;
 }
 
-/* .disable-rounded-top-left {
+.disable-rounded-top-left {
   border-top-left-radius: 0 !important;
-} */
+}
 
 .small-expand-item:hover {
-  color: #0d8478;
+  background-color: #fff;
   transition: 0.6s ease;
 }
 
@@ -167,8 +212,8 @@ button {
   bottom: 0px;
   width: 2px;
   background: #2d353c;
-  left: 17%;
-  margin-left: -2.5px;
+  right: 17%;
+  margin-right: -2.5px;
 }
 
 .timeline > li {
@@ -179,9 +224,9 @@ button {
 
 .timeline .timeline-time {
   position: absolute;
-  left: 0;
+  right: 0;
   width: 15%;
-  text-align: right;
+  text-align: left;
   top: 22px;
 }
 
@@ -194,7 +239,7 @@ button {
 }
 
 .timeline .timeline-body {
-  margin-left: 20%;
+  margin-right: 20%;
   position: relative;
   padding: 0;
   border-radius: 6px;
@@ -213,13 +258,14 @@ button {
   display: block;
   position: absolute;
   border: 10px solid transparent;
-  border-right-color: #f3f3f4;
-  left: -20px;
+  border-left-color: #f3f3f4;
+  right: -20px;
   top: 25px;
 }
 
 .timeline .timeline-icon {
-  left: 12%;
+  right: 12.25%;
+  margin-right: -1.5px;
   position: absolute;
   width: 9.5%;
   text-align: center;
@@ -239,16 +285,31 @@ button {
   border: 2px solid #2d353c;
 }
 
-.expand-item.archive-card,
-.timeline .timeline-body.archive-card,
-.timeline .timeline-body.archive-card .event-content {
+.archive-card .expand-item,
+.archive-card .timeline .timeline-body,
+.archive-card .timeline .timeline-body .event-content,
+.archive-card .small-expand-item {
   background-color: #f2e5d9;
 }
 
-.expand-item.archive-card:hover {
+.archive-card .expand-item:hover,
+.archive-card .small-expand-item:hover {
   background-color: #f7f2ed;
 }
 
-.timeline .timeline-body.archive-card:before {
-  border-right-color: #f2e5d9;
+.archive-card .timeline .timeline-body:before {
+  border-left-color: #f2e5d9;
+}
+
+.pagination-wrapper {
+  position: absolute;
+  bottom: 70px;
+  text-align: center;
+  left: 50%;
+}
+
+ngb-pagination {
+  display: inline-block;
+  position: relative;
+  left: -50%;
 }

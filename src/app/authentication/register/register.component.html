@@ -2,7 +2,7 @@
   <div class="col-12 col-md-8 mx-auto">
     <div class="card register-card">
       <div class="card-body">
-        <h1 class="card-title">Registreren</h1>
+        <h1 class="card-title text-center mb-4">Registreren</h1>
         <div *ngIf="userError" class="userError">
           <div class="alert alert-danger" role="alert">
             {{ userErrorMessage }}
@@ -169,21 +169,34 @@
               </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-12 mt-4">
               <button
                 type="button"
-                class="btn btn-outline-primary brand-button mb-3"
-                (click)="collapse.toggle()"
+                class="btn btn-outline-primary brand-button mb-3 text-center"
+                (click)="isCollapsed = !isCollapsed"
                 [attr.aria-expanded]="!isCollapsed"
                 aria-controls="collapseExample"
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  fill="currentColor"
+                  class="bi bi-plus-circle"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                  <path
+                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+                  />
+                </svg>
                 Een organisatie toevoegen?
               </button>
               <div>
                 <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
                   <div class="card">
                     <div class="card-body">
-                      <label for="organisationNameInput">Organisatie naam</label>
+                      <label for="organisationNameInput">Organisatienaam</label>
                       <div class="row">
                         <div class="col-9">
                           <div class="input-group">

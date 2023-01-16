@@ -10,7 +10,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { routes } from './app.routing';
 import { AddediteventComponent } from './events/addeditevent/addeditevent.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 import { TokenInterceptor } from '../../token.interceptor';
@@ -29,6 +29,7 @@ import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.direct
 import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrganisationComponent } from './organisation/organisation.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     LoadingSpinnerComponent,
     DragAndDropDirective,
     AccountrecoveryComponent,
+    OrganisationComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +70,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     MatSelectModule,
     EditorModule,
     NgbCollapseModule,
+    NgbPaginationModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

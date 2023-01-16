@@ -18,9 +18,8 @@ textarea {
 }
 
 .list-group-flush {
-  /* border-top-left-radius: 5px; */
-  /* border-bottom-left-radius: 5px; */
   border-radius: 5px;
+  border: 1px solid #ced4da;
   height: 160px;
   overflow: hidden;
   overflow-y: auto;
@@ -47,6 +46,7 @@ a:hover {
 
 ::ng-deep .multiselect-dropdown .dropdown-btn {
   width: -webkit-fill-available !important;
+  min-height: 38px;
 }
 
 ::ng-deep .multiselect-dropdown .dropdown-btn:focus {
@@ -59,15 +59,42 @@ a:hover {
 
 .form-tags {
   background-color: white;
-  border-radius: 5px;
+  border-radius: 0.375rem;
+}
+
+.newtag {
+  text-align: end;
 }
 
 .material-icons:hover {
   cursor: pointer;
 }
 
-#long-description {
-  border: 1px solid #ccc !important;
+.dropzone {
+  position: relative;
+}
+
+.dropzone .dropzone-text {
+  display: flex;
+  visibility: hidden;
+  position: absolute;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  top: 10px;
+  bottom: 0px;
+  width: 100%;
+  font-size: 0.9rem;
+  opacity: 0;
+  background-color: rgba(142, 156, 170, 0.2);
+  transition: opacity 0.3s ease-in-out;
+}
+
+div.dropzone:hover div.dropzone-text,
+div.dropzone div.dropzone-text.drag {
+  opacity: 1;
+  visibility: visible;
 }
 
 .dropzone button.btn.brand-button-danger {
@@ -82,5 +109,11 @@ a:hover {
 }
 
 .file-item-wrapper {
-  display: flex; justify-content: space-between; gap: 10px
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+editor.form-control {
+  min-height: 300px;
 }
