@@ -49,6 +49,13 @@ export class EventService {
     return this.http.get<Array<Event>>('events' + queryparams);
   }
 
+  getEventsCount(searchQuery?: string, getArchivedItems?: boolean): Observable<number> {
+    let queryparams = '?';
+    if (searchQuery) queryparams += `searchQuery=${searchQuery}&`;
+    if (getArchivedItems) queryparams += `getArchivedItems=${getArchivedItems}`;
+    return this.http.get<number>('events/count' + queryparams);
+  }
+
   getEvent(id: number): Observable<any> {
     return this.http.get<Event>(`events/${id}`).pipe(map((body: Event) => body));
   }

@@ -62,7 +62,6 @@ export class AddediteventComponent implements OnInit {
 
         editor.on('keyup, blur', () => {
           this.event.content = editor.getContent();
-          console.log(this.event.content);
         });
       },
       plugins: 'lists link image table code help wordcount',
@@ -106,8 +105,8 @@ export class AddediteventComponent implements OnInit {
     if (this.eventid) {
       this.isEditing = true;
       this.EventService.getEvent(this.eventid).subscribe((response: Event) => {
+        console.log(response);
         this.event = response;
-        console.log(this.event);
         if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent).toISOString();
         response.tags.forEach((element) => {
           element.tagText = `${element.subject}`;
@@ -137,6 +136,9 @@ export class AddediteventComponent implements OnInit {
     };
 
     window.addEventListener('resize', () => {
+      this.changeTagName();
+    });
+    setTimeout(() => {
       this.changeTagName();
     });
   }
@@ -171,18 +173,14 @@ export class AddediteventComponent implements OnInit {
     };
     this.EventService.addEvent(data).subscribe((response: Event) => {
       this.router.navigate(['/events']);
-      console.log(response);
     });
   }
 
   updateEvent() {
-    console.log(this.event.title);
     if (this.eventid != null) {
-      console.log(this.event);
       if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
       this.EventService.updateEvent(this.eventid, this.event).subscribe((response: Event) => {
         this.router.navigate(['/events']);
-        console.log(response);
       });
     }
   }
@@ -222,8 +220,9 @@ export class AddediteventComponent implements OnInit {
       if (parts.length > 1) element.innerHTML = parts[1];
       else element.innerHTML = parts[0];
     });
+
     let dropzone = document.getElementById('dropzone');
-    let tagSize = document.querySelector('#tags')?.getBoundingClientRect().height;
+    let tagSize = document.querySelector('ng-multiselect-dropdown#tags')?.getBoundingClientRect().height;
     if (tagSize && dropzone) {
       if (window.innerWidth >= 768) dropzone.style.marginTop = +tagSize - 38 + 'px';
       else dropzone.style.marginTop = 0 + 'px';
@@ -252,7 +251,6 @@ export class AddediteventComponent implements OnInit {
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
       for (const element of event.target.files) {
-        console.log(element);
         if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
         this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
       }
@@ -270,9 +268,12 @@ export class AddediteventComponent implements OnInit {
 
   onFileDropped(files: Array<any>) {
     for (const element of files) {
-      console.log(element);
       if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
       this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
     }
+  }
+
+  drag() {
+    document.querySelector('.dropzone-text')?.classList.add('drag');
   }
 }

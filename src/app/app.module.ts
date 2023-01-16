@@ -10,7 +10,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { routes } from './app.routing';
 import { AddediteventComponent } from './events/addeditevent/addeditevent.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 import { TokenInterceptor } from '../../token.interceptor';
@@ -68,6 +68,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     MatSelectModule,
     EditorModule,
     NgbCollapseModule,
+    NgbPaginationModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

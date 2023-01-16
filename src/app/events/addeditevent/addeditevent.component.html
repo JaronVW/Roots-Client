@@ -122,7 +122,13 @@
               </div>
             </div>
             <div class="col-12">
-              <div class="form-group dropzone" id="dropzone" appDragAndDrop (fileDropped)="onFileDropped($event)">
+              <div
+                class="form-group dropzone"
+                id="dropzone"
+                appDragAndDrop
+                (fileDropped)="onFileDropped($event)"
+                (onDragEnter)="drag()"
+              >
                 <div *ngIf="!event.multimediaItems || event.multimediaItems.length == 0" class="dropzone-text">
                   <i>Drop files here</i>
                 </div>
