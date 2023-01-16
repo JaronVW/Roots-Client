@@ -10,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
 
     <ng-template #downloadFile>
       <button class="btn btn-primary brand-button" (click)="getFile()">Download</button></ng-template
-    >`,
+    > `,
   styles: ['.img-size { max-height: 10rem;  }'],
 })
 export class EventMediaItemComponent implements OnInit {
@@ -28,7 +28,7 @@ export class EventMediaItemComponent implements OnInit {
 
   getFile() {
     if (this.path || this.media) {
-      this.document.location.href = `http://localhost:3000/file/${this.path}?originalFilename=${this.media}`;
+      this.document.location.href = `${environment.apiUrl}file/${this.path}?originalFilename=${this.media}`;
     }
   }
 
@@ -39,7 +39,6 @@ export class EventMediaItemComponent implements OnInit {
       this.media.includes('jpeg') ||
       this.media.includes('gif') ||
       this.media.includes('svg')
-    ) 
-    
+    );
   }
 }

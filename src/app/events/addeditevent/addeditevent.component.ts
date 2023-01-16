@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
 import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import tinymce from 'tinymce';
 
 @Component({
@@ -17,22 +16,22 @@ import tinymce from 'tinymce';
 export class AddediteventComponent implements OnInit {
   dropdownList: any = [];
   dropdownSettings = {};
+
   error: boolean = false;
   errorMessage: string = '';
   isFirstVisit: boolean = true;
   buttonText: string = 'Aanmaken';
   eventid: number | null = null;
   isEditing: boolean = false;
-  apiKeyTinymce = environment['tinymceApiKey'] || 'nokey';
+
+  editor: any;
 
   event: Event = {
     title: '',
     description: '',
     content: '',
     dateOfEvent: new Date().toISOString(),
-    // userId: 'test',
     tags: [],
-    // customtags ['test', 'test2'],
     multimediaItems: [],
   };
 
@@ -47,32 +46,62 @@ export class AddediteventComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // tinymce.init({
-    //   selector: '#longer-description',
-    //   base_url: '/tinymce',
-    //   suffix: '.min',
-    //   plugins: 'lists link image table code help wordcount',
-    //   branding: false,
-    //   promotion: false,
+    if (tinymce.activeEditor != null) tinymce.EditorManager.execCommand('mceRemoveEditor', true, 'longerdescription');
+    tinymce.init({
+      selector: '#longerdescription',
+      base_url: '/tinymce',
+      suffix: '.min',
+      setup: (editor) => {
+        this.editor = editor;
 
-    //   placeholder: 'Omschrijving typen...',
-    //   toolbar:
-    //     'undo redo | formatselect | bold italic backcolor | \
-    //       alignleft aligncenter alignright alignjustify | table | \
-    //       bullist numlist outdent indent code',
-    //   // automatic_uploads: true,
-    //   // file_picker_types: 'image',
-    //   // file_picker_callback: function (cb, value, meta) {
-    //   //   let input = document.createElement('input');
-    //   //   input.setAttribute('type', 'file');
-    //   //   input.setAttribute('accept', 'image/*');
+        editor.on('init', () => {
+          if (this.event.content) {
+            editor.setContent(this.event.content);
+          }
+        });
 
-    //   //   input.onchange = function () {}; // TODO: add functionility to upload image
-    //   // },
-    //   height: 300,
-    //   menubar: false,
-    //   inline_boundaries: false,
-    // });
+        editor.on('keyup, blur', () => {
+          this.event.content = editor.getContent();
+          console.log(this.event.content);
+        });
+      },
+      plugins: 'lists link image table code help wordcount',
+      branding: false,
+      promotion: false,
+      placeholder: 'Omschrijving typen...',
+      // add image (just before table) to get image button in toolbar
+      toolbar:
+        'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent code',
+      height: 300,
+      menubar: false,
+      inline_boundaries: false,
+      automatic_uploads: true,
+      file_picker_types: 'image',
+      file_picker_callback: function (cb, value, meta) {
+        let input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+
+        input.onchange = function () {
+          if (input.files && input.files.length > 0) {
+            let file = input.files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+              let id = 'blobid' + new Date().getTime();
+              let blobCache = tinymce.activeEditor?.editorUpload.blobCache;
+              let base64 = reader.result?.toString().split(',')[1];
+              if (blobCache == null || base64 == null) return;
+              let blobInfo = blobCache.create(id, file, base64);
+              blobCache.add(blobInfo);
+              cb(blobInfo.blobUri(), { title: file.name });
+            };
+          }
+        };
+        input.click();
+      },
+    });
+
     this.eventid = Number(this.route.snapshot.paramMap.get('id'));
     if (this.eventid) {
       this.isEditing = true;
@@ -106,6 +135,10 @@ export class AddediteventComponent implements OnInit {
       enableCheckAll: false,
       classes: 'tag-dropdown',
     };
+
+    window.addEventListener('resize', () => {
+      this.changeTagName();
+    });
   }
 
   validate() {
@@ -189,6 +222,13 @@ export class AddediteventComponent implements OnInit {
       if (parts.length > 1) element.innerHTML = parts[1];
       else element.innerHTML = parts[0];
     });
+    let dropzone = document.getElementById('dropzone');
+    let tagSize = document.querySelector('#tags')?.getBoundingClientRect().height;
+    if (tagSize && dropzone) {
+      if (window.innerWidth >= 768) dropzone.style.marginTop = +tagSize - 38 + 'px';
+      else dropzone.style.marginTop = 0 + 'px';
+    }
+
     // document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {});
   }
 

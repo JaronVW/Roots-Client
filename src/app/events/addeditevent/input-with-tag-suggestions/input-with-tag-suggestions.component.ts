@@ -40,6 +40,7 @@ export class InputWithTagSuggestionsComponent implements OnInit {
     if (this.showDropdown) {
       this.input.nativeElement.blur();
     }
+    this.filterTags();
   }
 
   showDropdown = false;
@@ -73,7 +74,7 @@ export class InputWithTagSuggestionsComponent implements OnInit {
     this.timeout = setTimeout(() => {
       this.filterTags();
       this.showDropdown = this.suggestions.length > 0;
-    }, 700);
+    }, 400);
   }
 
   addTagAndRemoveFromSuggestions(tag: Tag) {

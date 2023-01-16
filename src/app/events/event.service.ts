@@ -7,7 +7,6 @@ import { Event, Tag } from './event.interface';
   providedIn: 'root',
 })
 export class EventService {
-
   public currentUser$ = new BehaviorSubject<null | undefined>(undefined);
   private readonly CURRENT_USER = 'currentuser';
 
@@ -59,16 +58,16 @@ export class EventService {
   }
 
   getFile(filename: string) {
-    return this.http.get(`file/${filename}`)
+    return this.http.get(`file/${filename}`);
   }
 
   updateEvent(id: number, event: Event): Observable<Event> {
     let formData = new FormData();
     event.multimediaItems?.forEach((element, index) => {
-      if (element.file != undefined) {
-        formData.append('files', element.file);
-        formData.append(`multimediaItems[${index}][multimedia]`, element.multimedia);
-      }
+      console.log('element: ', element);
+      if (element.path) formData.append(`multimediaItems[${index}][path]`, element.path);
+      formData.append('files', element.file ? element.file : '');
+      formData.append(`multimediaItems[${index}][multimedia]`, element.multimedia);
     });
 
     event.tags.forEach((element, index) => {

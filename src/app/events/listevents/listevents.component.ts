@@ -51,6 +51,7 @@ export class ListeventsComponent implements OnInit {
 
   clearSearch() {
     this._searchValue = '';
+    this.showArchived = false;
     this.getEvents();
     this.hasSearched = false;
   }
@@ -70,6 +71,7 @@ export class ListeventsComponent implements OnInit {
     this.eventService
       .getEvents(undefined, undefined, undefined, searchQuery, getArchivedItems)
       .subscribe((response: any[]) => {
+        console.log(response);
         this.events = response;
         for (const element of this.events) {
           if (element.dateOfEvent)
