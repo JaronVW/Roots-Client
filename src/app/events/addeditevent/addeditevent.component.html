@@ -149,14 +149,31 @@
       </div>
 
       <div class="col-md-6">
-        <button type="button" class="btn btn-primary brand-button" (click)="backClicked()">Terug</button>
-        <button type="button" class="btn btn-primary submitButton brand-button" (click)="validate()">
+        <button type="button" class="btn btn-primary brand-button bottom-button" (click)="backClicked()">Terug</button>
+        <button type="button" class="btn btn-primary submitButton brand-button bottom-button" (click)="open(content)">
           {{ buttonText }}
         </button>
       </div>
     </div>
   </form>
 </div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title">{{ modalmode.title }}</h1>
+    <button type="button" class="btn-close x-icon" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <p>
+      {{ modalmode.body }}
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn brand-button" (click)="modal.dismiss('Cross click')">Terug</button>
+    <button type="button" class="btn brand-button" (click)="addedit(); modal.close('Save click')">
+      {{ modalmode.buttontext }}
+    </button>
+  </div>
+</ng-template>
 <script>
   $(document).ready(function () {
     $('#tags').multiselect({
