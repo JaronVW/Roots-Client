@@ -8,9 +8,8 @@ describe('EventMediaItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventMediaItemComponent ]
-    })
-    .compileComponents();
+      declarations: [EventMediaItemComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EventMediaItemComponent);
     component = fixture.componentInstance;

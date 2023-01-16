@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +12,7 @@ describe('RegisterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RegisterComponent],
-      imports: [NgbCollapseModule],
+      imports: [NgbCollapseModule, HttpClientModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
@@ -49,7 +50,7 @@ describe('RegisterComponent', () => {
   });
 
   it('should have a confirmPassword input', () => {
-    let compiled = fixture.debugElement.queryAll(By.css('#passwordInputConfirm'));
+    let compiled = fixture.debugElement.queryAll(By.css('#repeatPasswordInput'));
     expect(compiled.length).toEqual(1);
   });
 });

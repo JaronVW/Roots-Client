@@ -9,20 +9,12 @@ export const mockEvent1: Event = {
     {
       id: 1,
       subject: 'Test tag 1',
-<<<<<<< HEAD
       count: 1,
-=======
-      count: 0,
->>>>>>> development
     },
     {
       id: 2,
       subject: 'Test tag 2',
-<<<<<<< HEAD
       count: 1,
-=======
-      count: 0,
->>>>>>> development
     },
   ],
   userId: '1',

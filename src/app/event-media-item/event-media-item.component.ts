@@ -24,7 +24,7 @@ export class EventMediaItemComponent implements OnInit {
   }
 
   @Input() path!: string;
-  @Input() media!: string;
+  @Input() media: string = '';
 
   getFile() {
     if (this.path || this.media) {
@@ -39,7 +39,6 @@ export class EventMediaItemComponent implements OnInit {
       this.media.includes('jpeg') ||
       this.media.includes('gif') ||
       this.media.includes('svg')
-    ) 
-    
+    );
   }
 }

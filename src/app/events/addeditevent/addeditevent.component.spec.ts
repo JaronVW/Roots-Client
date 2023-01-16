@@ -9,6 +9,7 @@ import { routes } from 'src/app/app.routing';
 import { mockTags } from './addeditevent.mockdata.tags';
 
 import { AddediteventComponent } from './addeditevent.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 describe('AddeventComponent', () => {
   let component: AddediteventComponent;
@@ -24,6 +25,7 @@ describe('AddeventComponent', () => {
         FormsModule,
         MatDialogModule,
         NgMultiSelectDropDownModule,
+        EditorModule,
       ],
     }).compileComponents();
 
