@@ -165,16 +165,13 @@ export class AddediteventComponent implements OnInit {
 
   validate() {
     if (this.event.tags.length <= 0) {
-      this.setError(true, 'You must select at least 1 tag.');
-      throw new Error('You must select at least 1 tag.');
+      this.setError(true, 'Er moet tenminste 1 tag geselecteerd worden.');
     }
     if (this.event.description == '') {
-      this.setError(true, 'Description can not be empty.');
-      throw new Error('Description can not be empty.');
+      this.setError(true, 'De beschrijving mag niet leeg zijn.');
     }
     if (this.event.title == '') {
-      this.setError(true, 'Title can not be empty.');
-      throw new Error('Title can not be empty.');
+      this.setError(true, 'De titel mag niet leeg zijn.');
     }
     if (this.event.title != '' && this.event.description != '' && this.event.tags.length > 0) {
       this.setError(false, '');
