@@ -1,24 +1,40 @@
-<div class="container">
+<div class="container mt-5" style="background: white">
   <div class="row gx-5 gy-3">
     <div class="col-12">
       <div class="card-body">
-        <h1 class="card-title text-center mb-2">Organisatie</h1>
+        <h1 class="text-center">{{ organisation.name }}</h1>
       </div>
     </div>
 
-    <div class="col-12 card">
-      <h3>Organisatienaam</h3>
-      <h3>Domein</h3>
+    <div class="col-12">
+      <button (click)="filter(true)" class="select-button left-button">Actief</button>
+      <button (click)="filter()" class="select-button">Allemaal</button>
+      <button (click)="filter(false)" class="select-button right-button">Inactief</button>
+      <hr />
     </div>
 
-    <div class="col-6">
-      <h2>Actieve deelnemers:</h2>
-      <div class="card">Actief</div>
-    </div>
-
-    <div class="col-6">
-      <h2>Inactieve deelnemers:</h2>
-      <div class="card">Inactief</div>
+    <div class="col-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="width: 30%" scope="col">Naam</th>
+            <th style="width: 30%" scope="col">Mail</th>
+            <th style="width: 30%" scope="col">Actief</th>
+            <th style="width: 10%" scope="col">Wijzigen</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let user of users">
+          <tr>
+            <td>{{ user.firstName + ' ' + user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.isActive ? "Ja" : "Nee" }}</td>
+            <td>
+              <button (click)="setActive(user.id)" *ngIf="!user.isActive" type="button" class="btn brand-button state-button"><i class="far fa-eye"></i>Activeren</button>
+              <button (click)="setInactive(user.id)" *ngIf="user.isActive" type="button" class="btn brand-button state-button"><i class="far fa-eye"></i>Deactiveren</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
