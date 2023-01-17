@@ -93,4 +93,28 @@ describe('ListeventsComponent', () => {
     compiled[0] = fixture.debugElement.query(By.css('.expandable-content'));
     expect(compiled[0]).toBeTruthy();
   }));
+
+  it('should have pagination', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.query(By.css('.pagination-wrapper'));
+
+    expect(compiled).toBeTruthy();
+  }));
+
+  it('there should be a button to create a new event', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.query(By.css('#create-new-event-button'));
+
+    expect(compiled).toBeTruthy();
+  }));
+
+  it('there should be a search button', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.query(By.css('#search-button'));
+
+    expect(compiled).toBeTruthy();
+  }));
 });
