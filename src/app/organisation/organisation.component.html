@@ -23,21 +23,14 @@
             <th scope="col">Wijzigen</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngFor="let user of users">
           <tr>
-            <td>Timothy Borghouts</td>
-            <td>Timothy.borghouts2@gmail.com</td>
-            <td>Yes</td>
+            <td>{{ user.firstName + ' ' + user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.isActive ? "Ja" : "Nee" }}</td>
             <td>
-              <button type="button" class="btn brand-button"><i class="far fa-eye"></i>Deactiveren</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Lucas de Kleijn</td>
-            <td>Lucasdekleijn@outlook.com</td>
-            <td>No</td>
-            <td>
-              <button type="button" class="btn brand-button"><i class="far fa-eye"></i>Activeren</button>
+              <button (click)="setActive(user.id)" *ngIf="!user.isActive" type="button" class="btn brand-button state-button"><i class="far fa-eye"></i>Activeren</button>
+              <button (click)="setInactive(user.id)" *ngIf="user.isActive" type="button" class="btn brand-button state-button"><i class="far fa-eye"></i>Deactiveren</button>
             </td>
           </tr>
         </tbody>

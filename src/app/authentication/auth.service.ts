@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { LoginUser, RegisterUser } from './user.interface';
+import { LoginUser, RegisterUser } from './auth.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class AuthService {
   public currentUser$ = new BehaviorSubject<null | undefined>(undefined);
   private readonly CURRENT_USER = 'currentuser';
 

@@ -28,3 +28,7 @@ h2 {
 .right-button {
   border-radius: 0px 50px 50px 0px;
 }
+
+.state-button {
+  width: 40%;
+}

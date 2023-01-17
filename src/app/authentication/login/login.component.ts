@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   errorMessage: String = '';
   res: any;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     // TODO document why this method 'ngOnInit' is empty
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       ) &&
       this.user.password != ''
     ) {
-      this.userService.login(this.user).subscribe(
+      this.authService.login(this.user).subscribe(
         (response) => {
           this.setError(false, '');
           this.res = response;

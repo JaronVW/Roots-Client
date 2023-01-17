@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 import { OrganisationService } from '../organisation.service';
 import jwt_decode from 'jwt-decode';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   res: any;
 
   constructor(
-    private userService: UserService,
+    private authService: AuthService,
     private organisationService: OrganisationService,
     private router: Router,
     private modalService: NgbModal,
@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit {
       this.user.password == this.repeatpassword
     ) {
       this.setUserError(false, '');
-      this.userService.register(this.user).subscribe(
+      this.authService.register(this.user).subscribe(
         (response) => {
           this.setUserError(false, '');
           this.res = response;
