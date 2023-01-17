@@ -2,7 +2,7 @@
   <div class="row gx-5 gy-3">
     <div class="col-12">
       <div class="card-body">
-        <h1 class="text-center">Organisatie</h1>
+        <h1 class="text-center">{{ organisation.name }}</h1>
       </div>
     </div>
 
@@ -17,10 +17,10 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th scope="col">Naam</th>
-            <th scope="col">Mail</th>
-            <th scope="col">Actief</th>
-            <th scope="col">Wijzigen</th>
+            <th style="width: 30%" scope="col">Naam</th>
+            <th style="width: 30%" scope="col">Mail</th>
+            <th style="width: 30%" scope="col">Actief</th>
+            <th style="width: 10%" scope="col">Wijzigen</th>
           </tr>
         </thead>
         <tbody *ngFor="let user of users">

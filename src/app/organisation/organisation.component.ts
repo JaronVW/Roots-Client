@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OrganisationService } from './organisation.service';
 import { UserService } from './user.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-organisation',
@@ -8,12 +10,22 @@ import { UserService } from './user.service';
 })
 export class OrganisationComponent implements OnInit {
   users: any;
+  organisation = {
+    name: ''
+  };
+  res: any;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private organisationService: OrganisationService) {}
 
   ngOnInit(): void {
-    this.userService.getAll().subscribe((response) => {
-      this.users = response;
+    this.organisation.name = '';
+    var decoded: any = jwt_decode(localStorage.getItem('token')!);
+    this.organisationService.get(decoded.organisationId).subscribe((response) => {
+      this.res = response;
+      this.organisation.name = this.res.name
+      this.userService.getAll().subscribe((response) => {
+        this.users = response;
+      });
     });
   }
 
