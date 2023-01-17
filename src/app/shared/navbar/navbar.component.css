@@ -61,5 +61,13 @@ p {
 }
 
 .dropdown-menu {
-  width: 320px;
+  width: 100%;
+}
+
+button.dropdown-item.active {
+  background-color: #007469 !important;
+}
+
+button.dropdown-item:focus {
+  background-color: #007469 !important;
 }
