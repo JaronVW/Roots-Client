@@ -40,6 +40,10 @@ export class ListeventsComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
+  setArchived() {
+    this.showArchived = true;
+  }
+
   get searchValue(): string {
     return this._searchValue;
   }
@@ -146,6 +150,6 @@ export class ListeventsComponent implements OnInit {
 
   changePage(page: number) {
     this.currentPage = page;
-    this.getEvents();
+    this.getEvents('', this.showArchived);
   }
 }
