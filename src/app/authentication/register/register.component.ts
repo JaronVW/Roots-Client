@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/events']);
         },
         (error) => {
-          this.setUserError(true, 'Email of wachtwoord incorrect.');
+          if (error.error.message == 'Invalid credentials') this.setUserError(true, 'Email/wachtwoord combinatie is incorrect.');
         },
       );
     }

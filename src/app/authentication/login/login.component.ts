@@ -50,7 +50,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/events']);
         },
         (error) => {
-          this.setError(true, 'Email of wachtwoord incorrect.');
+          if (error.error.message == 'Account is inactive') this.setError(true, 'Uw account is inactief. Contacteer een ander werknemer als dit een fout is.');
+          if (error.error.message == 'Invalid credentials') this.setError(true, 'Email/wachtwoord combinatie is incorrect.');
         },
       );
     }
