@@ -153,12 +153,8 @@
                       </a>
                       <mat-menu #menu="matMenu">
                         <button mat-menu-item [routerLink]="['edit', item.id]">Wijzigen</button>
-                        <button *ngIf="!item.isArchived" mat-menu-item (click)="open(content)">
-                          Archiveren
-                        </button>
-                        <button *ngIf="item.isArchived" mat-menu-item (click)="open(content)">
-                          De-archiveren
-                        </button>
+                        <button *ngIf="!item.isArchived" mat-menu-item (click)="open(content)">Archiveren</button>
+                        <button *ngIf="item.isArchived" mat-menu-item (click)="open(content)">De-archiveren</button>
                         <ng-template #content let-modal>
                           <div class="modal-header">
                             <h1 *ngIf="!item.isArchived" class="modal-title">Archiveren</h1>
@@ -174,9 +170,7 @@
                             <p *ngIf="!item.isArchived">
                               Weet u zeker dat u deze gebeurtenis wilt archiveren? (Dit kan ongedaan gemaakt worden).
                             </p>
-                            <p *ngIf="item.isArchived">
-                              Weet u zeker dat u deze gebeurtenis wilt de-archiveren?
-                            </p>
+                            <p *ngIf="item.isArchived">Weet u zeker dat u deze gebeurtenis wilt de-archiveren?</p>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn brand-button" (click)="modal.dismiss('Cross click')">

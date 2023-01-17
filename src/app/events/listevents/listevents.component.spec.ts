@@ -74,4 +74,23 @@ describe('ListeventsComponent', () => {
 
     expect(compiled.length).toEqual(1);
   }));
+
+  it('there should be a timeline displayed', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.query(By.css('.timeline'));
+
+    expect(compiled).toBeTruthy();
+  }));
+
+  it('card should be extended when clicked', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.queryAll(By.css('.example-accordion-item'));
+
+    compiled[0].nativeElement.click();
+    fixture.detectChanges();
+    compiled[0] = fixture.debugElement.query(By.css('.expandable-content'));
+    expect(compiled[0]).toBeTruthy();
+  }));
 });
