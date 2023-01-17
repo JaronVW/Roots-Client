@@ -28,7 +28,7 @@
   position: absolute;
 }
 
-button {
+.top-button {
   width: 100%;
 }
 
@@ -299,4 +299,17 @@ div.form-check-label {
 
 .archive-card .timeline .timeline-body:before {
   border-left-color: #f2e5d9;
+}
+
+.pagination-wrapper {
+  position: absolute;
+  bottom: 70px;
+  text-align: center;
+  left: 50%;
+}
+
+ngb-pagination {
+  display: inline-block;
+  position: relative;
+  left: -50%;
 }

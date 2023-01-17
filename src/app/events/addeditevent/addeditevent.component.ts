@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
 import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
 import tinymce from 'tinymce';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-addevent',
@@ -35,7 +36,13 @@ export class AddediteventComponent implements OnInit {
     multimediaItems: [],
   };
 
-  searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
+  tagSuggestions: Tag[] = [];
+
+  modalmode = {
+    title: '',
+    body: '',
+    buttontext: ''
+  }
 
   constructor(
     private router: Router,
@@ -43,6 +50,7 @@ export class AddediteventComponent implements OnInit {
     private _location: Location,
     private route: ActivatedRoute,
     public dialog: MatDialog,
+    private modalService: NgbModal,
   ) {}
 
   ngOnInit() {
@@ -62,7 +70,6 @@ export class AddediteventComponent implements OnInit {
 
         editor.on('keyup, blur', () => {
           this.event.content = editor.getContent();
-          console.log(this.event.content);
         });
       },
       plugins: 'lists link image table code help wordcount',
@@ -106,13 +113,23 @@ export class AddediteventComponent implements OnInit {
     if (this.eventid) {
       this.isEditing = true;
       this.EventService.getEvent(this.eventid).subscribe((response: Event) => {
+        console.log(response);
         this.event = response;
-        console.log(this.event);
         if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent).toISOString();
         response.tags.forEach((element) => {
           element.tagText = `${element.subject}`;
         });
       });
+    }
+
+    if (this.isEditing) {
+      this.modalmode.title = 'Wijzigingen opslaan?';
+      this.modalmode.body = 'Weet u zeker dat u al uw wijzigingen wilt opslaan?';
+      this.modalmode.buttontext = 'Aanpassen';
+    } else {
+      this.modalmode.title = 'Event aanmaken?';
+      this.modalmode.body = 'Weet u zeker dat u deze gebeurtenis wilt aanmaken?';
+      this.modalmode.buttontext = 'Aanmaken';
     }
 
     if (this.isEditing) this.buttonText = 'Update';
@@ -122,7 +139,9 @@ export class AddediteventComponent implements OnInit {
         tag.tagText = `${tag.count} | ${tag.subject}`;
       });
       this.dropdownList = response;
-      this.searchTags = this.dropdownList.filter((tag: Tag) => !this.event.tags.includes(tag));
+      this.tagSuggestions = this.dropdownList.filter(
+        (tag: Tag) => !this.event.tags.map((tag) => tag.subject).includes(tag.subject),
+      );
     });
 
     this.dropdownSettings = {
@@ -139,28 +158,38 @@ export class AddediteventComponent implements OnInit {
     window.addEventListener('resize', () => {
       this.changeTagName();
     });
+    setTimeout(() => {
+      this.changeTagName();
+    });
   }
 
   validate() {
     if (this.event.tags.length <= 0) {
-      this.setError(true, 'You must select at least 1 tag.');
-      throw new Error('You must select at least 1 tag.');
+      this.setError(true, 'Er moet tenminste 1 tag geselecteerd worden.');
     }
     if (this.event.description == '') {
-      this.setError(true, 'Description can not be empty.');
-      throw new Error('Description can not be empty.');
+      this.setError(true, 'De beschrijving mag niet leeg zijn.');
     }
     if (this.event.title == '') {
-      this.setError(true, 'Title can not be empty.');
-      throw new Error('Title can not be empty.');
+      this.setError(true, 'De titel mag niet leeg zijn.');
     }
     if (this.event.title != '' && this.event.description != '' && this.event.tags.length > 0) {
       this.setError(false, '');
-      if (this.isEditing) {
-        this.updateEvent();
-      } else {
-        this.createEvent();
-      }
+    }
+  }
+
+  open(content: any) {
+    this.validate();
+    if (this.error == false) {
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    }
+  }
+
+  addedit() {
+    if (this.isEditing) {
+      this.updateEvent();
+    } else {
+      this.createEvent();
     }
   }
 
@@ -171,18 +200,14 @@ export class AddediteventComponent implements OnInit {
     };
     this.EventService.addEvent(data).subscribe((response: Event) => {
       this.router.navigate(['/events']);
-      console.log(response);
     });
   }
 
   updateEvent() {
-    console.log(this.event.title);
     if (this.eventid != null) {
-      console.log(this.event);
       if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
       this.EventService.updateEvent(this.eventid, this.event).subscribe((response: Event) => {
         this.router.navigate(['/events']);
-        console.log(response);
       });
     }
   }
@@ -209,21 +234,25 @@ export class AddediteventComponent implements OnInit {
       }),
     );
 
-  addTag(tag: Tag) {
-    this.event.tags = [...this.event.tags, tag];
+  tagChange() {
     setTimeout(() => {
       this.changeTagName();
     });
   }
 
   changeTagName() {
+    this.tagSuggestions = this.dropdownList.filter(
+      (tag: Tag) => !this.event.tags.map((tag) => tag.subject).includes(tag.subject),
+    );
+
     document.querySelectorAll('.multiselect-dropdown span.selected-item span').forEach((element) => {
       const parts = element.innerHTML.split(' | ');
       if (parts.length > 1) element.innerHTML = parts[1];
       else element.innerHTML = parts[0];
     });
+
     let dropzone = document.getElementById('dropzone');
-    let tagSize = document.querySelector('#tags')?.getBoundingClientRect().height;
+    let tagSize = document.querySelector('ng-multiselect-dropdown#tags')?.getBoundingClientRect().height;
     if (tagSize && dropzone) {
       if (window.innerWidth >= 768) dropzone.style.marginTop = +tagSize - 38 + 'px';
       else dropzone.style.marginTop = 0 + 'px';
@@ -252,15 +281,10 @@ export class AddediteventComponent implements OnInit {
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
       for (const element of event.target.files) {
-        console.log(element);
         if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
         this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
       }
     }
-  }
-
-  updateTitle(event: any) {
-    this.event.title = event;
   }
 
   filterMultimedia(multimedia: string) {
@@ -270,9 +294,12 @@ export class AddediteventComponent implements OnInit {
 
   onFileDropped(files: Array<any>) {
     for (const element of files) {
-      console.log(element);
       if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
       this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
     }
+  }
+
+  drag() {
+    document.querySelector('.dropzone-text')?.classList.add('drag');
   }
 }

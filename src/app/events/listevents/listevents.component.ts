@@ -3,6 +3,7 @@ import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-listevents',
@@ -12,18 +13,31 @@ import { DOCUMENT } from '@angular/common';
 export class ListeventsComponent implements OnInit {
   _searchValue: string = '';
   events: Event[] | null = [];
+  currentEventCount = 0;
+  currentPage = 1;
+  pageSize = 2;
   hasSearched: boolean = false;
   loading: boolean = false;
   showArchived: boolean = false;
+  modalmode = {
+    title: '',
+    body: '',
+    buttontext: ''
+  }
 
   constructor(
     private router: Router,
     private eventService: EventService,
     @Inject(DOCUMENT) private document: Document,
+    private modalService: NgbModal,
   ) {}
 
   ngOnInit(): void {
     this.getEvents();
+  }
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   get searchValue(): string {
@@ -69,9 +83,14 @@ export class ListeventsComponent implements OnInit {
   getEvents(searchQuery?: string, getArchivedItems?: boolean) {
     this.events = null;
     this.eventService
-      .getEvents(undefined, undefined, undefined, searchQuery, getArchivedItems)
+      .getEvents(
+        (+this.currentPage - 1) * +this.pageSize,
+        (+this.currentPage - 1) * +this.pageSize + +this.pageSize,
+        undefined,
+        searchQuery,
+        getArchivedItems,
+      )
       .subscribe((response: any[]) => {
-        console.log(response);
         this.events = response;
         for (const element of this.events) {
           if (element.dateOfEvent)
@@ -84,6 +103,10 @@ export class ListeventsComponent implements OnInit {
         }
         console.log(this.events);
       });
+
+    this.eventService.getEventsCount(searchQuery, getArchivedItems).subscribe((response: number) => {
+      this.currentEventCount = response;
+    });
   }
 
   getEventDetails(accIndex: number, id: number) {
@@ -119,5 +142,10 @@ export class ListeventsComponent implements OnInit {
 
   logState() {
     console.log(this.showArchived);
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+    this.getEvents();
   }
 }

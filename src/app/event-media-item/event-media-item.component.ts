@@ -24,7 +24,7 @@ export class EventMediaItemComponent implements OnInit {
   }
 
   @Input() path!: string;
-  @Input() media!: string;
+  @Input() media: string = '';
 
   getFile() {
     if (this.path || this.media) {
