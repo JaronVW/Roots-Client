@@ -28,4 +28,20 @@ export class OrganisationComponent implements OnInit {
       this.users.find((user: any) => user.id == id).isActive = false;
     });
   }
+
+  filter(state?: boolean) {
+    this.userService.getAll().subscribe((response) => {
+      this.users = response;
+      switch (state) {
+        case true:
+          this.users = this.users.filter((user: any) => user.isActive === true);
+          break;
+        case false:
+          this.users = this.users.filter((user: any) => user.isActive === false);
+          break;
+        default:
+          break;
+      }
+    });
+  }
 }

@@ -7,9 +7,9 @@
     </div>
 
     <div class="col-12">
-      <button class="select-button left-button">Actief</button>
-      <button class="select-button">Allemaal</button>
-      <button class="select-button right-button">Inactief</button>
+      <button (click)="filter(true)" class="select-button left-button">Actief</button>
+      <button (click)="filter()" class="select-button">Allemaal</button>
+      <button (click)="filter(false)" class="select-button right-button">Inactief</button>
       <hr />
     </div>
 
