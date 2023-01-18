@@ -30,6 +30,7 @@ import { AccountrecoveryComponent } from './authentication/accountrecovery/accou
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrganisationComponent } from './organisation/organisation.component';
+import { PasswordresetComponent } from './authentication/passwordreset/passwordreset.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { OrganisationComponent } from './organisation/organisation.component';
     DragAndDropDirective,
     AccountrecoveryComponent,
     OrganisationComponent,
+    PasswordresetComponent,
   ],
   imports: [
     BrowserModule,

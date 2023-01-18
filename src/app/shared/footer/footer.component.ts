@@ -4,13 +4,19 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-footer',
   template: `
-    <footer *ngIf="router.url !== '/login' && router.url !== '/register' && router.url !== '/accountrecovery'" class="border-top footer">
+    <footer
+      *ngIf="
+        router.url !== '/login' &&
+        router.url !== '/register' &&
+        router.url !== '/accountrecovery' &&
+        router.url !== '/passwordreset'
+      "
+      class="border-top footer"
+    >
       <div class="container">&copy; 2022 - Roots</div>
     </footer>
   `,
-  styles: [
-    'footer { line-height: 60px; bottom: 0; width: 100%; position: absolute; }'
-  ],
+  styles: ['footer { line-height: 60px; bottom: 0; width: 100%; position: absolute; }'],
 })
 export class FooterComponent implements OnInit {
   constructor(public router: Router) {
