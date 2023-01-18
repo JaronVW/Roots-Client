@@ -9,7 +9,7 @@ describe('Testing the register page functionalities.', () => {
     cy.get('#lastNameInput').type('Doe')
     cy.get('#emailInput').type('JohnDoe@Chicken.com')
     cy.get('#passwordInput').type('123456')
-    cy.get('#confirmPasswordInput').type('123456')
+    cy.get('#repeatPasswordInput').type('123456')
   })
 
   it('Search for the Create organisation button. Should open a dialog. Type in a emial adress, check if the domain name will be given', () => {
@@ -38,7 +38,7 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('#lastNameInput').type('Doe')
     cy.get('#emailInput').type('JohnDoe@Chicken.com')
     cy.get('#passwordInput').type('123456')
-    cy.get('#confirmPasswordInput').type('123456')
+    cy.get('#repeatPasswordInput').type('123456')
     cy.get('.btn').contains('Een organisatie toevoegen? ').click().wait(100)
     cy.get('#organisationNameInput').type('a{backspace}').type('{enter}')
     cy.contains('Organisatienaam kan niet leeg zijn.').should('have.length', 1).should('be.visible')
@@ -49,7 +49,7 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('#lastNameInput').type('Doe')
     cy.get('#emailInput').type('JohnDoe@Chicken.com')
     cy.get('#passwordInput').type('123456')
-    cy.get('#confirmPasswordInput').type('123456')
+    cy.get('#repeatPasswordInput').type('123456')
     cy.get('.btn').contains('Een organisatie toevoegen? ').click().wait(100)
     cy.get('#organisationNameInput').type('a{backspace}')
     cy.get('.btn').contains('Aanmaken').click()
@@ -68,7 +68,7 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('#lastNameInput').type('Doe')
     cy.get('#emailInput').type('JohnDoe@Chicken.com')
     cy.get('#passwordInput').type('123456')
-    cy.get('#confirmPasswordInput').type('123456')
+    cy.get('#repeatPasswordInput').type('123456')
 
     cy.get('.btn').contains('Registreren').click()
     cy.contains('Voornaam kan niet leeg zijn.').should('have.length', 1).should('be.visible')
@@ -79,7 +79,7 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('#firstNameInput').type('John')
     cy.get('#emailInput').type('JohnDoe@Chicken.com')
     cy.get('#passwordInput').type('123456')
-    cy.get('#confirmPasswordInput').type('123456')
+    cy.get('#repeatPasswordInput').type('123456')
 
     cy.get('.btn').contains('Registreren').click()
     cy.contains('Achternaam kan niet leeg zijn.').should('have.length', 1).should('be.visible')
@@ -91,7 +91,7 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('#lastNameInput').type('Doe')
     // cy.get('#emailInput').type('JohnDoe@Chicken.com')
     cy.get('#passwordInput').type('123456')
-    cy.get('#confirmPasswordInput').type('123456')
+    cy.get('#repeatPasswordInput').type('123456')
 
     cy.get('.btn').contains('Registreren').click()
     cy.contains('Email moet valide zijn.').should('have.length', 1).should('be.visible')
@@ -103,7 +103,7 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('#lastNameInput').type('Doe')
     cy.get('#emailInput').type('JohnDoe')
     cy.get('#passwordInput').type('123456')
-    cy.get('#confirmPasswordInput').type('123456')
+    cy.get('#repeatPasswordInput').type('123456')
 
     cy.get('.btn').contains('Registreren').click()
     cy.contains('Email moet valide zijn.').should('have.length', 1).should('be.visible')
@@ -132,7 +132,7 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('#lastNameInput').type('Doe')
     cy.get('#emailInput').type('JohnDoe@Chicken.com')
     // cy.get('#passwordInput').type('123456')
-    cy.get('#confirmPasswordInput').type('123456')
+    cy.get('#repeatPasswordInput').type('123456')
 
     cy.get('.btn').contains('Registreren').click()
     cy.contains('Wachtwoord kan niet leeg zijn.').should('have.length', 1).should('be.visible')
@@ -144,11 +144,12 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('#lastNameInput').type('Doe')
     cy.get('#emailInput').type('JohnDoe@Chicken.com')
     cy.get('#passwordInput').type('12345678910')
-    cy.get('#confirmPasswordInput').type('1234567891011')
+    cy.get('#repeatPasswordInput').type('1234567891011')
 
     cy.get('.btn').contains('Registreren').click()
     cy.contains('Wachtwoorden komen niet overeen.').should('have.length', 1).should('be.visible')
   })
+
 
 
 

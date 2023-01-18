@@ -241,7 +241,7 @@ describe('Testing the event cards results and search function', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: 'http://localhost:3000/events?searchQuery=story&',
+        url: 'http://localhost:3000/events?max=2&searchQuery=story&',
       },
       [
         {
@@ -297,7 +297,7 @@ describe('Testing the event cards results and search function', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: 'http://localhost:3000/events?getArchivedItems=true',
+        url: 'http://localhost:3000/events?max=2&getArchivedItems=true',
       },
       [
         {

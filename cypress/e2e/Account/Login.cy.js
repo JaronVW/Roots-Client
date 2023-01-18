@@ -34,7 +34,7 @@ describe('Testing the register page functionalities.', () => {
     cy.get('#emailInput').type('CompletleyFake@iSwear.com')
     cy.get('#passwordInput').type('IfYouReadThisYouAreAwesome!')
     cy.get('.btn').contains('Inloggen').click().wait(100)
-    cy.contains('Email of wachtwoord incorrect.').should('have.length', 1).should('be.visible')
+    cy.contains('Email/wachtwoord combinatie is incorrect.').should('have.length', 1).should('be.visible')
 
   })
 

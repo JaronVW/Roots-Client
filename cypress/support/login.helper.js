@@ -89,7 +89,7 @@ export function login() {
       });
     });
 
-    cy.intercept('GET', 'http://localhost:3000/events?', ( res, req) => {
+    cy.intercept('GET', 'http://localhost:3000/events?max=2&', ( res, req) => {
       res.reply({
         statusCode: 200,
         body: [
