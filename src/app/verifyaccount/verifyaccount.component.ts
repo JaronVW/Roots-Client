@@ -4,23 +4,40 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-verifyaccount',
-  template: ` <h2>{{res}}</h2> `,
+  template: `<div *ngIf="htmlData != ''; else elseBlock">
+      <h1>{{ htmlData }}</h1>
+    </div>
+    <ng-template #elseBlock><app-loading-spinner></app-loading-spinner></ng-template>`,
 })
 export class VerifyaccountComponent implements OnInit {
   res: any;
   token: string = '';
+  _htmlData: string = '';
+
   constructor(private verifyAccountService: VerifyaccountService, private route: ActivatedRoute) {}
+
+  public get htmlData(): any {
+    return this._htmlData;
+  }
+
+  public set htmlData(val: any) {
+    this._htmlData = val;
+  }
 
   ngOnInit(): void {
     this.token = this.route.snapshot.paramMap.get('id') || '';
-    this.verifyAccountService.verifyAccount(this.token).subscribe((result) => {
-      this.res = result;
-      console.log(this.res.message)
-      // if (res.message.message === 'Account Verified!') {
-      //   this.res = 'Account Verified';
-      // } else {
-      //   this.res = 'Account Not Verified';
-      // }
+    this.verifyAccountService.verifyAccount(this.token).subscribe({
+      next: (result) => {
+        this.res = result;
+        this.htmlData = 'U bent succesvol geverifieerd';
+      },
+      error: (error) => {
+        if (error.error.statusCode == 404 || error.error.message == 'Verification token expired') {
+          this.htmlData = 'Deze link is niet meer geldig';
+        } else {
+          this.htmlData = 'Er is iets fout gegaan bij het verifiëren van uw account';
+        }
+      },
     });
   }
 }

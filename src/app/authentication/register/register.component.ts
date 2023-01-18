@@ -28,8 +28,8 @@ export class RegisterComponent implements OnInit {
   userErrorMessage: String = '';
   organisationError: boolean = false;
   organisationErrorMessage: String = '';
-  organisationSuccess: boolean = false;
-  organisationSuccessMessage: String = '';
+  _organisationSuccess: boolean = false;
+  _organisationSuccessMessage: String = '';
   res: any;
 
   constructor(
@@ -38,6 +38,23 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
   ) {}
+
+  public get organisationSuccess(): any {
+    return this._organisationSuccess;
+  }
+
+  public set organisationSuccess(val: any) {
+    this._organisationSuccess = val;
+  }
+
+  public get organisationSuccessMessage(): any {
+    return this._organisationSuccessMessage;
+  }
+
+  public set organisationSuccessMessage(val: any) {
+    this._organisationSuccessMessage = val;
+  }
+  
 
   ngOnInit(): void {
     // TODO document why this method 'ngOnInit' is empty
@@ -82,19 +99,22 @@ export class RegisterComponent implements OnInit {
       this.user.password == this.repeatpassword
     ) {
       this.setUserError(false, '');
-      this.authService.register(this.user).subscribe(
-        (response) => {
+      this.authService.register(this.user).subscribe({
+        next: (response) => {
           this.setUserError(false, '');
-          this.res = response;
-          var decoded: any = jwt_decode(this.res.access_token);
-          localStorage.setItem('token', this.res.access_token);
-          localStorage.setItem('email', decoded.username);
-          this.router.navigate(['/events']);
+          // this.res = response;
+          // var decoded: any = jwt_decode(this.res.access_token);
+          // localStorage.setItem('token', this.res.access_token);
+          // localStorage.setItem('email', decoded.username);
+          console.log(response);
+          this.organisationSuccess = true;
+          this.organisationSuccessMessage = 'Organisatie succesvol aangemaakt.';
         },
-        (error) => {
-          if (error.error.message == 'Invalid credentials') this.setUserError(true, 'Email/wachtwoord combinatie is incorrect.');
+        error: (error) => {
+          if (error.error.message == 'Invalid credentials')
+            this.setUserError(true, 'Email/wachtwoord combinatie is incorrect.');
         },
-      );
+      });
     }
   }
 
@@ -137,8 +157,8 @@ export class RegisterComponent implements OnInit {
   }
 
   setSuccess(success: boolean, successMessage: string) {
-    this.organisationSuccess = success;
-    this.organisationSuccessMessage = successMessage;
+    this._organisationSuccess = success;
+    this._organisationSuccessMessage = successMessage;
   }
 
   open(content: any) {
