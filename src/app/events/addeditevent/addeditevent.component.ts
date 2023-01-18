@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
 import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
 import tinymce from 'tinymce';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-addevent',
@@ -37,12 +38,19 @@ export class AddediteventComponent implements OnInit {
 
   tagSuggestions: Tag[] = [];
 
+  modalmode = {
+    title: '',
+    body: '',
+    buttontext: ''
+  }
+
   constructor(
     private router: Router,
     private EventService: EventService,
     private _location: Location,
     private route: ActivatedRoute,
     public dialog: MatDialog,
+    private modalService: NgbModal,
   ) {}
 
   ngOnInit() {
@@ -114,6 +122,16 @@ export class AddediteventComponent implements OnInit {
       });
     }
 
+    if (this.isEditing) {
+      this.modalmode.title = 'Wijzigingen opslaan?';
+      this.modalmode.body = 'Weet u zeker dat u al uw wijzigingen wilt opslaan?';
+      this.modalmode.buttontext = 'Aanpassen';
+    } else {
+      this.modalmode.title = 'Event aanmaken?';
+      this.modalmode.body = 'Weet u zeker dat u deze gebeurtenis wilt aanmaken?';
+      this.modalmode.buttontext = 'Aanmaken';
+    }
+
     if (this.isEditing) this.buttonText = 'Update';
 
     this.EventService.getTags().subscribe((response: any[]) => {
@@ -147,24 +165,31 @@ export class AddediteventComponent implements OnInit {
 
   validate() {
     if (this.event.tags.length <= 0) {
-      this.setError(true, 'You must select at least 1 tag.');
-      throw new Error('You must select at least 1 tag.');
+      this.setError(true, 'Er moet tenminste 1 tag geselecteerd worden.');
     }
     if (this.event.description == '') {
-      this.setError(true, 'Description can not be empty.');
-      throw new Error('Description can not be empty.');
+      this.setError(true, 'De beschrijving mag niet leeg zijn.');
     }
     if (this.event.title == '') {
-      this.setError(true, 'Title can not be empty.');
-      throw new Error('Title can not be empty.');
+      this.setError(true, 'De titel mag niet leeg zijn.');
     }
     if (this.event.title != '' && this.event.description != '' && this.event.tags.length > 0) {
       this.setError(false, '');
-      if (this.isEditing) {
-        this.updateEvent();
-      } else {
-        this.createEvent();
-      }
+    }
+  }
+
+  open(content: any) {
+    this.validate();
+    if (this.error == false) {
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    }
+  }
+
+  addedit() {
+    if (this.isEditing) {
+      this.updateEvent();
+    } else {
+      this.createEvent();
     }
   }
 

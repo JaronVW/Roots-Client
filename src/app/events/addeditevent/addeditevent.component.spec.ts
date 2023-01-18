@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, flush, discardPeriodicTasks } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -38,13 +38,20 @@ describe('AddeventComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('there should be a submit button', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('.submitButton'));
+    expect(compiled.length).toEqual(1);
+  }));
+
   it('form invalid when empty', fakeAsync(() => {
     spyOn(component, 'validate');
 
     let button = fixture.debugElement.nativeElement.querySelector('.submitButton');
     button.click();
+    discardPeriodicTasks();
     tick();
     expect(component.validate).toHaveBeenCalled();
+    flush();
   }));
 
   //testing if all fields are present
@@ -68,8 +75,13 @@ describe('AddeventComponent', () => {
     expect(compiled.length).toEqual(1);
   }));
 
-  it('there should be a field for the event files', fakeAsync(() => {
+  it('there should be a field for files', fakeAsync(() => {
     let compiled = fixture.debugElement.queryAll(By.css('#file'));
+    expect(compiled.length).toEqual(1);
+  }));
+
+  it('there should be an option to drag and drop files', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('.dropzone'));
     expect(compiled.length).toEqual(1);
   }));
 
@@ -84,6 +96,7 @@ describe('AddeventComponent', () => {
     button.click();
     tick();
     expect(component.openDialog).toHaveBeenCalled();
+    flush();
   }));
 
   it('there should be tags in the dropdown menu', fakeAsync(() => {
@@ -95,18 +108,41 @@ describe('AddeventComponent', () => {
     tick();
     let compiled = fixture.debugElement.queryAll(By.css('.multiselect-item-checkbox'));
     expect(compiled.length).toEqual(2);
+    flush();
   }));
 
-  //Hier nog naar kijken!!!
-  xit('there should be displayed how much one tag is used', fakeAsync(() => {
+  it('there should be a button for custom tags', fakeAsync(() => {
+    let compiled = fixture.debugElement.queryAll(By.css('.material-icons'));
+    expect(compiled.length).toEqual(1);
+  }));
+
+  it('the button for custom tags should open a dialog', fakeAsync(() => {
+    spyOn(component, 'openDialog');
+    let button = fixture.debugElement.nativeElement.querySelector('.material-icons');
+    button.click();
+    tick();
+    expect(component.openDialog).toHaveBeenCalled();
+    flush();
+  }));
+
+  it('tagdropdown should be clickable', fakeAsync(() => {
+    component.dropdownList = mockTags;
+    fixture.detectChanges();
+    let tagDropdown = fixture.debugElement.nativeElement.querySelector('#tags');
+    tagDropdown.click();
+    tick();
+    let compiled = fixture.debugElement.queryAll(By.css('.multiselect-item-checkbox'));
+    expect(compiled.length).toEqual(2);
+    flush();
+  }));
+
+  it('there should be displayed how much one tag is used', fakeAsync(() => {
     component.dropdownList = mockTags;
     fixture.detectChanges();
     let tagDropdown = fixture.debugElement.nativeElement.querySelector('#tags');
     tagDropdown.click();
     tick();
 
-    let compiled = fixture.debugElement.nativeElement.querySelector('.multiselect-item-checkbox');
-    console.log(compiled);
-    expect(compiled.length).toEqual(2);
+    expect(component.dropdownList[0].count).toEqual(2);
   }));
 });

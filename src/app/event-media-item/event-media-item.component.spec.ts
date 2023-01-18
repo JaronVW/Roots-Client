@@ -16,7 +16,6 @@ describe('EventMediaItemComponent', () => {
     fixture.detectChanges();
   });
 
-  // figure out imports (dependencies) of this component (breaks on this.media.includes, says media is undefined)
   it('should create', () => {
     expect(component).toBeTruthy();
   });

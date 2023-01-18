@@ -3,6 +3,7 @@ import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-listevents',
@@ -18,15 +19,29 @@ export class ListeventsComponent implements OnInit {
   hasSearched: boolean = false;
   loading: boolean = false;
   showArchived: boolean = false;
+  modalmode = {
+    title: '',
+    body: '',
+    buttontext: ''
+  }
 
   constructor(
     private router: Router,
     private eventService: EventService,
     @Inject(DOCUMENT) private document: Document,
+    private modalService: NgbModal,
   ) {}
 
   ngOnInit(): void {
     this.getEvents();
+  }
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  setArchived() {
+    this.showArchived = true;
   }
 
   get searchValue(): string {
@@ -135,6 +150,6 @@ export class ListeventsComponent implements OnInit {
 
   changePage(page: number) {
     this.currentPage = page;
-    this.getEvents();
+    this.getEvents('', this.showArchived);
   }
 }

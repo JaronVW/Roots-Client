@@ -1,4 +1,4 @@
 export interface Organisation {
-    domainName: String,
-    name: String
+  domainName: string;
+  name: string;
 }

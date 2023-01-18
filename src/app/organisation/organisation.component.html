@@ -2,14 +2,14 @@
   <div class="row gx-5 gy-3">
     <div class="col-12">
       <div class="card-body">
-        <h1 class="text-center">Organisatie</h1>
+        <h1 class="text-center">{{ organisation.name }}</h1>
       </div>
     </div>
 
     <div class="col-12">
-      <button class="select-button left-button">Actief</button>
-      <button class="select-button">Allemaal</button>
-      <button class="select-button right-button">Inactief</button>
+      <button (click)="filter(true)" class="select-button left-button">Actief</button>
+      <button (click)="filter()" class="select-button">Allemaal</button>
+      <button (click)="filter(false)" class="select-button right-button">Inactief</button>
       <hr />
     </div>
 
@@ -17,27 +17,20 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th scope="col">Naam</th>
-            <th scope="col">Mail</th>
-            <th scope="col">Actief</th>
-            <th scope="col">Wijzigen</th>
+            <th style="width: 30%" scope="col">Naam</th>
+            <th style="width: 30%" scope="col">Mail</th>
+            <th style="width: 30%" scope="col">Actief</th>
+            <th style="width: 10%" scope="col">Wijzigen</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngFor="let user of users">
           <tr>
-            <td>Timothy Borghouts</td>
-            <td>Timothy.borghouts2@gmail.com</td>
-            <td>Yes</td>
+            <td>{{ user.firstName + ' ' + user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.isActive ? "Ja" : "Nee" }}</td>
             <td>
-              <button type="button" class="btn brand-button"><i class="far fa-eye"></i>Deactiveren</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Lucas de Kleijn</td>
-            <td>Lucasdekleijn@outlook.com</td>
-            <td>No</td>
-            <td>
-              <button type="button" class="btn brand-button"><i class="far fa-eye"></i>Activeren</button>
+              <button (click)="setActive(user.id)" *ngIf="!user.isActive" type="button" class="btn brand-button state-button"><i class="far fa-eye"></i>Activeren</button>
+              <button (click)="setInactive(user.id)" *ngIf="user.isActive" type="button" class="btn brand-button state-button"><i class="far fa-eye"></i>Deactiveren</button>
             </td>
           </tr>
         </tbody>
