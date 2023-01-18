@@ -113,7 +113,3 @@ div.dropzone div.dropzone-text.drag {
   justify-content: space-between;
   gap: 10px;
 }
-
-editor.form-control {
-  min-height: 300px;
-}
