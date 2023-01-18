@@ -78,5 +78,6 @@ import { OrganisationComponent } from './organisation/organisation.component';
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
   ],
   bootstrap: [AppComponent],
+  
 })
 export class AppModule {}
