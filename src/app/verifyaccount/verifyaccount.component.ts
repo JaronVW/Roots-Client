@@ -4,10 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-verifyaccount',
-  template: `<div *ngIf="htmlData != ''; else elseBlock">
-      <h1>{{ htmlData }}</h1>
-    </div>
-    <ng-template #elseBlock><app-loading-spinner></app-loading-spinner></ng-template>`,
+  templateUrl: './verifyaccount.component.html',
 })
 export class VerifyaccountComponent implements OnInit {
   res: any;

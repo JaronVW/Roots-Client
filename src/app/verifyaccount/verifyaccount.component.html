@@ -1,0 +1,6 @@
+<div style="padding: auto auto; padding-top: 40px; text-align: center">
+  <div *ngIf="htmlData != ''; else elseBlock">
+    <h1>{{ htmlData }}</h1>
+  </div>
+  <ng-template #elseBlock><app-loading-spinner></app-loading-spinner></ng-template>
+</div>
