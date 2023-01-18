@@ -11,6 +11,7 @@ export class AddtagDialogComponent implements OnInit {
   newTag: Tag | undefined = {
     id: undefined,
     subject: '',
+    count: 0,
   };
 
   error: boolean = false;

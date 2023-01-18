@@ -14,9 +14,10 @@
           <app-input-with-tag-suggestions
             class="title"
             style="position: relative"
-            [tags]="dropdownList"
-            (addTag)="addTag($event)"
-            (titleChange)="getTitle($event)"
+            [(tags)]="tagSuggestions"
+            [(eventTags)]="event.tags"
+            [(title)]="event.title"
+            (eventTagsChange)="tagChange()"
           >
           </app-input-with-tag-suggestions>
         </div>
@@ -53,71 +54,125 @@
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="description">Omschrijving:</label>
+          <label for="longerdescription">Omschrijving:</label>
           <textarea
             [(ngModel)]="event.content"
-            name="content"
-            style="height: 300px"
-            type="content"
+            name="longerdescription"
+            id="longerdescription"
             class="form-control"
-            id="content"
-            aria-describedby="descriptionHelp"
-            placeholder="Omschrijving typen..."
           ></textarea>
         </div>
       </div>
-      <div class="col-md-5">
-        <div class="form-group">
-          <label for="tags">Tags toevoegen:</label>
-          <div class="form-tags">
-            <ng-multiselect-dropdown
-              [settings]="dropdownSettings"
-              [data]="dropdownList"
-              [(ngModel)]="event.tags"
-              [required]="error"
-              name="tags"
-              id="tags"
-              placeholder="Selecteren"
-            >
-            </ng-multiselect-dropdown>
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="row">
+              <div class="col-10 pe-0">
+                <div class="form-group">
+                  <label for="tags">Tags toevoegen:</label>
+                  <div class="form-tags">
+                    <ng-multiselect-dropdown
+                      #multiSelect
+                      [settings]="dropdownSettings"
+                      [data]="dropdownList"
+                      [(ngModel)]="event.tags"
+                      (click)="changeTagName()"
+                      (ngModelChange)="changeTagName()"
+                      [required]="error"
+                      name="tags"
+                      id="tags"
+                      placeholder="Selecteren"
+                      (keydown.enter)="multiSelect.toggleDropdown($event)"
+                    >
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 newtag">
+                <a class="a-for-accessibility" href="javascript:void(0)" (keydown.enter)="openDialog()">
+                  <i class="material-icons" (click)="openDialog()" style="padding-top: 37px">&#xe148;</i>
+                </a>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" *ngFor="let tag of event.tags">{{ tag.subject }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="file"></label>
+                  Bestand toevoegen:
+                  <input
+                    type="file"
+                    (change)="onFileSelected($event)"
+                    class="form-control"
+                    id="file"
+                    multiple
+                    aria-describedby="fileHelp"
+                    name="Image"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div
+                class="form-group dropzone"
+                id="dropzone"
+                appDragAndDrop
+                (fileDropped)="onFileDropped($event)"
+                (onDragEnter)="drag()"
+              >
+                <div *ngIf="!event.multimediaItems || event.multimediaItems.length == 0" class="dropzone-text">
+                  <i>Drop files here</i>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" *ngFor="let multimediaItem of event.multimediaItems">
+                    <div class="file-item-wrapper">
+                      <span>{{ multimediaItem.multimedia }}</span>
+                      <button (click)="filterMultimedia(multimediaItem.multimedia)" class="btn brand-button-danger">
+                        x
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-1">
-        <i class="material-icons" (click)="openDialog()" style="padding-top: 35px">&#xe148;</i>
-      </div>
-      <div class="col-md-6 mb-3">
-        <div class="form-group">
-          <label for="file"></label>
-          Bestand toevoegen:
-          <input type="file" class="form-control" id="file" multiple aria-describedby="fileHelp" name="Image" />
-        </div>
-      </div>
+
       <div class="col-md-6">
-        <div class="form-group">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let tag of event.tags">{{ tag.subject }}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <button type="button" class="btn btn-primary" (click)="backClicked()">Terug</button>
-        <button type="button" class="btn btn-primary submitButton" (click)="validate()">{{ buttonText }}</button>
+        <button type="button" class="btn btn-primary brand-button bottom-button" (click)="backClicked()">Terug</button>
+        <button type="button" class="btn btn-primary submitButton brand-button bottom-button" (click)="open(content)">
+          {{ buttonText }}
+        </button>
       </div>
     </div>
   </form>
 </div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title">{{ modalmode.title }}</h1>
+    <button type="button" class="btn-close x-icon" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <p>
+      {{ modalmode.body }}
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn brand-button" (click)="modal.dismiss('Cross click')">Terug</button>
+    <button type="button" class="btn brand-button" (click)="addedit(); modal.close('Save click')">
+      {{ modalmode.buttontext }}
+    </button>
+  </div>
+</ng-template>
 <script>
   $(document).ready(function () {
     $('#tags').multiselect({

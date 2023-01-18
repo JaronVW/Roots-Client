@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {EventService} from '../event.service';
-import {Event, Tag} from '../event.interface';
-import {Location} from '@angular/common';
-import {MatDialog} from '@angular/material/dialog';
-import {AddtagDialogComponent} from './addtag-dialog/addtag-dialog.component';
-import {debounceTime, distinctUntilChanged, map, Observable, OperatorFunction} from "rxjs";
-import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventService } from '../event.service';
+import { Event, Tag } from '../event.interface';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { AddtagDialogComponent } from './addtag-dialog/addtag-dialog.component';
+import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
+import tinymce from 'tinymce';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-addevent',
@@ -16,22 +17,31 @@ import {NgbTypeaheadSelectItemEvent} from "@ng-bootstrap/ng-bootstrap";
 export class AddediteventComponent implements OnInit {
   dropdownList: any = [];
   dropdownSettings = {};
+
   error: boolean = false;
   errorMessage: string = '';
   isFirstVisit: boolean = true;
   buttonText: string = 'Aanmaken';
-  eventid: number | null =null;
+  eventid: number | null = null;
   isEditing: boolean = false;
+
+  editor: any;
 
   event: Event = {
     title: '',
     description: '',
     content: '',
     dateOfEvent: new Date().toISOString(),
-    // userId: 'test',
     tags: [],
-    // customtags ['test', 'test2'],
-    // multiMedia: ['test', 'test2'],
+    multimediaItems: [],
+  };
+
+  tagSuggestions: Tag[] = [];
+
+  modalmode = {
+    title: '',
+    body: '',
+    buttontext: '',
   };
 
   constructor(
@@ -40,67 +50,131 @@ export class AddediteventComponent implements OnInit {
     private _location: Location,
     private route: ActivatedRoute,
     public dialog: MatDialog,
+    private modalService: NgbModal,
   ) {}
 
   ngOnInit() {
+    if (tinymce.activeEditor != null) tinymce.EditorManager.execCommand('mceRemoveEditor', true, 'longerdescription');
+    tinymce.init({
+      selector: '#longerdescription',
+      base_url: '/tinymce',
+      suffix: '.min',
+      setup: (editor) => {
+        this.editor = editor;
+
+        editor.on('init', () => {
+          if (this.event.content) {
+            editor.setContent(this.event.content);
+          }
+        });
+
+        editor.on('keyup, blur', () => {
+          this.event.content = editor.getContent();
+        });
+      },
+      plugins: 'lists link image table code help wordcount',
+      branding: false,
+      promotion: false,
+      placeholder: 'Omschrijving typen...',
+      // add image (just before table) to get image button in toolbar
+      toolbar:
+        'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent code',
+      height: 300,
+      menubar: false,
+      inline_boundaries: false,
+    });
+
     this.eventid = Number(this.route.snapshot.paramMap.get('id'));
     if (this.eventid) {
       this.isEditing = true;
       this.EventService.getEvent(this.eventid).subscribe((response: Event) => {
+        console.log(response);
         this.event = response;
-        console.log(this.event);
         if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent).toISOString();
+        response.tags.forEach((element) => {
+          element.tagText = `${element.subject}`;
+        });
       });
+    }
+
+    if (this.isEditing) {
+      this.modalmode.title = 'Wijzigingen opslaan?';
+      this.modalmode.body = 'Weet u zeker dat u al uw wijzigingen wilt opslaan?';
+      this.modalmode.buttontext = 'Aanpassen';
+    } else {
+      this.modalmode.title = 'Event aanmaken?';
+      this.modalmode.body = 'Weet u zeker dat u deze gebeurtenis wilt aanmaken?';
+      this.modalmode.buttontext = 'Aanmaken';
     }
 
     if (this.isEditing) this.buttonText = 'Update';
 
     this.EventService.getTags().subscribe((response: any[]) => {
-      this.dropdownList = response.map((tag: Tag) => ({ ...tag }));
+      response.forEach((tag) => {
+        tag.tagText = `${tag.count} | ${tag.subject}`;
+      });
+      this.dropdownList = response;
+      this.tagSuggestions = this.dropdownList.filter(
+        (tag: Tag) => !this.event.tags.map((tag) => tag.subject).includes(tag.subject),
+      );
     });
 
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'id',
-      textField: 'subject',
+      idField: 'subject',
+      textField: 'tagText',
+      subject: 'subject',
       itemsShowLimit: 5,
       allowSearchFilter: true,
       enableCheckAll: false,
+      classes: 'tag-dropdown',
     };
+
+    window.addEventListener('resize', () => {
+      this.changeTagName();
+    });
+    setTimeout(() => {
+      this.changeTagName();
+    });
   }
 
   validate() {
     if (this.event.tags.length <= 0) {
-      this.setError(true, 'You must select at least 1 tag.');
-      throw new Error('You must select at least 1 tag.');
+      this.setError(true, 'Er moet tenminste 1 tag geselecteerd worden.');
     }
     if (this.event.description == '') {
-      this.setError(true, 'Description can not be empty.');
-      throw new Error('Description can not be empty.');
+      this.setError(true, 'De beschrijving mag niet leeg zijn.');
     }
     if (this.event.title == '') {
-      this.setError(true, 'Title can not be empty.');
-      throw new Error('Title can not be empty.');
+      this.setError(true, 'De titel mag niet leeg zijn.');
     }
     if (this.event.title != '' && this.event.description != '' && this.event.tags.length > 0) {
       this.setError(false, '');
-      if (this.isEditing) {
-        this.updateEvent();
-      } else {
-        this.createEvent();
-      }
+    }
+  }
+
+  open(content: any) {
+    this.validate();
+    if (this.error == false) {
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    }
+  }
+
+  addedit() {
+    if (this.isEditing) {
+      this.updateEvent();
+    } else {
+      this.createEvent();
     }
   }
 
   createEvent() {
-    console.log(this.event);
     if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
     const data = {
       ...this.event,
     };
     this.EventService.addEvent(data).subscribe((response: Event) => {
       this.router.navigate(['/events']);
-      console.log(response);
     });
   }
 
@@ -109,7 +183,6 @@ export class AddediteventComponent implements OnInit {
       if (this.event.dateOfEvent) this.event.dateOfEvent = new Date(this.event.dateOfEvent).toISOString();
       this.EventService.updateEvent(this.eventid, this.event).subscribe((response: Event) => {
         this.router.navigate(['/events']);
-        console.log(response);
       });
     }
   }
@@ -130,17 +203,37 @@ export class AddediteventComponent implements OnInit {
       map((term) => {
         console.log(term);
         console.log(text$);
-        return term.length < 2 ? [] : [].filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
+        return term.length < 2
+          ? []
+          : [].filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
       }),
     );
 
-  addTag(tag: Tag) {
-    console.log('addTag');
-    const newTag: Tag = {
-      subject: tag.subject,
+  tagChange() {
+    setTimeout(() => {
+      this.changeTagName();
+    });
+  }
+
+  changeTagName() {
+    this.tagSuggestions = this.dropdownList.filter(
+      (tag: Tag) => !this.event.tags.map((tag) => tag.subject).includes(tag.subject),
+    );
+
+    document.querySelectorAll('.multiselect-dropdown span.selected-item span').forEach((element) => {
+      const parts = element.innerHTML.split(' | ');
+      if (parts.length > 1) element.innerHTML = parts[1];
+      else element.innerHTML = parts[0];
+    });
+
+    let dropzone = document.getElementById('dropzone');
+    let tagSize = document.querySelector('ng-multiselect-dropdown#tags')?.getBoundingClientRect().height;
+    if (tagSize && dropzone) {
+      if (window.innerWidth >= 768) dropzone.style.marginTop = +tagSize - 38 + 'px';
+      else dropzone.style.marginTop = 0 + 'px';
     }
-    this.dropdownList.push({ id: this.dropdownList.length + 1, subject: newTag });
-    this.event.tags = [...this.event.tags, newTag];
+
+    // document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {});
   }
 
   openDialog() {
@@ -151,16 +244,37 @@ export class AddediteventComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       if (result != undefined) {
-        this.dropdownList.push({ id: this.dropdownList.length + 1, subject: result });
-        this.event.tags = [...this.event.tags, result];
-
-        console.log('event tags:', this.event.tags);
+        this.dropdownList = [...this.dropdownList, { ...result, tagText: `0 | ${result.subject}` }];
+        this.event.tags = [...this.event.tags, { ...result, tagText: `0 | ${result.subject}` }];
+        setTimeout(() => {
+          this.changeTagName();
+        });
       }
     });
   }
 
-  getTitle($event: string) {
-    // console.log('reached parent',$event);
-    this.event.title = $event;
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      for (const element of event.target.files) {
+        if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+        this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
+      }
+    }
+  }
+
+  filterMultimedia(multimedia: string) {
+    if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+    this.event.multimediaItems = this.event.multimediaItems.filter((item) => item.multimedia != multimedia);
+  }
+
+  onFileDropped(files: Array<any>) {
+    for (const element of files) {
+      if (this.event.multimediaItems == undefined) this.event.multimediaItems = [];
+      this.event.multimediaItems = [...this.event.multimediaItems, { multimedia: element.name, file: element }];
+    }
+  }
+
+  drag() {
+    document.querySelector('.dropzone-text')?.classList.add('drag');
   }
 }

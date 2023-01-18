@@ -1,11 +1,5 @@
-nav {
-  background-color: #007469 !important;
-  color: white;
-}
-
 nav img {
-  width: 3.5%;
-  margin-right: 10px;
+  width: 3.5em;
 }
 
 .nav-item {
@@ -19,6 +13,8 @@ nav img:hover {
 .nav-item a {
   font-size: 1.2rem;
   position: relative;
+  margin-top: 0.36em;
+  align-self: center;
 }
 
 .nav-item a:hover {
@@ -46,4 +42,32 @@ nav img:hover {
 .active a {
   color: white;
   border-bottom: 2px solid white;
+}
+
+p {
+  margin-top: 0.55em;
+  font-size: 25px;
+  color: rgb(140, 192, 187);
+}
+
+.roots-wrapper .navbar-brand {
+  font-size: 30px;
+  margin-left: 0.5em;
+}
+
+.roots-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-menu {
+  width: 100%;
+}
+
+button.dropdown-item.active {
+  background-color: #007469 !important;
+}
+
+button.dropdown-item:focus {
+  background-color: #007469 !important;
 }

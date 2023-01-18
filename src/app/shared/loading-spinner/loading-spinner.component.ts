@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styles: [
     `
       .loader {
-        width: 48px;
-        height: 48px;
-        border: 5px solid black;
+        width: 20px;
+        height: 20px;
+        border: 2px solid black;
         border-bottom-color: transparent;
         border-radius: 50%;
         box-sizing: border-box;
@@ -16,7 +16,6 @@ import { Component, OnInit } from '@angular/core';
         /* margin-left: auto;
         margin-right: auto; */
         display: inline-block;
-        
       }
 
       @keyframes rotation {

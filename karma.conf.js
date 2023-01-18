@@ -24,6 +24,14 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true // removes the duplicated traces
     },
+    sonarQubeUnitReporter: {
+      sonarQubeVersion: 'LATEST',
+      outputFile: 'reports/ut_report.xml',
+      overrideTestDescription: true,
+      testPaths: ['src'],
+      testFilePattern: '.spec.ts',
+      useBrowserName: false
+    },
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/roots-client'),
       subdir: '.',
