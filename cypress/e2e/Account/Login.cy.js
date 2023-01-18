@@ -1,37 +1,14 @@
+import { KJUR } from 'jsrsasign';
+import {login} from "../../support/login.helper";
+
 describe('Testing the register page functionalities.', () => {
   beforeEach(() => {
     cy.visit('http://localhost:4200/login')
 
   })
 
-
   it('Enters valid account information. Should log in, and redirect to the next page', () => {
-    cy.intercept('POST', 'http://localhost:3000/auth/login', ( res) => {
-      res.reply({
-        statusCode: 201,
-        body: {
-          "access_token":"fakeTokenYayyy3123assadas.eyJ1c2VybmFtZSI6InRob21hc0Bqam10dGwubmwiLCJzdWIiOjYsIm9yZ2FuaXNhdGlvbklkIjpudWxsLCJpYXQiOjE2NzM2Mjk3MDksImV4cCI6MTY3MzcxNjEwOX0.ahS-CBkO2jRJlba1811SL_m9TChm9E9zQKs4Bb1CbEg",
-        }
-      })
-    }).as('login')
-
-
-
-    cy.get('#emailInput').type('CompletleyFake@iSwear.com')
-    cy.get('#passwordInput').type('IfYouReadThisYouAreAwesome!')
-    cy.get('.btn').contains('Inloggen').click()
-    cy.wait('@login')
-
-    cy.get('@login').then((interception) => {
-      expect(interception.response.statusCode).to.equal(201)
-    }).wait(300)
-
-    // cy.url().should('include', 'http://localhost:4200/events')
-
-    cy.window()
-      .then(win => {
-        expect(win.localStorage.getItem('token')).to.exist
-      })
+    login()
   })
 
   it('Search for a text input field for email and password and writes in it.', () => {

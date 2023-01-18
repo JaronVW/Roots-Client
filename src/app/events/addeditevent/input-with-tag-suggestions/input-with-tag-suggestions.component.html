@@ -15,7 +15,7 @@
     />
   </div>
   <!-- dropdown select list -->
-  <div class="dropdown">
+  <div class="dropdown" id="dropdownTags">
     <ul *ngIf="showDropdown" (keydown)="onKeyDown($event); $event.stopPropagation()" tabindex="0" #dropdown>
       <li class="headerTag" disabled="true">Kies alvast een tag.</li>
       <li

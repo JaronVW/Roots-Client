@@ -1,99 +1,100 @@
+import {KJUR} from "jsrsasign";
+import {login} from "../../support/login.helper";
+
 describe('Testing the event cards results and search function', () => {
   beforeEach(() => {
-    cy.intercept(
-      {
-        method: 'GET',
-        url: 'http://localhost:3000/events?',
-      },
-      [
-        {
-          "id": 1,
-          "title": " HALLO DIT IS EEN TEST",
-          "description": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
-          "content": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
-          "dateOfEvent": "Thu Dec 22 2022",
-          "userId": null,
-          "tags": [
-            {
-              "id": 14,
-              "subject": "Blue"
-            },
-            {
-              "id": 1,
-              "subject": "Finances"
-            },
-            {
-              "id": 8,
-              "subject": "Moving"
-            },
-            {
-              "id": 13,
-              "subject": "no tag"
-            },
-            {
-              "id": 15,
-              "subject": "Red"
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "title": "Just a crazy ass title yo! true story! But this is title.. NGL coolcool super cool",
-          "description": "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph,",
-          "content": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
-          "dateOfEvent": "Wed Dec 21 2022",
-          "userId": null,
-          "tags": [
-            {
-              "id": 3,
-              "subject": "Adminstration"
-            },
-            {
-              "id": 14,
-              "subject": "Blue"
-            },
-            {
-              "id": 10,
-              "subject": "Changing team sizes"
-            }
-          ]
-        },
-        {
-          "id": 3,
-          "title": " Dit is een nice event. true story",
-          "description": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
-          "content": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
-
-          "dateOfEvent": "Thu Dec 22 2022",
-          "userId": null,
-          "tags": [
-            {
-              "id": 14,
-              "subject": "Blue"
-            },
-            {
-              "id": 1,
-              "subject": "Finances"
-            },
-            {
-              "id": 8,
-              "subject": "Moving"
-            },
-            {
-              "id": 13,
-              "subject": "no tag"
-            },
-            {
-              "id": 15,
-              "subject": "Red"
-            }
-          ]
-        }
-      ],
-
-    ).as('getEvents')
 
 
+    cy.intercept('GET', 'http://localhost:3000/events?', ( res, req) => {
+      res.reply({
+        statusCode: 200,
+        body: [
+          {
+            "id": 1,
+            "title": " HALLO DIT IS EEN TEST",
+            "description": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
+            "content": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
+            "dateOfEvent": "Thu Dec 22 2022",
+            "userId": null,
+            "tags": [
+              {
+                "id": 14,
+                "subject": "Blue"
+              },
+              {
+                "id": 1,
+                "subject": "Finances"
+              },
+              {
+                "id": 8,
+                "subject": "Moving"
+              },
+              {
+                "id": 13,
+                "subject": "no tag"
+              },
+              {
+                "id": 15,
+                "subject": "Red"
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "Just a crazy ass title yo! true story! But this is title.. NGL coolcool super cool",
+            "description": "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph,",
+            "content": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
+            "dateOfEvent": "Wed Dec 21 2022",
+            "userId": null,
+            "tags": [
+              {
+                "id": 3,
+                "subject": "Adminstration"
+              },
+              {
+                "id": 14,
+                "subject": "Blue"
+              },
+              {
+                "id": 10,
+                "subject": "Changing team sizes"
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": " Dit is een nice event. true story",
+            "description": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
+            "content": "dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text dummy text ",
+
+            "dateOfEvent": "Thu Dec 22 2022",
+            "userId": null,
+            "tags": [
+              {
+                "id": 14,
+                "subject": "Blue"
+              },
+              {
+                "id": 1,
+                "subject": "Finances"
+              },
+              {
+                "id": 8,
+                "subject": "Moving"
+              },
+              {
+                "id": 13,
+                "subject": "no tag"
+              },
+              {
+                "id": 15,
+                "subject": "Red"
+              }
+            ]
+          }
+        ],
+      })
+    }).as('getEvents')
     cy.intercept(
       {
         method: 'GET',
@@ -130,11 +131,10 @@ describe('Testing the event cards results and search function', () => {
         ]
       }
       ).as('getEventsEmpty')
-    cy.wait(500);
 
-    cy.visit('http://localhost:4200/events')
-
+    login();
   })
+
 
 
   it('checks if there is events available', () => {
@@ -148,7 +148,6 @@ describe('Testing the event cards results and search function', () => {
       .find('h1')
 
     cy.get('#accordion-header-0').should('have.length' , 1)
-      .find('.info')
       .find('.tags')
       .find('span')
   })

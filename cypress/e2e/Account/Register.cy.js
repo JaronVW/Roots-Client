@@ -60,7 +60,7 @@ describe('Testing the error handling responses on incorrect input.', () => {
     cy.get('.btn').contains('Een organisatie toevoegen? ').click().wait(100)
     cy.get('#organisationNameInput').type('aOrganisation')
     cy.get('.btn').contains('Aanmaken').click()
-    cy.contains('Domein kan niet leeg zijn; voer uw email in.').should('have.length', 1).should('be.visible')
+    cy.contains('Email moet valide zijn.').should('have.length', 1).should('be.visible')
   })
 
 

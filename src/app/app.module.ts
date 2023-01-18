@@ -30,6 +30,8 @@ import { AccountrecoveryComponent } from './authentication/accountrecovery/accou
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +53,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     LoadingSpinnerComponent,
     DragAndDropDirective,
     AccountrecoveryComponent,
+
   ],
   imports: [
     BrowserModule,
