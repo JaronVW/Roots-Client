@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
         router.url !== '/login' &&
         router.url !== '/register' &&
         router.url !== '/accountrecovery' &&
-        !router.url.includes('/passwordreset') 
+        !router.url.includes('/passwordreset') &&
+        !this.router.url.includes('/verifyaccount')
       "
       class="border-top footer"
     >

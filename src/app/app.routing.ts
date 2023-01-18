@@ -6,6 +6,7 @@ import { AddediteventComponent } from './events/addeditevent/addeditevent.compon
 import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
 import { OrganisationComponent } from './organisation/organisation.component';
 import { PasswordresetComponent } from './authentication/passwordreset/passwordreset.component';
+import { VerifyaccountComponent } from './verifyaccount/verifyaccount.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'events', pathMatch: 'full' },
@@ -17,4 +18,5 @@ export const routes: Routes = [
   { path: 'events/edit/:id', component: AddediteventComponent },
   { path: 'accountrecovery', component: AccountrecoveryComponent },
   { path: 'passwordreset/:id', component: PasswordresetComponent },
+  { path: 'verifyaccount/:id', component: VerifyaccountComponent },
 ];

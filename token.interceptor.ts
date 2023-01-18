@@ -14,7 +14,12 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(public router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (this.router.url !== '/login' && this.router.url !== '/register' && this.router.url !== '/accountrecovery') {
+    if (
+      this.router.url !== '/login' &&
+      this.router.url !== '/register' &&
+      this.router.url !== '/accountrecovery' &&
+      !this.router.url.includes('/verifyaccount')
+    ) {
       let token = localStorage.getItem('token');
       if (token) {
         if (this.helper.isTokenExpired(token)) {
