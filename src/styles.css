@@ -52,7 +52,8 @@ footer,
   border-color: white;
 }
 
-div.form-group div.tox.tox-tinymce {
+div.form-group div.tox.tox-tinymce,
+.form-tags ng-multiselect-dropdown#tags div span.dropdown-btn {
   border: 1px solid #ced4da;
   border-radius: 0.375rem;
 }
@@ -64,4 +65,21 @@ ng-multiselect-dropdown#tags div.multiselect-dropdown div span.dropdown-btn {
 .a-for-accessibility,
 .a-for-accessibility:hover {
   color: black;
+}
+
+ngb-pagination a.page-link {
+  color: #007469;
+}
+
+ngb-pagination a.page-link:hover {
+  color: #0d8478;
+}
+
+ngb-pagination .active a.page-link {
+  background: #007469;
+  border-color: #007469;
+}
+
+ngb-pagination .active a.page-link:hover {
+  color: white;
 }

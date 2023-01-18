@@ -16,15 +16,17 @@ import { Tag } from '../../event.interface';
   templateUrl: './input-with-tag-suggestions.component.html',
   styleUrls: ['./input-with-tag-suggestions.component.css'],
 })
-export class InputWithTagSuggestionsComponent implements OnInit {
+export class InputWithTagSuggestionsComponent {
+  @Input() title: string = '';
   @Input() tags: Tag[] = [];
   @Input() eventTags: Tag[] = [];
-  @Input() title: string = '';
-  @Output() addTag = new EventEmitter<Tag>();
-  @Output() removeTag = new EventEmitter<Tag>();
   @Output() titleChange = new EventEmitter<string>();
+  @Output() tagsChange = new EventEmitter<Tag[]>();
+  @Output() eventTagsChange = new EventEmitter<Tag[]>();
+
   @ViewChild('input') input!: ElementRef;
   @ViewChild('input') dropdown!: ElementRef;
+
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
     const emptyTag: Tag = { id: undefined, subject: '', count: 0 };
@@ -36,6 +38,7 @@ export class InputWithTagSuggestionsComponent implements OnInit {
       this.showDropdown = false;
     }
   }
+
   onFocus() {
     if (this.showDropdown) {
       this.input.nativeElement.blur();
@@ -50,22 +53,15 @@ export class InputWithTagSuggestionsComponent implements OnInit {
     /* TODO document why this constructor is empty */
   }
 
-  ngOnInit(): void {
-    this.suggestions = this.tags.filter((tag) => !this.eventTags.includes(tag));
-  }
-
   filterTags() {
     this.titleChange.emit(this.title);
-    console.log(this.title);
     let words = this.title.split(' ').map((word) => word.toLowerCase());
     if (this.title.endsWith('.') || this.title.endsWith(' ')) {
       words = words.slice(0, -1);
     }
-    this.suggestions = this.tags.filter((tag) => !this.eventTags.includes(tag));
-    this.suggestions = this.suggestions.filter((tag) => words.some((word) => tag.subject.toLowerCase().includes(word)));
+    this.suggestions = this.tags.filter((tag) => words.some((word) => tag.subject.toLowerCase().includes(word)));
     if (this.title === '') this.suggestions = [];
     this.showDropdown = this.suggestions.length !== 0;
-    console.log('dropdown: ', this.showDropdown);
   }
 
   timeout: any;
@@ -78,8 +74,8 @@ export class InputWithTagSuggestionsComponent implements OnInit {
   }
 
   addTagAndRemoveFromSuggestions(tag: Tag) {
-    this.addTag.emit(tag);
-    this.eventTags.push(tag);
+    this.eventTags = [...this.eventTags, tag];
+    this.eventTagsChange.emit(this.eventTags);
     this.filterTags();
   }
 

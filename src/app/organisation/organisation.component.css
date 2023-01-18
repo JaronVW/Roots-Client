@@ -1,0 +1,38 @@
+.card {
+  padding: 1%;
+}
+
+h2 {
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 0px;
+}
+
+.table {
+  background: white;
+}
+
+.select-button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  background-color: #eaf0f5;
+}
+
+.select-button:hover {
+  background-color: #d1dfec;
+}
+
+.left-button {
+  border-radius: 50px 0px 0px 50px;
+}
+
+.right-button {
+  border-radius: 0px 50px 50px 0px;
+}
+
+.state-button {
+  width: 115px;
+}

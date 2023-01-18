@@ -1,4 +1,4 @@
-button {
+.bottom-button {
   margin-top: 10px;
   margin-right: 10px;
   width: 45%;
@@ -91,7 +91,8 @@ a:hover {
   transition: opacity 0.3s ease-in-out;
 }
 
-div.dropzone:hover div.dropzone-text {
+div.dropzone:hover div.dropzone-text,
+div.dropzone div.dropzone-text.drag {
   opacity: 1;
   visibility: visible;
 }
