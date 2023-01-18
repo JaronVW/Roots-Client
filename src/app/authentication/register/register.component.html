@@ -8,6 +8,11 @@
             {{ userErrorMessage }}
           </div>
         </div>
+        <div *ngIf="_userSuccess" class="userError">
+          <div class="alert alert-success" role="alert">
+            {{ _userSuccessMessage }}
+          </div>
+        </div>
         <form>
           <div class="row gy-3">
             <div class="col-6">

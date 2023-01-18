@@ -26,6 +26,8 @@ export class RegisterComponent implements OnInit {
   repeatpassword: String = '';
   userError: boolean = false;
   userErrorMessage: String = '';
+  _userSuccess: boolean = false;
+  _userSuccessMessage: String = '';
   organisationError: boolean = false;
   organisationErrorMessage: String = '';
   _organisationSuccess: boolean = false;
@@ -54,7 +56,14 @@ export class RegisterComponent implements OnInit {
   public set organisationSuccessMessage(val: any) {
     this._organisationSuccessMessage = val;
   }
-  
+
+  public get userSuccess(): any {
+    return this._userSuccess;
+  }
+
+  public set userSuccess(val: any) {
+    this._userSuccess = val;
+  }
 
   ngOnInit(): void {
     // TODO document why this method 'ngOnInit' is empty
@@ -101,7 +110,7 @@ export class RegisterComponent implements OnInit {
       this.setUserError(false, '');
       this.authService.register(this.user).subscribe({
         next: (response) => {
-          this.setUserError(false, '');
+          this.setUserSuccess(true, 'Gebruiker geregistreerd, verifieer uw email om in te kunnen loggen.');
           // this.res = response;
           // var decoded: any = jwt_decode(this.res.access_token);
           // localStorage.setItem('token', this.res.access_token);
@@ -149,6 +158,11 @@ export class RegisterComponent implements OnInit {
   setUserError(error: boolean, errorMessage: string) {
     this.userError = error;
     this.userErrorMessage = errorMessage;
+  }
+
+  setUserSuccess(success: boolean, successMessage: string) {
+    this._userSuccess = success;
+    this._userSuccessMessage = successMessage;
   }
 
   setOrganisationError(error: boolean, errorMessage: string) {
