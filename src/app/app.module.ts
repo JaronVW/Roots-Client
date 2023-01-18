@@ -77,5 +77,6 @@ import { VerifyaccountComponent } from './verifyaccount/verifyaccount.component'
     { provide: MatDialogRef, useValue: {} },
   ],
   bootstrap: [AppComponent],
+  
 })
 export class AppModule {}
