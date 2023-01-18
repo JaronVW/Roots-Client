@@ -13,7 +13,9 @@ app-root {
 
 body {
   font-family: sans-serif;
-  background-color: #dae0e6;
+  background-image: url('assets/images/background3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 app-root {
