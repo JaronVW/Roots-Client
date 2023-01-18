@@ -30,3 +30,7 @@ button {
   border-radius: 0px !important;
   margin: 0px 20px 0px 8px;
 }
+
+h1 {
+  margin-bottom: 10px;
+}

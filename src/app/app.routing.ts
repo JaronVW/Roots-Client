@@ -16,5 +16,5 @@ export const routes: Routes = [
   { path: 'events/create', component: AddediteventComponent },
   { path: 'events/edit/:id', component: AddediteventComponent },
   { path: 'accountrecovery', component: AccountrecoveryComponent },
-  { path: 'passwordreset', component: PasswordresetComponent },
+  { path: 'passwordreset/:id', component: PasswordresetComponent },
 ];

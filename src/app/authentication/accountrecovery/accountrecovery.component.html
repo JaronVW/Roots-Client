@@ -3,6 +3,17 @@
     <div class="card text-center">
       <div class="card-body">
         <h1 class="card-title">Accountherstel</h1>
+        <div *ngIf="error" class="userError">
+          <div class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+          </div>
+        </div>
+        <div *ngIf="success" class="col-md-12">
+          <br />
+          <div class="alert alert-success" role="alert">
+            {{ this.successMessage }}
+          </div>
+        </div>
         <h3>Voer uw e-mailadres in om een ​​e-mail te ontvangen over hoe u uw account kunt herstellen.</h3>
         <form>
           <div class="row gy-3">
@@ -27,11 +38,11 @@
                     </svg>
                   </span>
                 </div>
-                <input type="email" class="form-control" id="emailInput" placeholder="Email invoeren..." />
+                <input [(ngModel)]="email" [ngModelOptions]="{ standalone: true }" type="email" class="form-control" id="emailInput" placeholder="Email invoeren..." />
               </div>
             </div>
             <div class="col-12">
-              <button type="submit" class="btn btn-primary brand-button">Stuur herstel e-mail</button>
+              <button (click)="sendResetPasswordRequest(email)" type="submit" class="btn btn-primary brand-button">Stuur herstel e-mail</button>
             </div>
             <div class="col-12">
               <a routerLink="/login">Terug</a>

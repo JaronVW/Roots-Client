@@ -73,9 +73,9 @@ export class RegisterComponent implements OnInit {
     if (
       this.user.firstName != '' &&
       this.user.lastName != '' &&
-      this.user.username.match(
+            this.user.username.match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      ) &&
+) &&
       this.user.password != '' &&
       this.user.password.length > 7 &&
       this.user.password.length < 21 &&
