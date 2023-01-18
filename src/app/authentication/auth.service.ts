@@ -21,6 +21,10 @@ export class AuthService {
   }
 
   sendResetPasswordRequest(email: string) {
-    return this.http.post(`auth/reset-password`, {email: email}).subscribe();
+    return this.http.post(`auth/reset-password`, {email}).subscribe();
+  }
+
+  resetPassword(id: string, password: string) {
+    return this.http.post(`auth/reset-password/${id}`, {password}).subscribe();
   }
 }
