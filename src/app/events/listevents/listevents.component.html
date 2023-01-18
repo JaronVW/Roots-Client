@@ -26,7 +26,9 @@
           </button>
 
           <ng-template #searchButton (click)="search(searchValue)">
-            <button (click)="search(searchValue)" class="btn btn-primary brand-button top-button">Zoeken</button>
+            <button (click)="search(searchValue)" class="btn btn-primary brand-button top-button" id="search-button">
+              Zoeken
+            </button>
           </ng-template>
         </div>
         <div class="col-md-12 col-7">
@@ -40,7 +42,12 @@
     <div class="create-button">
       <div class="row">
         <div class="col-12">
-          <button type="submit" class="btn btn-primary brand-button top-button" routerLink="/events/create">
+          <button
+            type="submit"
+            class="btn btn-primary brand-button top-button"
+            id="create-new-event-button"
+            routerLink="/events/create"
+          >
             Aanmaken
           </button>
         </div>
@@ -153,12 +160,8 @@
                       </a>
                       <mat-menu #menu="matMenu">
                         <button mat-menu-item [routerLink]="['edit', item.id]">Wijzigen</button>
-                        <button *ngIf="!item.isArchived" mat-menu-item (click)="open(content)">
-                          Archiveren
-                        </button>
-                        <button *ngIf="item.isArchived" mat-menu-item (click)="open(content)">
-                          De-archiveren
-                        </button>
+                        <button *ngIf="!item.isArchived" mat-menu-item (click)="open(content)">Archiveren</button>
+                        <button *ngIf="item.isArchived" mat-menu-item (click)="open(content)">De-archiveren</button>
                         <ng-template #content let-modal>
                           <div class="modal-header">
                             <h1 *ngIf="!item.isArchived" class="modal-title">Archiveren</h1>
@@ -174,9 +177,7 @@
                             <p *ngIf="!item.isArchived">
                               Weet u zeker dat u deze gebeurtenis wilt archiveren? (Dit kan ongedaan gemaakt worden).
                             </p>
-                            <p *ngIf="item.isArchived">
-                              Weet u zeker dat u deze gebeurtenis wilt de-archiveren?
-                            </p>
+                            <p *ngIf="item.isArchived">Weet u zeker dat u deze gebeurtenis wilt de-archiveren?</p>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn brand-button" (click)="modal.dismiss('Cross click')">
