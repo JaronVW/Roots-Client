@@ -19,8 +19,6 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-
-
   validate() {
     if (this.user.password == '') {
       this.setError(true, 'Wachtwoord kan niet leeg zijn.');
