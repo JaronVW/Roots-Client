@@ -68,7 +68,6 @@ export class InputWithTagSuggestionsComponent {
   selectedTag!: Tag;
 
   onKeyDown(event: KeyboardEvent) {
-    console.log(event.key);
     if (event.key === 'ArrowDown') {
       const index = this.suggestions.indexOf(this.selectedTag);
       if (index > 0) {

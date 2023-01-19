@@ -12,7 +12,6 @@ export class EventService {
   constructor(private http: HttpClient) {}
 
   addEvent(event: Event): Observable<Event> {
-    console.log('event: ', event);
     let formData = new FormData();
     event.multimediaItems?.forEach((element, index) => {
       if (element.file != undefined) {
@@ -70,7 +69,6 @@ export class EventService {
   updateEvent(id: number, event: Event): Observable<Event> {
     let formData = new FormData();
     event.multimediaItems?.forEach((element, index) => {
-      console.log('element: ', element);
       if (element.path) formData.append(`multimediaItems[${index}][path]`, element.path);
       formData.append('files', element.file ? element.file : '');
       formData.append(`multimediaItems[${index}][multimedia]`, element.multimedia);
@@ -86,10 +84,7 @@ export class EventService {
     formData.append('id', event.id?.toString()!);
     formData.append('content', event.content!);
 
-    console.log(formData);
-    return this.http.put<Event>(`events/${id}`, formData).pipe(
-      tap((body: Event) => console.log('body: ', body)),
-    );
+    return this.http.put<Event>(`events/${id}`, formData);
   }
 
   deleteEvent(id: number) {

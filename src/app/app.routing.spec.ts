@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { TestBed, fakeAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-
 import { routes } from './app.routing';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 
@@ -39,4 +38,4 @@ describe('Router: App', () => {
       expect(location.path()).toBe('/register');
     });
   }));
-})
+});

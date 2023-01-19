@@ -76,7 +76,6 @@ export class AddediteventComponent implements OnInit {
       branding: false,
       promotion: false,
       placeholder: 'Omschrijving typen...',
-
       toolbar:
         'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent code',
       height: 300,
@@ -88,7 +87,6 @@ export class AddediteventComponent implements OnInit {
     if (this.eventid) {
       this.isEditing = true;
       this.EventService.getEvent(this.eventid).subscribe((response: Event) => {
-        console.log(response);
         this.event = response;
         if (response.dateOfEvent) this.event.dateOfEvent = new Date(response.dateOfEvent).toISOString();
         response.tags.forEach((element) => {
@@ -201,8 +199,6 @@ export class AddediteventComponent implements OnInit {
       debounceTime(200),
       distinctUntilChanged(),
       map((term) => {
-        console.log(term);
-        console.log(text$);
         return term.length < 2
           ? []
           : [].filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
@@ -240,7 +236,6 @@ export class AddediteventComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
       if (result != undefined) {
         this.dropdownList = [...this.dropdownList, { ...result, tagText: `0 | ${result.subject}` }];
         this.event.tags = [...this.event.tags, { ...result, tagText: `0 | ${result.subject}` }];

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { OrganisationService } from '../organisation.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -35,7 +34,6 @@ export class RegisterComponent {
   constructor(
     private authService: AuthService,
     private organisationService: OrganisationService,
-    private router: Router,
     private modalService: NgbModal,
   ) {}
 
@@ -105,7 +103,6 @@ export class RegisterComponent {
       this.authService.register(this.user).subscribe({
         next: (response) => {
           this.setUserSuccess(true, 'Gebruiker geregistreerd, verifieer uw email om in te kunnen loggen.');
-          console.log(response);
           this.organisationSuccess = true;
           this.organisationSuccessMessage = 'Organisatie succesvol aangemaakt.';
         },

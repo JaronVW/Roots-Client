@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { InputWithTagSuggestionsComponent } from './input-with-tag-suggestions.component';
 
 describe('InputWithTagSuggestionsComponent', () => {
@@ -8,9 +7,8 @@ describe('InputWithTagSuggestionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InputWithTagSuggestionsComponent ]
-    })
-    .compileComponents();
+      declarations: [InputWithTagSuggestionsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InputWithTagSuggestionsComponent);
     component = fixture.componentInstance;
