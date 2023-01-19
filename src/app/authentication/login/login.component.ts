@@ -8,20 +8,18 @@ import jwt_decode from 'jwt-decode';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   user = {
     username: '',
     password: '',
   };
   error: boolean = false;
-  errorMessage: String = '';
+  errorMessage: string = '';
   res: any;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    // TODO document why this method 'ngOnInit' is empty
-  }
+
 
   validate() {
     if (this.user.password == '') {
@@ -44,14 +42,16 @@ export class LoginComponent implements OnInit {
         (response) => {
           this.setError(false, '');
           this.res = response;
-          var decoded: any = jwt_decode(this.res.access_token);
+          const decoded: any = jwt_decode(this.res.access_token);
           localStorage.setItem('token', this.res.access_token);
           localStorage.setItem('email', decoded.username);
           this.router.navigate(['/events']);
         },
         (error) => {
-          if (error.error.message == 'Account is inactive') this.setError(true, 'Uw account is inactief. Contacteer een ander werknemer als dit een fout is.');
-          if (error.error.message == 'Invalid credentials') this.setError(true, 'Email/wachtwoord combinatie is incorrect.');
+          if (error.error.message == 'Account is inactive')
+            this.setError(true, 'Uw account is inactief. Contacteer een ander werknemer als dit een fout is.');
+          if (error.error.message == 'Invalid credentials')
+            this.setError(true, 'Email/wachtwoord combinatie is incorrect.');
         },
       );
     }

@@ -8,7 +8,6 @@ import { Event, Tag } from './event.interface';
 })
 export class EventService {
   public currentUser$ = new BehaviorSubject<null | undefined>(undefined);
-  private readonly CURRENT_USER = 'currentuser';
 
   constructor(private http: HttpClient) {}
 
@@ -89,7 +88,6 @@ export class EventService {
 
     console.log(formData);
     return this.http.put<Event>(`events/${id}`, formData).pipe(
-      // map((body: EventResponse) => body.results[0]),
       tap((body: Event) => console.log('body: ', body)),
     );
   }

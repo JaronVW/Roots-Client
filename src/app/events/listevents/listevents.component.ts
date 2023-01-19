@@ -3,7 +3,7 @@ import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-listevents',

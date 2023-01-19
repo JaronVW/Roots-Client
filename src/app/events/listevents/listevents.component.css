@@ -41,7 +41,6 @@
 .search-wrapper {
   position: relative;
   width: 80%;
-  /* padding-right: 2.6em; */
 }
 
 .create-button {
@@ -53,7 +52,6 @@ div.form-check-label {
 }
 
 .card {
-  /* margin-top: 40px; */
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border: none;

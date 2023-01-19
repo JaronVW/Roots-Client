@@ -11,8 +11,6 @@ export interface Event {
   isArchived?: boolean | null;
   organisationId?: number | null;
   content?: string | null;
-
-  //   Nog te doen: Tags, files, userId referencen naar andere interfaces
 }
 
 export interface Tag {

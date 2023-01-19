@@ -11,56 +11,31 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <app-input-with-tag-suggestions
-            class="title"
-            style="position: relative"
-            [(tags)]="tagSuggestions"
-            [(eventTags)]="event.tags"
-            [(title)]="event.title"
-            (eventTagsChange)="tagChange()"
-          >
+          <app-input-with-tag-suggestions class="title" style="position: relative" [(tags)]="tagSuggestions"
+            [(eventTags)]="event.tags" [(title)]="event.title" (eventTagsChange)="tagChange()">
           </app-input-with-tag-suggestions>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="dateOfEvent">Datum:</label>
-          <input
-            [ngModel]="event.dateOfEvent | date : 'yyyy-MM-dd'"
-            (ngModelChange)="event.dateOfEvent = $event"
-            name="dateOfEvent"
-            type="date"
-            class="form-control"
-            id="dateOfEvent"
-            [value]="event.dateOfEvent | date : 'yyyy-MM-dd'"
-            aria-describedby="dateHelp"
-            lang="fr-CA"
-          />
+          <input [ngModel]="event.dateOfEvent | date : 'yyyy-MM-dd'" (ngModelChange)="event.dateOfEvent = $event"
+            name="dateOfEvent" type="date" class="form-control" id="dateOfEvent"
+            [value]="event.dateOfEvent | date : 'yyyy-MM-dd'" aria-describedby="dateHelp" lang="fr-CA" />
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
           <label for="description">Beschrijving:</label>
-          <textarea
-            [(ngModel)]="event.description"
-            name="description"
-            type="description"
-            class="form-control"
-            id="description"
-            aria-describedby="descriptionHelp"
-            placeholder="Beschrijving typen..."
-          ></textarea>
+          <textarea [(ngModel)]="event.description" name="description" type="description" class="form-control"
+            id="description" aria-describedby="descriptionHelp" placeholder="Beschrijving typen..."></textarea>
         </div>
       </div>
       <div class="col-md-12">
         <div class="form-group">
           <label for="longerdescription">Omschrijving:</label>
-          <textarea
-            [(ngModel)]="event.content"
-            name="longerdescription"
-            id="longerdescription"
-            class="form-control"
-          ></textarea>
+          <textarea [(ngModel)]="event.content" name="longerdescription" id="longerdescription"
+            class="form-control"></textarea>
         </div>
       </div>
       <div class="col-12">
@@ -71,19 +46,10 @@
                 <div class="form-group">
                   <label for="tags">Tags toevoegen:</label>
                   <div class="form-tags">
-                    <ng-multiselect-dropdown
-                      #multiSelect
-                      [settings]="dropdownSettings"
-                      [data]="dropdownList"
-                      [(ngModel)]="event.tags"
-                      (click)="changeTagName()"
-                      (ngModelChange)="changeTagName()"
-                      [required]="error"
-                      name="tags"
-                      id="tags"
-                      placeholder="Selecteren"
-                      (keydown.enter)="multiSelect.toggleDropdown($event)"
-                    >
+                    <ng-multiselect-dropdown #multiSelect [settings]="dropdownSettings" [data]="dropdownList"
+                      [(ngModel)]="event.tags" (click)="changeTagName()" (ngModelChange)="changeTagName()"
+                      [required]="error" name="tags" id="tags" placeholder="Selecteren"
+                      (keydown.enter)="multiSelect.toggleDropdown($event)">
                     </ng-multiselect-dropdown>
                   </div>
                 </div>
@@ -108,26 +74,14 @@
                 <div class="form-group">
                   <label for="file"></label>
                   Bestand toevoegen:
-                  <input
-                    type="file"
-                    (change)="onFileSelected($event)"
-                    class="form-control"
-                    id="file"
-                    multiple
-                    aria-describedby="fileHelp"
-                    name="Image"
-                  />
+                  <input type="file" (change)="onFileSelected($event)" class="form-control" id="file" multiple
+                    aria-describedby="fileHelp" name="Image" />
                 </div>
               </div>
             </div>
             <div class="col-12">
-              <div
-                class="form-group dropzone"
-                id="dropzone"
-                appDragAndDrop
-                (fileDropped)="onFileDropped($event)"
-                (onDragEnter)="drag()"
-              >
+              <div class="form-group dropzone" id="dropzone" appDragAndDrop (fileDropped)="onFileDropped($event)"
+                (onDragEnter)="drag()">
                 <div *ngIf="!event.multimediaItems || event.multimediaItems.length == 0" class="dropzone-text">
                   <i>Drop files here</i>
                 </div>

@@ -39,9 +39,4 @@ describe('Router: App', () => {
       expect(location.path()).toBe('/register');
     });
   }));
-  // it('navigate to "/events/archive" takes you to archive page', fakeAsync(() => {
-  //   router.navigate(['/events/archive']).then(() => {
-  //     expect(location.path()).toBe('/events/archive');
-  //   });
-  // }));
-});
+})

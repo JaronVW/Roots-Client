@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Tag } from '../../event.interface';
 
 @Component({
   selector: 'app-addtag-dialog',
   templateUrl: './addtag-dialog.component.html',
-  styleUrls: ['./addtag-dialog.component.css'],
 })
-export class AddtagDialogComponent implements OnInit {
+export class AddtagDialogComponent  {
   newTag: Tag | undefined = {
     id: undefined,
     subject: '',
@@ -19,9 +18,6 @@ export class AddtagDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddtagDialogComponent>) {}
 
-  ngOnInit(): void {
-    // TODO document why this method 'ngOnInit' is empty
-  }
 
   closeDialog() {
     this.newTag = undefined;

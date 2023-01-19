@@ -76,7 +76,7 @@ export class AddediteventComponent implements OnInit {
       branding: false,
       promotion: false,
       placeholder: 'Omschrijving typen...',
-      // add image (just before table) to get image button in toolbar
+
       toolbar:
         'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent code',
       height: 300,
@@ -232,8 +232,6 @@ export class AddediteventComponent implements OnInit {
       if (window.innerWidth >= 768) dropzone.style.marginTop = +tagSize - 38 + 'px';
       else dropzone.style.marginTop = 0 + 'px';
     }
-
-    // document.querySelectorAll('.multiselect-item-checkbox div').forEach((element) => {});
   }
 
   openDialog() {

@@ -6,13 +6,12 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent  {
   username = '';
   isNavbarCollapsed = true;
 
   constructor(public router: Router) {}
 
-  ngOnInit(): void {}
 
   logout() {
     localStorage.setItem('token', '');

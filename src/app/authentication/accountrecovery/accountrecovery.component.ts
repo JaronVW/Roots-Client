@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './accountrecovery.component.html',
   styleUrls: ['./accountrecovery.component.css']
 })
-export class AccountrecoveryComponent implements OnInit {
+export class AccountrecoveryComponent{
   email: string = '';
   success: boolean = false;
   successMessage: string = '';
@@ -15,8 +15,7 @@ export class AccountrecoveryComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
 
-  ngOnInit(): void {
-  }
+
 
   sendResetPasswordRequest(email: string) {
     if (this.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,)) {
