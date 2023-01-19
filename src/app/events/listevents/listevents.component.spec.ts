@@ -74,4 +74,47 @@ describe('ListeventsComponent', () => {
 
     expect(compiled.length).toEqual(1);
   }));
+
+  it('there should be a timeline displayed', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.query(By.css('.timeline'));
+
+    expect(compiled).toBeTruthy();
+  }));
+
+  it('card should be extended when clicked', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.queryAll(By.css('.example-accordion-item'));
+
+    compiled[0].nativeElement.click();
+    fixture.detectChanges();
+    compiled[0] = fixture.debugElement.query(By.css('.expandable-content'));
+    expect(compiled[0]).toBeTruthy();
+  }));
+
+  it('should have pagination', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.query(By.css('.pagination-wrapper'));
+
+    expect(compiled).toBeTruthy();
+  }));
+
+  it('there should be a button to create a new event', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.query(By.css('#create-new-event-button'));
+
+    expect(compiled).toBeTruthy();
+  }));
+
+  it('there should be a search button', fakeAsync(() => {
+    component.events = mockEvents;
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.query(By.css('#search-button'));
+
+    expect(compiled).toBeTruthy();
+  }));
 });

@@ -26,10 +26,12 @@ export class RegisterComponent implements OnInit {
   repeatpassword: String = '';
   userError: boolean = false;
   userErrorMessage: String = '';
+  _userSuccess: boolean = false;
+  _userSuccessMessage: String = '';
   organisationError: boolean = false;
   organisationErrorMessage: String = '';
-  organisationSuccess: boolean = false;
-  organisationSuccessMessage: String = '';
+  _organisationSuccess: boolean = false;
+  _organisationSuccessMessage: String = '';
   res: any;
 
   constructor(
@@ -38,6 +40,30 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
   ) {}
+
+  public get organisationSuccess(): any {
+    return this._organisationSuccess;
+  }
+
+  public set organisationSuccess(val: any) {
+    this._organisationSuccess = val;
+  }
+
+  public get organisationSuccessMessage(): any {
+    return this._organisationSuccessMessage;
+  }
+
+  public set organisationSuccessMessage(val: any) {
+    this._organisationSuccessMessage = val;
+  }
+
+  public get userSuccess(): any {
+    return this._userSuccess;
+  }
+
+  public set userSuccess(val: any) {
+    this._userSuccess = val;
+  }
 
   ngOnInit(): void {
     // TODO document why this method 'ngOnInit' is empty
@@ -73,28 +99,31 @@ export class RegisterComponent implements OnInit {
     if (
       this.user.firstName != '' &&
       this.user.lastName != '' &&
-      this.user.username.match(
+            this.user.username.match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      ) &&
+) &&
       this.user.password != '' &&
       this.user.password.length > 7 &&
       this.user.password.length < 21 &&
       this.user.password == this.repeatpassword
     ) {
       this.setUserError(false, '');
-      this.authService.register(this.user).subscribe(
-        (response) => {
-          this.setUserError(false, '');
-          this.res = response;
-          var decoded: any = jwt_decode(this.res.access_token);
-          localStorage.setItem('token', this.res.access_token);
-          localStorage.setItem('email', decoded.username);
-          this.router.navigate(['/events']);
+      this.authService.register(this.user).subscribe({
+        next: (response) => {
+          this.setUserSuccess(true, 'Gebruiker geregistreerd, verifieer uw email om in te kunnen loggen.');
+          // this.res = response;
+          // var decoded: any = jwt_decode(this.res.access_token);
+          // localStorage.setItem('token', this.res.access_token);
+          // localStorage.setItem('email', decoded.username);
+          console.log(response);
+          this.organisationSuccess = true;
+          this.organisationSuccessMessage = 'Organisatie succesvol aangemaakt.';
         },
-        (error) => {
-          if (error.error.message == 'Invalid credentials') this.setUserError(true, 'Email/wachtwoord combinatie is incorrect.');
+        error: (error) => {
+          if (error.error.message == 'Invalid credentials')
+            this.setUserError(true, 'Email/wachtwoord combinatie is incorrect.');
         },
-      );
+      });
     }
   }
 
@@ -131,14 +160,19 @@ export class RegisterComponent implements OnInit {
     this.userErrorMessage = errorMessage;
   }
 
+  setUserSuccess(success: boolean, successMessage: string) {
+    this._userSuccess = success;
+    this._userSuccessMessage = successMessage;
+  }
+
   setOrganisationError(error: boolean, errorMessage: string) {
     this.organisationError = error;
     this.organisationErrorMessage = errorMessage;
   }
 
   setSuccess(success: boolean, successMessage: string) {
-    this.organisationSuccess = success;
-    this.organisationSuccessMessage = successMessage;
+    this._organisationSuccess = success;
+    this._organisationSuccessMessage = successMessage;
   }
 
   open(content: any) {

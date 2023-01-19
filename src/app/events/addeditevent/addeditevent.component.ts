@@ -41,8 +41,8 @@ export class AddediteventComponent implements OnInit {
   modalmode = {
     title: '',
     body: '',
-    buttontext: ''
-  }
+    buttontext: '',
+  };
 
   constructor(
     private router: Router,
@@ -82,31 +82,6 @@ export class AddediteventComponent implements OnInit {
       height: 300,
       menubar: false,
       inline_boundaries: false,
-      automatic_uploads: true,
-      file_picker_types: 'image',
-      file_picker_callback: function (cb, value, meta) {
-        let input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
-
-        input.onchange = function () {
-          if (input.files && input.files.length > 0) {
-            let file = input.files[0];
-            let reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-              let id = 'blobid' + new Date().getTime();
-              let blobCache = tinymce.activeEditor?.editorUpload.blobCache;
-              let base64 = reader.result?.toString().split(',')[1];
-              if (blobCache == null || base64 == null) return;
-              let blobInfo = blobCache.create(id, file, base64);
-              blobCache.add(blobInfo);
-              cb(blobInfo.blobUri(), { title: file.name });
-            };
-          }
-        };
-        input.click();
-      },
     });
 
     this.eventid = Number(this.route.snapshot.paramMap.get('id'));

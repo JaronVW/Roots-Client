@@ -27,9 +27,10 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { EventMediaItemComponent } from './event-media-item/event-media-item.component';
 import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.directive';
 import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
-import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrganisationComponent } from './organisation/organisation.component';
+import { VerifyaccountComponent } from './verifyaccount/verifyaccount.component';
+import { PasswordresetComponent } from './authentication/passwordreset/passwordreset.component';
 
 
 
@@ -55,6 +56,8 @@ import { OrganisationComponent } from './organisation/organisation.component';
     DragAndDropDirective,
     AccountrecoveryComponent,
     OrganisationComponent,
+    VerifyaccountComponent,
+    PasswordresetComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,14 +73,12 @@ import { OrganisationComponent } from './organisation/organisation.component';
     MatMenuModule,
     MatButtonModule,
     MatSelectModule,
-    EditorModule,
     NgbCollapseModule,
     NgbPaginationModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: MatDialogRef, useValue: {} },
-    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
   ],
   bootstrap: [AppComponent],
 })

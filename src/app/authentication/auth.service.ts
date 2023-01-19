@@ -19,4 +19,12 @@ export class AuthService {
   register(user: RegisterUser) {
     return this.http.post(`auth/register`, user);
   }
+
+  sendResetPasswordRequest(email: string) {
+    return this.http.post(`auth/reset-password`, {email}).subscribe();
+  }
+
+  resetPassword(id: string, password: string) {
+    return this.http.post(`auth/reset-password/${id}`, {password}).subscribe();
+  }
 }

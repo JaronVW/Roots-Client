@@ -11,7 +11,7 @@ import jwt_decode from 'jwt-decode';
 export class OrganisationComponent implements OnInit {
   users: any;
   organisation = {
-    name: ''
+    name: '',
   };
   res: any;
 
@@ -22,7 +22,7 @@ export class OrganisationComponent implements OnInit {
     var decoded: any = jwt_decode(localStorage.getItem('token')!);
     this.organisationService.get(decoded.organisationId).subscribe((response) => {
       this.res = response;
-      this.organisation.name = this.res.name
+      this.organisation.name = this.res.name;
       this.userService.getAll().subscribe((response) => {
         this.users = response;
       });

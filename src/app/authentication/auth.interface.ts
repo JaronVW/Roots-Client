@@ -1,11 +1,11 @@
 export interface RegisterUser {
-    firstName: String,
-    lastName: String,
-    username: String,
-    password: String
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
 }
 
 export interface LoginUser {
-    username: String,
-    password: String
+  username: string;
+  password: string;
 }
