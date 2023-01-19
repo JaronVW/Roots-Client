@@ -38,13 +38,12 @@ export class LoginComponent {
     ) {
       this.authService.login(this.user).subscribe(
         (response) => {
-          console.log('asdasdasd',response);
+          console.log('asdasdasd', response);
           this.setError(false, '');
           this.res = response;
           const decoded: any = jwt_decode(this.res.access_token);
           localStorage.setItem('token', this.res.access_token);
           localStorage.setItem('email', decoded.username);
-          console.log('does it reach here?')
           this.router.navigate(['/events']);
         },
         (error) => {

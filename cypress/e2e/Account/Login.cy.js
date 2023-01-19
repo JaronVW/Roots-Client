@@ -1,5 +1,5 @@
 import { KJUR } from 'jsrsasign';
-import {login} from "../../support/login.helper";
+import { login } from "../../support/login.helper";
 
 describe('Testing the register page functionalities.', () => {
   beforeEach(() => {
@@ -29,13 +29,11 @@ describe('Testing the register page functionalities.', () => {
   })
 
 
-
-  it('writes an fake email and password that does not exist. Should return an error.', () => {
+  it('writes a fake email and password that does not exist. Should return an error.', () => {
     cy.get('#emailInput').type('CompletleyFake@iSwear.com')
     cy.get('#passwordInput').type('IfYouReadThisYouAreAwesome!')
     cy.get('.btn').contains('Inloggen').click().wait(100)
     cy.contains('Email/wachtwoord combinatie is incorrect.').should('have.length', 1).should('be.visible')
-
   })
 
 
