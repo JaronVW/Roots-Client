@@ -3,7 +3,7 @@ import { EventService } from '../event.service';
 import { Event } from '../event.interface';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-listevents',
@@ -107,7 +107,6 @@ export class ListeventsComponent implements OnInit {
               day: 'numeric',
             });
         }
-        console.log(this.events);
       });
 
     this.eventService.getEventsCount(searchQuery, getArchivedItems).subscribe((response: number) => {
@@ -144,10 +143,6 @@ export class ListeventsComponent implements OnInit {
   delete(id: number) {
     this.eventService.deleteEvent(id).subscribe(() => this.router.navigate(['/events']));
     this.getEvents();
-  }
-
-  logState() {
-    console.log(this.showArchived);
   }
 
   changePage(page: number) {

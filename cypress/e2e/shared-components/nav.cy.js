@@ -1,4 +1,4 @@
-import {login} from "../../support/login.helper";
+import { login } from "../../support/login.helper";
 
 
 describe('testing the navbar', () => {

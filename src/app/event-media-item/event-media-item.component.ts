@@ -4,13 +4,15 @@ import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-event-media-item',
-  template: ` <h2>{{ media }}</h2>
+  template: `
+    <h2>{{ media }}</h2>
     <img *ngIf="isImage(); else downloadFile" src="{{ imageUrl }}" class="img-fluid img-size" alt="{{ media }}" />
     <img />
 
     <ng-template #downloadFile>
       <button class="btn btn-primary brand-button" (click)="getFile()">Download</button></ng-template
-    > `,
+    >
+  `,
   styles: ['.img-size { max-height: 10rem;  }'],
 })
 export class EventMediaItemComponent implements OnInit {

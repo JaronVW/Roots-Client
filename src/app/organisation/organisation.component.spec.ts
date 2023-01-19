@@ -25,7 +25,6 @@ describe('OrganisationComponent', () => {
 
   it('should have a title', () => {
     component.organisation = mockOrganisation;
-    console.log(component.organisation);
     expect(component.organisation.name).toEqual(mockOrganisation.name);
   });
 });

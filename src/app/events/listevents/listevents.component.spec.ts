@@ -1,7 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { mockEvent1, mockEvent2, mockEvents } from './listevents.mockdata';
-
 import { ListeventsComponent } from './listevents.component';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MatMenuModule } from '@angular/material/menu';

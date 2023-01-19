@@ -8,7 +8,6 @@ import { LoginUser, RegisterUser } from './auth.interface';
 })
 export class AuthService {
   public currentUser$ = new BehaviorSubject<null | undefined>(undefined);
-  private readonly CURRENT_USER = 'currentuser';
 
   constructor(private http: HttpClient) {}
 
@@ -21,10 +20,10 @@ export class AuthService {
   }
 
   sendResetPasswordRequest(email: string) {
-    return this.http.post(`auth/reset-password`, {email}).subscribe();
+    return this.http.post(`auth/reset-password`, { email }).subscribe();
   }
 
   resetPassword(id: string, password: string) {
-    return this.http.post(`auth/reset-password/${id}`, {password}).subscribe();
+    return this.http.post(`auth/reset-password/${id}`, { password }).subscribe();
   }
 }
