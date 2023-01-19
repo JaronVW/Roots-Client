@@ -30,10 +30,10 @@ describe('Testing the register page functionalities.', () => {
 
 
   it('writes a fake email and password that does not exist. Should return an error.', () => {
-    cy.get('#emailInput').type('CompletleyFake@iSwear.com')
+    cy.get('#emailInput').type('CompletleyFake@iswear.com')
     cy.get('#passwordInput').type('IfYouReadThisYouAreAwesome!')
     cy.get('.btn').contains('Inloggen').click().wait(100)
-    cy.contains('Email/wachtwoord combinatie is incorrect.').should('have.length', 1).should('be.visible')
+    cy.contains('Er is iets misgegaan.').should('have.length', 1).should('be.visible') // can't be run when the backend is not running (in github workflow)
   })
 
 

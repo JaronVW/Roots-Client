@@ -38,7 +38,6 @@ export class LoginComponent {
     ) {
       this.authService.login(this.user).subscribe(
         (response) => {
-          console.log('asdasdasd', response);
           this.setError(false, '');
           this.res = response;
           const decoded: any = jwt_decode(this.res.access_token);
@@ -49,8 +48,9 @@ export class LoginComponent {
         (error) => {
           if (error.error.message == 'Account is inactive')
             this.setError(true, 'Uw account is inactief. Contacteer een ander werknemer als dit een fout is.');
-          if (error.error.message == 'Invalid credentials')
+          else if (error.error.message == 'Invalid credentials')
             this.setError(true, 'Email/wachtwoord combinatie is incorrect.');
+          else this.setError(true, 'Er is iets misgegaan.');
         },
       );
     }
