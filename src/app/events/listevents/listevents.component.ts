@@ -22,8 +22,8 @@ export class ListeventsComponent implements OnInit {
   modalmode = {
     title: '',
     body: '',
-    buttontext: ''
-  }
+    buttontext: '',
+  };
 
   constructor(
     private router: Router,
@@ -75,13 +75,15 @@ export class ListeventsComponent implements OnInit {
   }
 
   async archive(id: number) {
-    this.eventService.archive(id).subscribe(() => {});
-    window.location.reload();
+    this.eventService.archive(id).subscribe(() => {
+      window.location.reload();
+    });
   }
 
   async unarchive(id: number) {
-    this.eventService.unarchive(id).subscribe(() => {});
-    window.location.reload();
+    this.eventService.unarchive(id).subscribe(() => {
+      window.location.reload();
+    });
   }
 
   getEvents(searchQuery?: string, getArchivedItems?: boolean) {
