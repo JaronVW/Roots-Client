@@ -3,8 +3,6 @@ name: Roots Client CI
 on:
   push:
     branches: ['main', 'development']
-  pull_request:
-    branches: ['main']
 
 jobs:
   build:
