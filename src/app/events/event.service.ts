@@ -99,10 +99,10 @@ export class EventService {
   }
 
   unarchive(id: number) {
-    return this.http.patch(`events/${id}/unarchive`, null);
+    return this.http.patch(`events/${id}/unarchive`, {});
   }
 
   archive(id: number) {
-    return this.http.patch(`events/${id}/archive`, null);
+    return this.http.patch(`events/${id}/archive`, {});
   }
 }
