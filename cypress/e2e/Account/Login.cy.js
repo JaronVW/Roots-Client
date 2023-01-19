@@ -1,10 +1,8 @@
-import { KJUR } from 'jsrsasign';
 import { login } from "../../support/login.helper";
 
-describe('Testing the register page functionalities.', () => {
+describe('Testing the login page functionalities.', () => {
   beforeEach(() => {
     cy.visit('http://localhost:4200/login')
-
   })
 
   it('Enters valid account information. Should log in, and redirect to the next page', () => {
