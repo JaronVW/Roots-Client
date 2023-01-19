@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-accountrecovery',
   templateUrl: './accountrecovery.component.html',
-  styleUrls: ['./accountrecovery.component.css']
+  styleUrls: ['./accountrecovery.component.css'],
 })
-export class AccountrecoveryComponent implements OnInit {
+export class AccountrecoveryComponent {
   email: string = '';
   success: boolean = false;
   successMessage: string = '';
   error: boolean = false;
   errorMessage: string = '';
 
-  constructor(private authService: AuthService) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private authService: AuthService) {}
 
   sendResetPasswordRequest(email: string) {
-    if (this.email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,)) {
+    if (
+      this.email.match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
       this.setError(false, '');
-      this.setSuccess(true, 'Als dit email verbonden is aan een account is er een herstel email verstuurd!')
-      console.log(email)
+      this.setSuccess(true, 'Als dit email verbonden is aan een account is er een herstel email verstuurd!');
       this.authService.sendResetPasswordRequest(email);
     } else {
       this.setSuccess(false, '');
@@ -39,5 +39,4 @@ export class AccountrecoveryComponent implements OnInit {
     this.error = error;
     this.errorMessage = errorMessage;
   }
-
 }

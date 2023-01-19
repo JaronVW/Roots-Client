@@ -1,17 +1,14 @@
-import { registerLocaleData } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { OrganisationService } from '../organisation.service';
-import jwt_decode from 'jwt-decode';
-import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   public isCollapsed = true;
   organisation = {
     name: '',
@@ -23,21 +20,20 @@ export class RegisterComponent implements OnInit {
     firstName: '',
     lastName: '',
   };
-  repeatpassword: String = '';
+  repeatpassword: string = '';
   userError: boolean = false;
-  userErrorMessage: String = '';
+  userErrorMessage: string = '';
   _userSuccess: boolean = false;
-  _userSuccessMessage: String = '';
+  _userSuccessMessage: string = '';
   organisationError: boolean = false;
-  organisationErrorMessage: String = '';
+  organisationErrorMessage: string = '';
   _organisationSuccess: boolean = false;
-  _organisationSuccessMessage: String = '';
+  _organisationSuccessMessage: string = '';
   res: any;
 
   constructor(
     private authService: AuthService,
     private organisationService: OrganisationService,
-    private router: Router,
     private modalService: NgbModal,
   ) {}
 
@@ -63,10 +59,6 @@ export class RegisterComponent implements OnInit {
 
   public set userSuccess(val: any) {
     this._userSuccess = val;
-  }
-
-  ngOnInit(): void {
-    // TODO document why this method 'ngOnInit' is empty
   }
 
   createDomain() {
@@ -99,9 +91,9 @@ export class RegisterComponent implements OnInit {
     if (
       this.user.firstName != '' &&
       this.user.lastName != '' &&
-            this.user.username.match(
+      this.user.username.match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-) &&
+      ) &&
       this.user.password != '' &&
       this.user.password.length > 7 &&
       this.user.password.length < 21 &&
@@ -111,11 +103,6 @@ export class RegisterComponent implements OnInit {
       this.authService.register(this.user).subscribe({
         next: (response) => {
           this.setUserSuccess(true, 'Gebruiker geregistreerd, verifieer uw email om in te kunnen loggen.');
-          // this.res = response;
-          // var decoded: any = jwt_decode(this.res.access_token);
-          // localStorage.setItem('token', this.res.access_token);
-          // localStorage.setItem('email', decoded.username);
-          console.log(response);
           this.organisationSuccess = true;
           this.organisationSuccessMessage = 'Organisatie succesvol aangemaakt.';
         },
@@ -135,8 +122,8 @@ export class RegisterComponent implements OnInit {
       this.setOrganisationError(true, 'Domein kan niet leeg zijn; voer uw email in.');
     }
     if (this.organisation.name != '' && this.organisation.domainName != '') {
-      this.organisationService.create(this.organisation).subscribe(
-        (response) => {
+      this.organisationService.create(this.organisation).subscribe({
+        next: (response) => {
           this.setOrganisationError(false, '');
           this.res = response;
           this.setSuccess(
@@ -148,10 +135,10 @@ export class RegisterComponent implements OnInit {
               '" is succesvol aangemaakt.',
           );
         },
-        (error) => {
+        error: () => {
           this.setOrganisationError(true, 'Organisatienaam/domein is al in gebruik.');
         },
-      );
+      });
     }
   }
 

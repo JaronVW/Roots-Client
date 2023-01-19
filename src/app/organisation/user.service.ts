@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserService {
   public currentUser$ = new BehaviorSubject<null | undefined>(undefined);
-  private readonly CURRENT_USER = 'currentuser';
 
   constructor(private http: HttpClient) {}
 

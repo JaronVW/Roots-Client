@@ -1,14 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
 import { Tag } from '../../event.interface';
 
 @Component({
@@ -49,10 +39,6 @@ export class InputWithTagSuggestionsComponent {
   showDropdown = false;
   suggestions: Tag[] = [];
 
-  constructor() {
-    /* TODO document why this constructor is empty */
-  }
-
   filterTags() {
     this.titleChange.emit(this.title);
     let words = this.title.split(' ').map((word) => word.toLowerCase());
@@ -82,23 +68,17 @@ export class InputWithTagSuggestionsComponent {
   selectedTag!: Tag;
 
   onKeyDown(event: KeyboardEvent) {
-    if (event.keyCode === 38) {
-      // up arrow key
-      // select the previous item in the list
+    if (event.key === 'ArrowDown') {
       const index = this.suggestions.indexOf(this.selectedTag);
       if (index > 0) {
         this.selectedTag = this.suggestions[index - 1];
       }
-    } else if (event.keyCode === 40) {
-      // down arrow key
-      // select the next item in the list
+    } else if (event.key === 'ArrowUp') {
       const index = this.suggestions.indexOf(this.selectedTag);
       if (index < this.suggestions.length - 1) {
         this.selectedTag = this.suggestions[index + 1];
       }
-    } else if (event.keyCode === 13) {
-      // enter key
-      // add the selected item to the list of tags
+    } else if (event.key === 'Enter') {
       this.addTagAndRemoveFromSuggestions(this.selectedTag);
     }
   }

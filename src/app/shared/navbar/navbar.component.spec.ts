@@ -3,7 +3,6 @@ import { By } from '@angular/platform-browser';
 import { Location, CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed, async, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { NavbarComponent } from './navbar.component';
 import { ListeventsComponent } from 'src/app/events/listevents/listevents.component';
 

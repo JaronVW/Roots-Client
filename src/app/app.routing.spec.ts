@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { TestBed, fakeAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-
 import { routes } from './app.routing';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 
@@ -39,9 +38,4 @@ describe('Router: App', () => {
       expect(location.path()).toBe('/register');
     });
   }));
-  // it('navigate to "/events/archive" takes you to archive page', fakeAsync(() => {
-  //   router.navigate(['/events/archive']).then(() => {
-  //     expect(location.path()).toBe('/events/archive');
-  //   });
-  // }));
 });

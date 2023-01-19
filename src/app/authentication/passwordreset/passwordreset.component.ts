@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -7,17 +7,15 @@ import { AuthService } from '../auth.service';
   templateUrl: './passwordreset.component.html',
   styleUrls: ['./passwordreset.component.css'],
 })
-export class PasswordresetComponent implements OnInit {
+export class PasswordresetComponent {
   password: string = '';
   repeatPassword: string = '';
   error: boolean = false;
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router,) {}
+  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router) {}
 
-  ngOnInit(): void {}
-
-  resetPassword(password: string, repeatPassword: string) {
+  resetPassword() {
     if (this.repeatPassword != this.password) {
       this.setError(true, 'Wachtwoorden komen niet overeen.');
     }
@@ -25,7 +23,7 @@ export class PasswordresetComponent implements OnInit {
       this.setError(true, 'Wachtwoord moet tussen de 8-20 tekens lang zijn.');
     }
     if (this.password.length > 7 && this.password.length < 21 && this.password == this.repeatPassword) {
-      this.setError(false, '')
+      this.setError(false, '');
       this.authService.resetPassword(this.route.snapshot.paramMap.get('id')!, this.password);
       this.router.navigate(['/login']);
     }

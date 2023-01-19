@@ -10,7 +10,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { routes } from './app.routing';
 import { AddediteventComponent } from './events/addeditevent/addeditevent.component';
-import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ListeventsComponent } from './events/listevents/listevents.component';
 import { TokenInterceptor } from '../../token.interceptor';
@@ -27,10 +27,11 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { EventMediaItemComponent } from './event-media-item/event-media-item.component';
 import { DragAndDropDirective } from './events/addeditevent/drag-and-drop.directive';
 import { AccountrecoveryComponent } from './authentication/accountrecovery/accountrecovery.component';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrganisationComponent } from './organisation/organisation.component';
 import { VerifyaccountComponent } from './verifyaccount/verifyaccount.component';
 import { PasswordresetComponent } from './authentication/passwordreset/passwordreset.component';
+
+
 
 @NgModule({
   declarations: [

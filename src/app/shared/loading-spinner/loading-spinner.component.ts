@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-loading-spinner',
@@ -13,8 +13,6 @@ import { Component, OnInit } from '@angular/core';
         border-radius: 50%;
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
-        /* margin-left: auto;
-        margin-right: auto; */
         display: inline-block;
       }
 
@@ -29,6 +27,4 @@ import { Component, OnInit } from '@angular/core';
     `,
   ],
 })
-export class LoadingSpinnerComponent {
-  constructor() {}
-}
+export class LoadingSpinnerComponent {}
