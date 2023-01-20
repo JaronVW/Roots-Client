@@ -19,7 +19,7 @@ export class OrganisationComponent implements OnInit {
 
   ngOnInit(): void {
     this.organisation.name = '';
-    var decoded: any = jwt_decode(localStorage.getItem('token')!);
+    let decoded: any = jwt_decode(localStorage.getItem('token')!);
     this.organisationService.get(decoded.organisationId).subscribe((response) => {
       this.res = response;
       this.organisation.name = this.res.name;
